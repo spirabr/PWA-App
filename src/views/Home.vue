@@ -28,7 +28,7 @@
         <v-icon
           v-on:click="listen(audio)"
           medium
-          :color="toggleAudio"
+          :color="toggleAudio(audio)"
         >mdi-headphones</v-icon>
       </v-card>
     </div>
@@ -42,41 +42,48 @@ export default {
   name: 'Home',
   data: () => ({    
     activeMic: false,
-    activeAudio: false,
+    activeAudio: {},
     audios: ['RandomSample1.wav', 'AfricanSample.wav', 'HouseSample.wav'],
-    soundId: -1,
+    sound: {}
   }),
   methods: {
     toggleMic() {
       this.activeMic = !this.activeMic;
-      this.activeAudio = false;
+      for (let audio in this.activeAudio) {
+        if (this.activeAudio[audio])
+          this.sound[audio].stop();
+        this.activeAudio[audio] = false;
+      }
+      // Create an audio and store it at assets/audios with a 'nameHere.wav'
+      // audios.push('nameHere.wav');
+      // activeMic['nameHere.wav'] = false;
     },
     listen(selected) {
-      this.activeAudio = !this.activeAudio;
-      console.log('activeAudio: ', this.activeAudio);
-      this.activeMic = false;
-      const sound = new Howl({
-        src: [require(`../assets/audio/${selected}`)],
-        autoplay: true,
-        onend: function() {
-          this.activeAudio = false;
-          this.soundId = -1;
-          console.log(this.soundId);
+      if (this.activeAudio[selected]) {
+        this.sound[selected].stop();
+      }
+      else {
+        if (this.sound[selected] === undefined) {
+          this.sound[selected] = new Howl({
+            src: [require(`../assets/audio/${selected}`)],
+            onend: () => {
+              this.activeAudio[selected] = false;
+            }
+          })
         }
-      })
-      if (this.activeAudio) {
-        this.soundId = sound.play();
-        console.log(this.soundId);
+        this.sound[selected].play();
       }
-      else if (this.soundId !== -1) {
-        sound.stop(this.soundID);
-      }
-    },  
-  },
-  computed: {
-    toggleAudio() {
-      return this.activeAudio ? 'red' : '';
-    }
+      this.activeMic = false;
+      this.activeAudio[selected] = !this.activeAudio[selected];
+    },
+    toggleAudio(selected) {
+      return this.activeAudio[selected] ? 'red' : '';
+    },
+  },  
+  created() {
+    this.audios.forEach(audio => {
+      this.$set(this.activeAudio, audio, false);
+    })
   }
 
 }

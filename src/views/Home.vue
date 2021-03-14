@@ -37,6 +37,7 @@
 
 <script>
 import { Howl } from 'howler';
+import { AudioRecorder } from '../lib/recorder'
 
 export default {
   name: 'Home',

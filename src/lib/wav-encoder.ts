@@ -1,6 +1,6 @@
-import { IEncodedSample, IEncoderOptions } from "../model/wavEncoder";
+import { IEncodedSample, IEncoder, IEncoderOptions } from "../model/encoder";
 
-export default class WavEncoder {
+export default class WavEncoder implements IEncoder {
     bufferSize: number;
     sampleRate: number;
     headerSize: number;

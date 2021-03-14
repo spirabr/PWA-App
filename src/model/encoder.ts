@@ -1,3 +1,11 @@
+export interface IEncoder {
+    bufferSize: number;
+    sampleRate: number;
+    headerSize: number;
+    channelCount: number
+    encode(samples: Array<Float32Array>): IEncodedSample
+}
+
 export interface IEncodedSample {
     id: string,
     blob: Blob,

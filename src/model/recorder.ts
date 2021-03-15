@@ -10,7 +10,7 @@ export interface IRecorder {
     format: string
     encoder: IEncoder
 
-    isRecodring: boolean
+    isRecording: boolean
     duration: number
 
     start() : void

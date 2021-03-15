@@ -9,7 +9,7 @@ export interface IEncoder {
 export interface IEncodedSample {
     id: string,
     blob: Blob,
-    url: string
+    url: string,
     format: string
 }
 

@@ -45,7 +45,8 @@ export default {
     activeMic: false,
     activeAudio: {},
     audios: ['RandomSample1.wav', 'AfricanSample.wav', 'HouseSample.wav'],
-    sound: {}
+    sound: {},
+    recorder: undefined,
   }),
   methods: {
     toggleMic() {
@@ -54,6 +55,13 @@ export default {
         if (this.activeAudio[audio])
           this.sound[audio].stop();
         this.activeAudio[audio] = false;
+      }
+      if (this.activeMic) {
+        this.recorder.start();
+        //this.recorder.start();
+      }
+      else {
+        this.recorder.stop();
       }
       // Create an audio and store it at assets/audios with a 'nameHere.wav'
       // audios.push('nameHere.wav');
@@ -85,6 +93,15 @@ export default {
     this.audios.forEach(audio => {
       this.$set(this.activeAudio, audio, false);
     })
+
+    this.recorder = new AudioRecorder({
+      beforeRecording: () => console.log('nada'),
+      pauseRecording: () => console.log('nada'),
+      afterRecording: () => console.log('nada'),
+      micFailed: () => console.log('nada'),
+      encoderOptions: 'asdfasd',
+    });
+    console.log(this.recorder);
   }
 
 }

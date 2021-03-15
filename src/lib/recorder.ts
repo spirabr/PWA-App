@@ -13,7 +13,7 @@ export class AudioRecorder implements IRecorder {
   encoder: IEncoder;
   context: AudioContext;
 
-  isRecodring: boolean;
+  isRecording: boolean;
   duration: number;
   volume: number;
 
@@ -38,7 +38,7 @@ export class AudioRecorder implements IRecorder {
 
     this.context = new (window.AudioContext || window.webkitAudioContext)()
 
-    this.isRecodring = false;
+    this.isRecording = false;
     this.duration = 0;
     this.volume = 0;
 
@@ -58,7 +58,7 @@ export class AudioRecorder implements IRecorder {
         .getUserMedia(constraints)
         .then(this.captureMic.bind(this))
         .catch(this.micError.bind(this))
-    
+
   }
 
   stop() {
@@ -92,7 +92,7 @@ export class AudioRecorder implements IRecorder {
 
     this.input.connect(this.processor)
     this.processor.connect(this.context.destination)
-    this.isRecodring = true
+    this.isRecording = true
   }
 
   private micError(error: Error) {

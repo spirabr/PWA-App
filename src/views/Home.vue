@@ -11,11 +11,7 @@
     
     <div class="recorder">
       <p>Clique no microfone para gravar um áudio</p>  
-      <v-icon
-        @click="toggleMic"
-        x-large
-        :color="activeMic ? 'red' : ''"
-      >mdi-microphone</v-icon>
+      <Microphone/>
     </div>
 
     <div class="listener">
@@ -37,7 +33,7 @@
 
 <script>
 import { Howl } from 'howler';
-import { AudioRecorder } from '../lib/recorder'
+import Microphone from '../components/Microphone'
 
 export default {
   name: 'Home',
@@ -48,25 +44,8 @@ export default {
     sound: {},
     recorder: undefined,
   }),
+  components: {Microphone},
   methods: {
-    toggleMic() {
-      this.activeMic = !this.activeMic;
-      for (let audio in this.activeAudio) {
-        if (this.activeAudio[audio])
-          this.sound[audio].stop();
-        this.activeAudio[audio] = false;
-      }
-      if (this.activeMic) {
-        this.recorder.start();
-        //this.recorder.start();
-      }
-      else {
-        this.recorder.stop();
-      }
-      // Create an audio and store it at assets/audios with a 'nameHere.wav'
-      // audios.push('nameHere.wav');
-      // activeMic['nameHere.wav'] = false;
-    },
     listen(selected) {
       if (this.activeAudio[selected]) {
         this.sound[selected].stop();
@@ -93,15 +72,6 @@ export default {
     this.audios.forEach(audio => {
       this.$set(this.activeAudio, audio, false);
     })
-
-    this.recorder = new AudioRecorder({
-      beforeRecording: () => console.log('nada'),
-      pauseRecording: () => console.log('nada'),
-      afterRecording: () => console.log('nada'),
-      micFailed: () => console.log('nada'),
-      encoderOptions: 'asdfasd',
-    });
-    console.log(this.recorder);
   }
 
 }

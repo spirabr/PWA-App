@@ -9,6 +9,12 @@
     
     <h1>SPIRA</h1>
     
+    <v-btn
+      rounded
+    >
+      <router-link class="accept-link" to="/accept">Fazer nova coleta</router-link>
+    </v-btn>
+
     <div class="recorder">
       <p>Clique no microfone para gravar um áudio</p>  
       <Microphone/>
@@ -38,11 +44,9 @@ import Microphone from '../components/Microphone'
 export default {
   name: 'Home',
   data: () => ({    
-    activeMic: false,
     activeAudio: {},
     audios: ['RandomSample1.wav', 'AfricanSample.wav', 'HouseSample.wav'],
     sound: {},
-    recorder: undefined,
   }),
   components: {Microphone},
   methods: {
@@ -61,7 +65,6 @@ export default {
         }
         this.sound[selected].play();
       }
-      this.activeMic = false;
       this.activeAudio[selected] = !this.activeAudio[selected];
     },
     toggleAudio(selected) {
@@ -101,5 +104,9 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .accept-link {
+    color: black; 
+    text-decoration: none;
   }
 </style>

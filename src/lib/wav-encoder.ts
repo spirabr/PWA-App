@@ -16,7 +16,7 @@ export default class WavEncoder implements IEncoder {
     encode = (samples: Array<Float32Array>) : IEncodedSample => {
         const joinedSamples = this.joinSamples(samples)
         
-        const buffer = new ArrayBuffer(this.headerSize + samples.length * 2)
+        const buffer = new ArrayBuffer(this.headerSize + joinedSamples.length * 2)
         const view = new DataView(buffer)
 
         this.writeHeader(view, samples)
@@ -25,7 +25,7 @@ export default class WavEncoder implements IEncoder {
         this.floatTo16BitPCM(view, this.headerSize, joinedSamples)
 
         const blob = new Blob([view], { type: 'audio/wav' })
-
+        
         return {
             id: Date.now().toString(),
             blob: blob,
@@ -91,6 +91,11 @@ export default class WavEncoder implements IEncoder {
     }
 
     private floatTo16BitPCM(output: DataView, offset: number, input: Float64Array) {
+        console.log({
+            output,
+            offset,
+            input
+        })
         for (let i = 0; i < input.length; i++, offset += 2) {
             let s = Math.max(-1, Math.min(1, input[i]))
             output.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true)

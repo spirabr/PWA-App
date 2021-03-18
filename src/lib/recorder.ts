@@ -36,7 +36,7 @@ export class AudioRecorder implements IRecorder {
     this.format = options.format || "wav";
     this.encoder = new WavEncoder(options.encoderOptions);
 
-    this.context = new (window.AudioContext || window.webkitAudioContext)()
+    this.context = new window.AudioContext();
 
     this.isRecording = false;
     this.duration = 0;
@@ -45,7 +45,7 @@ export class AudioRecorder implements IRecorder {
     this.audioSamples = [];
   }
 
-  start() {
+  async start() {
     const constraints = {
       video: false,
       audio: {
@@ -54,8 +54,7 @@ export class AudioRecorder implements IRecorder {
       },
     };
 
-    navigator.mediaDevices
-        .getUserMedia(constraints)
+    navigator.mediaDevices.getUserMedia(constraints)
         .then(this.captureMic.bind(this))
         .catch(this.micError.bind(this))
 
@@ -65,30 +64,35 @@ export class AudioRecorder implements IRecorder {
     this.stream.getTracks().forEach((track) => { track.stop() })
     this.input.disconnect()
     this.processor!.disconnect()
-    this.context.close()
+    // this.context.close()
 
+    console.log({samples: this.audioSamples})
     const encoded = this.encoder.encode(this.audioSamples)
     console.log({encoded})
     this.audioSamples = []
 
+    return encoded.url;
   }
 
   private captureMic(stream: MediaStream) : void {
+    this.stream = stream;
     this.input = this.context.createMediaStreamSource(stream)
-
+    this.context.audioWorklet;
+    
     this.processor = this.context.createScriptProcessor(this.encoder.bufferSize, 1, 1)
-    this.processor.onaudioprocess = (event) => {
-        const sample = event.inputBuffer.getChannelData(0)
-        let sum = 0.0
-        this.audioSamples.push(new Float32Array(sample))
+    this.processor.addEventListener('onaudioprocess', (event) => {
+      const sample = event.inputBuffer.getChannelData(0)
+      let sum = 0.0
+      console.log(event)
+      this.audioSamples.push(new Float32Array(sample))
 
-        for (let i = 0; i < sample.length; ++i) {
-            sum += sample[i] * sample[i]
-        }
+      for (let i = 0; i < sample.length; ++i) {
+          sum += sample[i] * sample[i]
+      }
 
-        this.duration += parseFloat(this.context.currentTime.toFixed(2))
-        this.volume = Math.sqrt(sum / sample.length)
-    }
+      this.duration += parseFloat(this.context.currentTime.toFixed(2))
+      this.volume = Math.sqrt(sum / sample.length)
+    })
 
     this.input.connect(this.processor)
     this.processor.connect(this.context.destination)

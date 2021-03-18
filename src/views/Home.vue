@@ -43,7 +43,7 @@ import Microphone from '../components/Microphone'
 
 export default {
   name: 'Home',
-  data: () => ({    
+  data: () => ({
     activeAudio: {},
     audios: ['RandomSample1.wav', 'AfricanSample.wav', 'HouseSample.wav'],
     sound: {},
@@ -70,13 +70,15 @@ export default {
     toggleAudio(selected) {
       return this.activeAudio[selected] ? 'red' : '';
     },
-  },  
+    newAudio: e => {
+      console.log('evento enviado: ', e);
+    }
+  },
   created() {
     this.audios.forEach(audio => {
       this.$set(this.activeAudio, audio, false);
     })
   }
-
 }
 </script>
 

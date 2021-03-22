@@ -22,7 +22,7 @@ export class AudioRecorder implements IRecorder {
    TODO: Change ScriptProcessorNode to AudioWorkletProcessor
    See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Using_AudioWorklet
    */
-  processor: ScriptProcessorNode | undefined
+  processor!: AudioWorkletNode | null
   stream!: MediaStream
 
   audioSamples: Array<Float32Array>;
@@ -32,18 +32,34 @@ export class AudioRecorder implements IRecorder {
     this.pauseRecording = options.pauseRecording;
     this.afterRecording = options.afterRecording;
     this.micFailed = options.micFailed;
-
+        
     this.format = options.format || "wav";
     this.encoder = new WavEncoder(options.encoderOptions);
 
     this.context = new window.AudioContext();
-
     this.isRecording = false;
     this.duration = 0;
     this.volume = 0;
 
     this.audioSamples = [];
+    this.createMyAudioProcessor().then(node => {
+      this.processor = node;
+    });
   }
+
+  createMyAudioProcessor = async () => {
+    if (!this.context) {
+      try {
+        this.context = new AudioContext();
+        await this.context.resume();
+        await this.context.audioWorklet.addModule("AudioProcessor.js");
+      } catch(e) {
+        return null;
+      }
+    }
+  
+    return new AudioWorkletNode(this.context, "Bypass");
+  }  
 
   async start() {
     const constraints = {
@@ -60,7 +76,7 @@ export class AudioRecorder implements IRecorder {
 
   }
 
-  stop() {
+  stop() : string {
     this.stream.getTracks().forEach((track) => { track.stop() })
     this.input.disconnect()
     this.processor!.disconnect()
@@ -77,22 +93,6 @@ export class AudioRecorder implements IRecorder {
   private captureMic(stream: MediaStream) : void {
     this.stream = stream;
     this.input = this.context.createMediaStreamSource(stream)
-    this.context.audioWorklet;
-    
-    this.processor = this.context.createScriptProcessor(this.encoder.bufferSize, 1, 1)
-    this.processor.addEventListener('onaudioprocess', (event) => {
-      const sample = event.inputBuffer.getChannelData(0)
-      let sum = 0.0
-      console.log(event)
-      this.audioSamples.push(new Float32Array(sample))
-
-      for (let i = 0; i < sample.length; ++i) {
-          sum += sample[i] * sample[i]
-      }
-
-      this.duration += parseFloat(this.context.currentTime.toFixed(2))
-      this.volume = Math.sqrt(sum / sample.length)
-    })
 
     this.input.connect(this.processor)
     this.processor.connect(this.context.destination)

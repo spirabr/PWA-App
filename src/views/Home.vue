@@ -17,7 +17,7 @@
 
     <div class="recorder">
       <p>Clique no microfone para gravar um áudio</p>  
-      <Microphone/>
+      <Microphone @newAudio="addNewAudio"/>
     </div>
 
     <div class="listener">
@@ -26,7 +26,7 @@
         v-for="(audio, index) in audios"
         :key="index"
       >
-        <v-card-title>{{ audio }}</v-card-title>
+        <v-card-title>{{"Audio " + (index + 1)}}</v-card-title>
         <v-icon
           v-on:click="listen(audio)"
           medium
@@ -45,7 +45,7 @@ export default {
   name: 'Home',
   data: () => ({
     activeAudio: {},
-    audios: ['RandomSample1.wav', 'AfricanSample.wav', 'HouseSample.wav'],
+    audios: [],
     sound: {},
   }),
   components: {Microphone},
@@ -57,7 +57,8 @@ export default {
       else {
         if (this.sound[selected] === undefined) {
           this.sound[selected] = new Howl({
-            src: [require(`../assets/audio/${selected}`)],
+            src: [selected],
+            format: "wav",
             onend: () => {
               this.activeAudio[selected] = false;
             }
@@ -70,8 +71,9 @@ export default {
     toggleAudio(selected) {
       return this.activeAudio[selected] ? 'red' : '';
     },
-    newAudio: e => {
-      console.log('evento enviado: ', e);
+    addNewAudio(url) {
+      this.$set(this.activeAudio, url, false);
+      this.audios.push(url);
     }
   },
   created() {

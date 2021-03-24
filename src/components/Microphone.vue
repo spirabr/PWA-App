@@ -7,7 +7,9 @@
 
 <script>
 import AudioRecorder from 'audio-recorder-polyfill';
+import { openDB, deleteDB, wrap, unwrap } from 'idb';
 window.MediaRecorder = AudioRecorder;
+rtcRtpTransceiver.setCodecPreferences([{}]);
 
 export default {
   name: "Microphone",
@@ -26,13 +28,24 @@ export default {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-            this.mediaRecorder = new MediaRecorder(stream);
+            this.mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/PCMU'});
             this.mediaRecorder.start();
 
-            this.mediaRecorder.addEventListener('dataavailable', e => {
-              const audioURL = window.URL.createObjectURL(e.data);
+            let chunks = [];
+            this.mediaRecorder.ondataavailable = ( e => {
+              chunks.push(e.data);
+            })
+
+            this.mediaRecorder.onstop = (() => {
+              const blob = new Blob(chunks, {'type': 'audio/ogg; codecs=opus'});
+              chunks = [];
+              const audioURL = window.URL.createObjectURL(blob);
               this.$emit('newAudio', audioURL);
             })
+            //this.mediaRecorder.addEventListener('dataavailable', e => {
+            //  const audioURL = window.URL.createObjectURL(e.data);
+            //  this.$emit('newAudio', audioURL);
+            //})
             
             this.activeMic = !this.activeMic;
           }

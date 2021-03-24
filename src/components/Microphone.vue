@@ -9,7 +9,7 @@
 import AudioRecorder from 'audio-recorder-polyfill';
 import { openDB, deleteDB, wrap, unwrap } from 'idb';
 window.MediaRecorder = AudioRecorder;
-rtcRtpTransceiver.setCodecPreferences([{}]);
+// rtcRtpTransceiver.setCodecPreferences([{}]);
 
 export default {
   name: "Microphone",
@@ -36,16 +36,16 @@ export default {
               chunks.push(e.data);
             })
 
-            this.mediaRecorder.onstop = (() => {
-              const blob = new Blob(chunks, {'type': 'audio/ogg; codecs=opus'});
-              chunks = [];
-              const audioURL = window.URL.createObjectURL(blob);
-              this.$emit('newAudio', audioURL);
+            // this.mediaRecorder.onstop = (() => {
+            //   const blob = new Blob(chunks, {'type': 'audio/ogg; codecs=opus'});
+            //   chunks = [];
+            //   const audioURL = window.URL.createObjectURL(blob);
+            //   this.$emit('newAudio', audioURL);
+            // })
+            this.mediaRecorder.addEventListener('dataavailable', e => {
+             const audioURL = window.URL.createObjectURL(e.data);
+             this.$emit('newAudio', audioURL);
             })
-            //this.mediaRecorder.addEventListener('dataavailable', e => {
-            //  const audioURL = window.URL.createObjectURL(e.data);
-            //  this.$emit('newAudio', audioURL);
-            //})
             
             this.activeMic = !this.activeMic;
           }
@@ -60,6 +60,9 @@ export default {
       else {
         if (this.mediaRecorder) {
           this.mediaRecorder.stop();
+          this.mediaRecorder.stream.getTracks().forEach(track => {
+            track.stop();
+          })
         }
         this.activeMic = !this.activeMic;
       }

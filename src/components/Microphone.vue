@@ -27,7 +27,23 @@ export default {
       if (!this.activeMic) {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+            // O uso de noiseSuppression cria degraus no volume de voz
+            // O uso de echoCancellation cria pequenos desvios na voz (não mto perceptiveis)
+            // O uso de autoGainControl torna a voz um pouco mais audivel ajustando o volume de
+            // forma suave, resta saber se causa grande alteração no esquema
+            const stream = await navigator.mediaDevices.getUserMedia({ 
+              audio: {
+                noiseSuppression: false,
+                echoCancellation: false,
+                autoGainControl: true,
+              } 
+            })
+            // await stream.getAudioTracks()[0].applyConstraints({
+            //   noiseSuppression: false,
+            //   autoGainControl: true,
+            //   echoCancellation: false,
+            // });
+            console.log("noiseSuppression: ", stream.getAudioTracks()[0].getSettings());
             this.mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/PCMU'});
             this.mediaRecorder.start();
 

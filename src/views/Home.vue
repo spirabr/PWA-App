@@ -1,116 +1,81 @@
 <template>
   <v-container>
-    <v-img 
-      src='../assets/spira_ico.png'
-      contain
-      max-height="100"
-      max-width="200"
-    ></v-img>
-    
-    <h1>SPIRA</h1>
-    
-    <v-btn
-      rounded
-    >
-      <router-link class="accept-link" to="/accept">Fazer nova coleta</router-link>
-    </v-btn>
-
-    <div class="recorder">
-      <p>Clique no microfone para gravar um áudio</p>  
-      <Microphone @newAudio="addNewAudio"/>
+    <div class="logo">
+      <v-img 
+        src='../assets/spira_ico.png'
+        contain
+        max-height="100"
+        max-width="200"
+      ></v-img>
+      
+      <h1>SPIRA</h1>
     </div>
-
-    <div class="listener">
-      <p>Clique no fone para ouvir o áudio</p>
-      <v-card 
-        v-for="(audio, index) in audios"
-        :key="index"
+    
+    <div class="buttons">
+      <v-btn
+        class="route-button"
+        rounded
+        x-large
       >
-        <v-card-title>{{"Audio " + (index + 1)}}</v-card-title>
-        <v-icon
-          v-on:click="listen(audio)"
-          medium
-          :color="toggleAudio(audio)"
-        >mdi-headphones</v-icon>
-      </v-card>
+        <router-link to="/gather/form">Fazer nova coleta</router-link>
+      </v-btn>
+      <v-btn
+        class="route-button"  
+        rounded
+        x-large
+      >
+        <router-link to="/about">Sobre o Spira</router-link>
+      </v-btn>
     </div>
+
+    <v-footer>
+      <strong>Spira - 2021</strong>
+    </v-footer>
   </v-container>
 </template>
 
 <script>
-import { Howl } from 'howler';
-import Microphone from '../components/Microphone'
-
 export default {
-  name: 'Home',
-  data: () => ({
-    activeAudio: {},
-    audios: [],
-    sound: {},
-  }),
-  components: {Microphone},
-  methods: {
-    listen(selected) {
-      if (this.activeAudio[selected]) {
-        this.sound[selected].stop();
-      }
-      else {
-        if (this.sound[selected] === undefined) {
-          this.sound[selected] = new Howl({
-            src: [selected],
-            format: "wav",
-            onend: () => {
-              this.activeAudio[selected] = false;
-            }
-          })
-        }
-        this.sound[selected].play();
-      }
-      this.activeAudio[selected] = !this.activeAudio[selected];
-    },
-    toggleAudio(selected) {
-      return this.activeAudio[selected] ? 'red' : '';
-    },
-    addNewAudio(url) {
-      this.$set(this.activeAudio, url, false);
-      this.audios.push(url);
-    }
-  },
-  created() {
-    this.audios.forEach(audio => {
-      this.$set(this.activeAudio, audio, false);
-    })
-  }
+  name: 'Home'
 }
 </script>
 
 <style scoped>
   .container {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    padding: 2rem 2rem 0 2rem;
+    position: relative;
+  }
+  .logo{
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: center;
   }
-  .recorder, .listener {
-    width: 100%;
-    margin: 1rem;
-    display: inherit;
-    flex-direction: inherit;
-    align-items: inherit;
-  }
-  button {
-    outline: none;
-  }
-  .v-card {
-    margin: 0.5em;
-    width: 100%;
-    padding: 0 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .accept-link {
+  .route-button a {
     color: black; 
     text-decoration: none;
+  }
+  .route-button {
+    margin-top: 1rem;
+    width: 100%;
+  }
+  .v-footer {
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+  }
+  .theme--light.v-footer {
+    color: white;
+    background-color: #500486;
   }
 </style>

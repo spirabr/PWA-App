@@ -19,7 +19,10 @@
         v-for="(audio, index) in audios"
         :key="index"
       >
-        <v-card-title>{{"Audio " + (index + 1)}}</v-card-title>
+        <v-card-title>{{names[index]}}</v-card-title>
+          <a :href=audio :download=names[index]>
+            <v-icon> mdi-arrow-collapse-down </v-icon>
+          </a>
         <v-icon
           v-on:click="listen(audio)"
           medium
@@ -40,6 +43,7 @@ export default {
     activeAudio: {},
     audios: [],
     sound: {},
+    names: [],
   }),
   components: {Microphone},
   methods: {
@@ -66,6 +70,7 @@ export default {
     },
     addNewAudio(url) {
       this.$set(this.activeAudio, url, false);
+      this.names.push(prompt("Digite o nome do áudio"))
       this.audios.push(url);
     }
   },

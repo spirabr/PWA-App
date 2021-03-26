@@ -26,6 +26,13 @@
       >
         <router-link to="/about">Sobre o Spira</router-link>
       </v-btn>
+      <v-btn
+        class="route-button"  
+        rounded
+        x-large
+      >
+        <router-link to="/test">Teste de áudio</router-link>
+      </v-btn>
     </div>
 
     <v-footer>

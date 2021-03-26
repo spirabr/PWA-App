@@ -1,7 +1,15 @@
 <template>
   <v-container>
+    <v-btn
+        class="route-button"  
+        rounded
+        color="Red"
+      >
+        <router-link to="/" style="none">Home</router-link>
+      </v-btn>
+      
     <div class="recorder">
-      <p>Clique no microfone para gravar um áudio</p>  
+      <p>Clique no botão para gravar um áudio</p>  
       <Microphone @newAudio="addNewAudio"/>
     </div>
 
@@ -70,10 +78,13 @@ export default {
 </script>
 
 <style scoped>
+  .v-btn a {
+    text-decoration: none;
+    color: black;
+  }
   .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
   }
   .recorder, .listener {

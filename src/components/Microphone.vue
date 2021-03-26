@@ -7,9 +7,7 @@
 
 <script>
 import AudioRecorder from 'audio-recorder-polyfill';
-import { openDB, deleteDB, wrap, unwrap } from 'idb';
 window.MediaRecorder = AudioRecorder;
-// rtcRtpTransceiver.setCodecPreferences([{}]);
 
 export default {
   name: "Microphone",
@@ -35,15 +33,16 @@ export default {
               audio: {
                 noiseSuppression: false,
                 echoCancellation: false,
-                autoGainControl: true,
+                autoGainControl: false,
               } 
             })
-            // await stream.getAudioTracks()[0].applyConstraints({
-            //   noiseSuppression: false,
-            //   autoGainControl: true,
-            //   echoCancellation: false,
-            // });
-            console.log("noiseSuppression: ", stream.getAudioTracks()[0].getSettings());
+
+            console.log({
+              noiseSuppression: stream.getAudioTracks()[0].getSettings().noiseSuppression,
+              echoCancellation: stream.getAudioTracks()[0].getSettings().echoCancellation,
+              autoGainControl: stream.getAudioTracks()[0].getSettings().autoGainControl,              
+            });
+
             this.mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/PCMU'});
             this.mediaRecorder.start();
 
@@ -52,12 +51,6 @@ export default {
               chunks.push(e.data);
             })
 
-            // this.mediaRecorder.onstop = (() => {
-            //   const blob = new Blob(chunks, {'type': 'audio/ogg; codecs=opus'});
-            //   chunks = [];
-            //   const audioURL = window.URL.createObjectURL(blob);
-            //   this.$emit('newAudio', audioURL);
-            // })
             this.mediaRecorder.addEventListener('dataavailable', e => {
              const audioURL = window.URL.createObjectURL(e.data);
              this.$emit('newAudio', audioURL);
@@ -87,6 +80,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

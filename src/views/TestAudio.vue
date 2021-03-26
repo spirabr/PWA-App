@@ -5,12 +5,35 @@
         rounded
         color="Red"
       >
-        <router-link to="/" style="none">Home</router-link>
-      </v-btn>
+      <router-link to="/" style="none">Home</router-link>
+    </v-btn>
       
+    <div class="checks">
+      <v-checkbox
+        v-model="noiseSuppression"
+        label="Supressão de Ruído"
+      >
+      </v-checkbox>
+      <v-checkbox
+        v-model="echoCancellation"
+        label="Cancelamento de eco"
+      >
+      </v-checkbox>
+      <v-checkbox
+        v-model="autoGainControl"
+        label="Controle de Ganho Automático"
+      >
+      </v-checkbox>
+    </div>
+
     <div class="recorder">
-      <p>Clique no botão para gravar um áudio</p>  
-      <Microphone @newAudio="addNewAudio"/>
+      <p>Clique no botão para gravar um áudio</p>
+      <Microphone
+        :noiseSuppression=noiseSuppression
+        :echoCancellation=echoCancellation
+        :autoGainControl=autoGainControl
+        @newAudio="addNewAudio"
+      />
     </div>
 
     <div class="listener">
@@ -44,6 +67,9 @@ export default {
     audios: [],
     sound: {},
     names: [],
+    noiseSuppression: false,
+    echoCancellation: false,
+    autoGainControl: false,
   }),
   components: {Microphone},
   methods: {

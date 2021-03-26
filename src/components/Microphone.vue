@@ -11,6 +11,7 @@ window.MediaRecorder = AudioRecorder;
 
 export default {
   name: "Microphone",
+  props: ['noiseSuppression', 'echoCancellation', 'autoGainControl'],
   data: () => ({
     activeMic: false,
     mediaRecorder: undefined,
@@ -31,9 +32,9 @@ export default {
             // forma suave, resta saber se causa grande alteração no esquema
             const stream = await navigator.mediaDevices.getUserMedia({ 
               audio: {
-                noiseSuppression: false,
-                echoCancellation: false,
-                autoGainControl: false,
+                noiseSuppression: this.noiseSuppression,
+                echoCancellation: this.echoCancellation,
+                autoGainControl: this.autoGainControl,
               } 
             })
 

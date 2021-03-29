@@ -14,25 +14,31 @@
         required
       ></v-text-field>
 
-      <p>Sexo</p>
 
-      <v-checkbox
-        label="Masculino"
-      ></v-checkbox>
-      <v-checkbox
-        label="Feminino"
-      ></v-checkbox>
-      <v-checkbox
-        label="Não desejo declarar"
-      ></v-checkbox>
+      <div class="checkboxes">
+        <p>Sexo</p>
+        <div>
+          <v-checkbox
+            label="Masculino"
+          ></v-checkbox>
+          <v-checkbox
+            label="Feminino"
+          ></v-checkbox>
+        </div>
+        <v-checkbox
+          label="Não desejo declarar"
+        ></v-checkbox>
+      </div>
 
     </v-form>
 
-    <v-btn
-      color="#500486"
-    >
-    <p> [Botão 3.1-4] </p>
-    </v-btn>
+    <router-link id="next-btn" to="/gather/audios">
+      <v-btn
+        color="#500486"
+      >
+        [Botão 3.1-4]
+      </v-btn>
+    </router-link>
   </v-container>
 </template>
 
@@ -43,10 +49,6 @@ export default {
 </script>
 
 <style scoped>
-  .container {
-    display: flex;
-    flex-direction: column;
-  }
   .container header {
     width: 100%;
     margin-bottom: 0.8rem;
@@ -55,15 +57,31 @@ export default {
     width: 100%;
     text-align: center;
   }
-  .container .v-btn {
-    height: 20px;
-    width: 100%;
-
+  .checkboxes {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+  }
+  .container .next-btn {
     justify-self: flex-end;
   }
-  .v-btn p {
+  #next-btn {
+    height: 4rem;
+    width: 100%;
+    align-self: flex-start;
+    justify-self: flex-start;
+
+    text-decoration: none;
+  }
+  .v-btn {
+    height: 4rem;
+    width: 100%;
+
     color: white;
     font-weight: bold;
     margin: 0;
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: inherit;
   }
 </style>

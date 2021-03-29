@@ -3,11 +3,8 @@ import VueRouter from 'vue-router'
 import TestAudio from '../views/TestAudio.vue'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
-import Form from '../views/gather/Form.vue'
-import Accept from '../views/gather/Accept.vue'
-import SusVowel from '../views/gather/SusVowel.vue'
-import Parlend from '../views/gather/Parlend.vue'
-import Phrase from '../views/gather/Phrase.vue'
+import Form from '../views/gather/Form'
+import Audios from '../views/gather/Audios'
 import Done from '../views/gather/Done.vue'
 
 Vue.use(VueRouter)
@@ -29,24 +26,9 @@ const routes = [
     component: Form
   },
   {
-    path: '/gather/accept',
-    name: 'Accept',
-    component: Accept
-  },
-  {
-    path: '/gather/susvowel',
-    name: 'SusVowel',
-    component: SusVowel
-  },
-  {
-    path: '/gather/parlend',
-    name: 'Parlend',
-    component: Parlend
-  },
-  {
-    path: '/gather/phrase',
-    name: 'Phrase',
-    component: Phrase
+    path: '/gather/audios',
+    name: 'Audios',
+    component: Audios
   },
   {
     path: '/gather/done',

@@ -12,27 +12,35 @@
     </div>
     
     <div class="buttons">
-      <v-btn
-        class="route-button"
-        rounded
-        x-large
-      >
-        <router-link to="/gather/form">Fazer nova coleta</router-link>
-      </v-btn>
-      <v-btn
-        class="route-button"  
-        rounded
-        x-large
-      >
-        <router-link to="/about">Sobre o Spira</router-link>
-      </v-btn>
-      <v-btn
-        class="route-button"  
-        rounded
-        x-large
-      >
-        <router-link to="/test">Teste de áudio</router-link>
-      </v-btn>
+      <router-link to="/gather/form">
+        <v-btn
+          class="route-button"
+          rounded
+          x-large
+        >
+          Fazer nova coleta
+        </v-btn>
+      </router-link>
+      
+      <router-link to="/about">
+        <v-btn
+          class="route-button"  
+          rounded
+          x-large
+        >
+          Sobre o Spira
+        </v-btn>
+      </router-link>
+
+      <router-link to="/test">
+        <v-btn
+          class="route-button"  
+          rounded
+          x-large
+        >
+          Teste de áudio
+        </v-btn>
+      </router-link>
     </div>
 
     <v-footer>
@@ -62,7 +70,7 @@ export default {
     align-items: center;
     justify-content: center;
   }
-  .route-button a {
+  .buttons a {
     color: black; 
     text-decoration: none;
   }

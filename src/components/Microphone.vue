@@ -1,7 +1,10 @@
 <template>
   <v-btn
+    outlined
+    block
     @click="toggleMic"
     :color="activeMic ? 'red' : ''"
+    class="recorder"
   >{{ activeMic ? 'Gravando' : 'Gravar' }}</v-btn>
 </template>
 
@@ -82,5 +85,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .recorder {
+    margin-bottom: 0.5rem;
+  }
 </style>

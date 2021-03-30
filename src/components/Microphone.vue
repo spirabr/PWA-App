@@ -1,6 +1,7 @@
 <template>
   <v-btn
     outlined
+    rounded
     block
     @click="toggleMic"
     :color="activeMic ? 'red' : ''"
@@ -87,5 +88,8 @@ export default {
 <style scoped>
   .recorder {
     margin-bottom: 0.5rem;
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: 100px;
   }
 </style>

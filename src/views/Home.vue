@@ -2,10 +2,10 @@
   <v-container>
     <div class="logo">
       <v-img 
-        src='../assets/spira_ico.png'
+        src='../assets/SpiraLogo.jpg'
         contain
-        max-height="100"
-        max-width="200"
+        max-height="150"
+        max-width="250"
       ></v-img>
       
       <h1>SPIRA</h1>
@@ -34,7 +34,7 @@
 
       <router-link to="/test">
         <v-btn
-          class="route-button"  
+          class="route-button"
           rounded
           x-large
         >

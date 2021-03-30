@@ -43,11 +43,12 @@
             <p>Texto1</p>
           </div>
 
-          <Microphone/>
-
+          <Microphone 
+            class="recorder"
+          />
           <v-btn
             color="#500486"
-            @click="cur_step = 2"
+            @click="cur_step = 2; carousel = 1"
             class="ready-btn"
             block
           >
@@ -120,7 +121,8 @@ import Microphone from '@/components/Microphone'
 export default {
   name: 'Gather',
   data: () => ({
-    cur_step: 1
+    cur_step: 1,
+    carousel: 1,
   }),
   components: { Microphone }
 }
@@ -143,18 +145,11 @@ export default {
     flex-direction: column;
     justify-content: space-around;
   }
-  .container .v-stepper__step__step {
+  .v-stepper__step__step {
     width: 100%;
     border-radius: 0%;
   }
-  .v-timeline {
-    display: flex;
-    flex-direction: column;
-  }
-  .progress-bar {
-    width: 100%;
-  }
   .ready-btn {
     color: white;
-  }
+  } 
 </style>

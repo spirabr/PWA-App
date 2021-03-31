@@ -42,7 +42,6 @@ export default {
         // audioUrl1: "http://example.audio.com/audios/1" not used for now
       }
       const response = await this.http.post('/', requestData)
-      console.log(response)
     }
   }
 }
@@ -51,12 +50,17 @@ export default {
 <style>
   .upload-audios-card {
     display: flex;
-    padding: 20
+    flex: 1 1 auto;
+    padding: 5px;
+    margin-bottom: 20px;
   }
   .upload-audios-card .title {
     font-weight: 600
   }
   .upload-audios-card .card-actions {
     align-self: center
+  }
+  .card-actions {
+    min-width: 100px;
   }
 </style>

@@ -10,15 +10,15 @@
         
       <h1>SPIRA</h1>
     </div>
-    <v-list class="cards-container">
-      <UploadAudiosCard
-        :patient="patient"
+    <div class="cards-container">
+      <UploadAudiosCard v-for="sample in samples" :key="sample.patient.id"
+        :patient="sample.patient"
         :sampleDate="'31/03/2021'"
-        :location="location"
+        :location="sample.location"
         :http="instance"
       >
       </UploadAudiosCard>
-    </v-list>
+    </div>
   </v-container>
 </template>
 
@@ -37,13 +37,26 @@ export default {
   components: {UploadAudiosCard},
   data: () => ({
     instance: instance,
-    patient: {
-      id: '123456',
-      name: 'Renan Nakazawa'
-    },
-    location: {
-      name: 'Hospital Albert Einstein'
-    }
+    samples: [
+      {
+        patient: {
+          id: '123456',
+          name: 'Renan Nakazawa'
+        },
+        location: {
+          name: 'Hospital Albert Einstein'
+        }
+      },
+      {
+        patient: {
+          id: '789123',
+          name: 'Juninho da Silva'
+        },
+        location: {
+          name: 'Hospital Albert Einstein'
+        }
+      }
+    ]
   })
 }
 </script>
@@ -64,7 +77,7 @@ export default {
     justify-content: center;
   }
   .cards-container {
-    
+    margin: 20;
   }
   .v-footer {
     background-color: black;

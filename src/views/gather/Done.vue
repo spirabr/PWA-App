@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <h1>Título</h1>
+    <div class="placeholder">
+      <h1>Obrigado por Participar da coleta!</h1>
+      <p class="label">[Título 8.1-1]</p>
+    </div>
     <v-icon
       x-large
       color="green"
@@ -10,9 +13,10 @@
       <v-btn
         color="#500486"
         block
-        class="back-home"
+        class="back-home placeholder"
       >
         Voltar para o início
+        <p class="label"> [Botão 8.1-2] </p>
       </v-btn>
     </router-link>
   </v-container>

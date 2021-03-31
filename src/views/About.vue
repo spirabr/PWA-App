@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <header>
-      <v-btn
-        class="ma-1"
-        color="#500486"
-        dark
-      >
-        <router-link to="/">
+      <router-link to="/">
+        <v-btn
+          class="ma-1"
+          color="#500486"
+          dark
+        >
           <v-icon
             dark
             small
@@ -14,14 +14,20 @@
           >
             mdi-arrow-left
           </v-icon>
-        </router-link>          
-      </v-btn>
-      <h1>[Título 1.2-1]</h1>
+        </v-btn>
+      </router-link>
+      <div class="placeholder">
+        <h1>Sobre o Spira</h1>
+        <p class="label">[Título 1.2-1]</p>
+      </div>
       <hr>
     </header>
 
     <main>
-      <p>[Texto 1.2-2]</p>
+      <div class="placeholder">
+        <p>Spira é um projeto maneiro</p>
+        <p class="label">[Texto 1.2-2]</p>
+      </div>
     </main>
 
     <v-footer>
@@ -37,25 +43,21 @@
 <style scoped>
   .container header {
     width: 100%;
-  }
-  .container header h1 {
-    width: 100%;
     text-align: center;
   }
   .container a {
     text-decoration: none;
     color: white;
   }
-  .container main {
+  .container main{
     width: 100%;
     height: 100%;
 
     display: flex;
-    place-items: center;
+    place-items: center top;
   }
-  .container main p {
+  .container main {
     width: 100%;
-    text-align: center;
   }
   .v-footer {
     display: flex;

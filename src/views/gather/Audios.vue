@@ -39,8 +39,34 @@
       <v-stepper-items>
         <v-stepper-content step="1">
           <div>
-            <h1>Titulo1</h1>
-            <p>Texto1</p>
+            <div class="placeholder">
+              <h1>Aceite</h1>
+              <p class="label">[Título 4.1-1]</p>
+            </div>
+            <div class="placeholder">
+              <p>Termos para gravação:</p>
+              <p class="label">[Texto 4.1-2]</p>
+            </div>
+            <div class="placeholder">
+              <ol>
+                <li>
+                  Doe sua voz
+                  <p class="label">[Termo 4.1-3]</p>
+                </li>
+                <li> 
+                  Doe sua voz
+                  <p class="label">[Termo 4.1-4]</p>
+                </li>
+                <li> 
+                  Doe sua voz
+                  <p class="label">[Termo 4.1-5]</p>
+                </li>
+                <li> 
+                  Doe sua voz
+                  <p class="label">[Termo 4.1-6]</p>
+                </li>
+              </ol>
+            </div>
           </div>
 
           <Microphone 
@@ -49,17 +75,24 @@
           <v-btn
             color="#500486"
             @click="cur_step = 2; carousel = 1"
-            class="ready-btn"
+            class="ready-btn placeholder"
             block
           >
             Pronto
+            <p class="label"> [Botão 4.1-7] </p>
           </v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="2">
           <div>
-            <h1>Titulo2</h1>
-            <p>Texto2</p>
+            <div class="placeholder">
+              <h1>Vogal Sustentada</h1>
+              <p class="label">[Título 5.1-1]</p>
+            </div>
+            <div class="placeholder">
+              <p>Inspire e fale a vogal "a" até acabar o ar</p>
+              <p class="label">[Texto 5.1-2]</p>
+            </div>
           </div>
 
           <Microphone/>
@@ -67,17 +100,27 @@
           <v-btn
             color="#500486"
             @click="cur_step = 3"
-            class="ready-btn"
+            class="ready-btn placeholder"
             block
           >
             Pronto
+            <p class="label"> [Botão 5.1-3] </p>
           </v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="3">
           <div>
-            <h1>Titulo3</h1>
-            <p>Texto3</p>
+            <div class="placeholder">
+              <h1>Parlenda</h1>
+              <p class="label">[Título 6.1-1]</p>
+            </div>
+            <div class="placeholder">
+              <p>Recite uma frase que sabe de cor. 
+                Pode ser uma oração ou uma frase clássica.
+                Não cante a frase.
+              </p>
+              <p class="label">[Texto 6.1-2]</p>
+            </div>
           </div>
 
           <Microphone/>
@@ -85,17 +128,24 @@
           <v-btn
             color="#500486"
             @click="cur_step = 4"
-            class="ready-btn"
+            class="ready-btn placeholder"
             block
           >
             Pronto
+            <p class="label"> [Botão 5.1-3] </p>
           </v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="4">
           <div>
-            <h1>Titulo4</h1>
-            <p> Texto4 </p>
+            <div class="placeholder">
+              <h1>Frase lida</h1>
+              <p class="label">[Título 7.1-1]</p>
+            </div>
+            <div class="placeholder">
+              <p>Leia a frase a seguir em voz alta</p>
+              <p class="label">[Texto 7.1-2]</p>
+            </div>
           </div>
 
           <Microphone/>
@@ -104,9 +154,10 @@
             <v-btn 
               block
               color="#500486"
-              class="ready-btn"
+              class="ready-btn placeholder"
             >
               Pronto
+              <p class="label"> [Botão 5.1-3] </p>
             </v-btn>
           </router-link>
         </v-stepper-content>
@@ -151,5 +202,8 @@ export default {
   }
   .ready-btn {
     color: white;
+  }
+  a {
+    text-decoration: none;
   } 
 </style>

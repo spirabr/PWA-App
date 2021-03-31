@@ -1,42 +1,55 @@
 <template>
   <v-container>
     <header>
-      <h1>[Título 3.1-1]</h1>
+      <div class="placeholder">
+        <h1>Formulário</h1>
+        <p class="label">[Título 3.1-1]</p>
+      </div>
       <hr>
     </header>
     <v-form>
       <v-text-field
-        label="[Dado 3.1-2]"
+        label="Registro Geral Hospitalar [Dado 3.1-2]"
         required
       ></v-text-field>
       <v-text-field
-        label="[Dado 3.1-3]"
+        label="Instituição Hospitalar [Dado 3.1-3]"
         required
       ></v-text-field>
 
+      <p>Sexo</p>
+      <v-radio-group 
+        class="checkboxes"
+        row
+      >
+        <v-radio
+          label="Masculino"
+        ></v-radio>
+        <v-radio
+          label="Feminino"
+        ></v-radio>
+      </v-radio-group>
 
-      <div class="checkboxes">
-        <p>Sexo</p>
-        <div>
-          <v-checkbox
-            label="Masculino"
-          ></v-checkbox>
-          <v-checkbox
-            label="Feminino"
-          ></v-checkbox>
-        </div>
-        <v-checkbox
-          label="Não desejo declarar"
-        ></v-checkbox>
-      </div>
+      <p>Dados da Coleta</p>
 
+      <v-text-field
+        label="Instituição Hospitalar [Dado 3.1-3]"
+        required
+      ></v-text-field>
+      <v-text-field
+        label="Data de Hoje [Dado 3.1-3]"
+        type="date"
+        required
+      ></v-text-field>
     </v-form>
 
     <router-link id="next-btn" to="/gather/audios">
       <v-btn
         color="#500486"
+        class="placeholder"
       >
-        [Botão 3.1-4]
+        Próximo
+        <p class="label">[Botão 3.1-4]</p>
       </v-btn>
     </router-link>
   </v-container>
@@ -49,6 +62,9 @@ export default {
 </script>
 
 <style scoped>
+  p {
+    margin-bottom: 0;
+  }
   .container header {
     width: 100%;
     margin-bottom: 0.8rem;
@@ -56,6 +72,10 @@ export default {
   .container header h1 {
     width: 100%;
     text-align: center;
+  }
+  .v-form {
+    width: 100%;
+    height: 100%;
   }
   .checkboxes {
     display: flex;
@@ -79,7 +99,7 @@ export default {
 
     color: white;
     font-weight: bold;
-    margin: 0;
+    margin-bottom: 1rem;
   }
   .v-btn:not(.v-btn--round).v-size--default {
     height: inherit;

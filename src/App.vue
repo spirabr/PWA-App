@@ -18,4 +18,12 @@ export default {
     flex-direction: column;
     place-items: center;
   }
+  .placeholder {
+    text-align: inherit;
+  }
+  .placeholder .label {
+    font-size: 0.8rem;
+    color: red;
+    margin: 0;
+  }
 </style>

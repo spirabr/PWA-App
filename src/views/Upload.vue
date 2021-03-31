@@ -12,10 +12,10 @@
     </div>
     <v-list class="cards-container">
       <UploadAudiosCard
-        :title="test"
-        :subtitle="'123456'"
-        :description="'31/03/2021'"
-        :baseUrl="'localhost'"
+        :patient="patient"
+        :sampleDate="'31/03/2021'"
+        :location="location"
+        :http="instance"
       >
       </UploadAudiosCard>
     </v-list>
@@ -26,11 +26,24 @@
 import UploadAudiosCard from '../components/UploadAudiosCard'
 import axios from 'axios'
 
+const baseURL = `${process.env.VUE_APP_BACKEND_URL}:${process.env.VUE_APP_BACKEND_PORT}`
+
+const instance = axios.create({
+  baseURL: baseURL
+})
+
 export default {
   name: 'Upload',
   components: {UploadAudiosCard},
   data: () => ({
-    test: 'Renan Nakazawa'
+    instance: instance,
+    patient: {
+      id: '123456',
+      name: 'Renan Nakazawa'
+    },
+    location: {
+      name: 'Hospital Albert Einstein'
+    }
   })
 }
 </script>

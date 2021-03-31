@@ -6,9 +6,9 @@
     :disabled="isUploading"
   >
     <div class="card-content">
-      <v-card-title class="title">{{title}}</v-card-title>
-      <v-card-subtitle class="subtitle">RGH: {{subtitle}}</v-card-subtitle>
-      <v-card-text class="description">{{description}}</v-card-text>
+      <v-card-title class="title">{{patient.name}}</v-card-title>
+      <v-card-subtitle class="subtitle">{{location.name}} - RGH: {{patient.id}}</v-card-subtitle>
+      <v-card-text class="description">Coleta realizada em: {{sampleDate}}</v-card-text>
     </div>
     <div class="card-actions">
       <v-card-actions class="flex-column">
@@ -27,13 +27,22 @@
 
 export default {
   name: 'UploadAudiosCard',
-  props: ['title', 'description', 'subtitle', 'baseUrl'],
+  props: ['patient', 'location', 'sampleDate', 'http'],
   data: () => ({
     isUploading: false,
   }),
   methods: {
     async uploadAudios() {
-      
+      const requestData = {
+        patientId: this.patient.id,
+        collector: {
+          name: this.patient.name,
+          hospital: this.location.name
+        },
+        // audioUrl1: "http://example.audio.com/audios/1" not used for now
+      }
+      const response = await this.http.post('/', requestData)
+      console.log(response)
     }
   }
 }

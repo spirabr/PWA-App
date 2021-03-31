@@ -16,6 +16,7 @@
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-howler": "^0.7.0",
+    "vue-marquee-text-component": "^1.2.0",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0"

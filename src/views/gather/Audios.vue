@@ -146,9 +146,21 @@
               <p>Leia a frase a seguir em voz alta</p>
               <p class="label">[Texto 7.1-2]</p>
             </div>
+            <VTextMarquee :duration="10" :paused="scroll">
+              <h1>
+                ------------------------------------------------ 
+                O amor ao próximo ajuda a enfrentar essa fase com a força que a gente precisa 
+              </h1>
+            </VTextMarquee>
           </div>
 
-          <Microphone/>
+          <div @click="startCountdown()">
+            <Microphone
+              :noiseSuppression="false"
+              :echoCancellation="false"
+              :autoGainControl="false"
+            />
+          </div>
 
           <router-link to="/gather/done">
             <v-btn 
@@ -168,14 +180,32 @@
 
 <script>
 import Microphone from '@/components/Microphone'
+import VTextMarquee from 'vue-marquee-text-component'
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 export default {
   name: 'Gather',
   data: () => ({
     cur_step: 1,
     carousel: 1,
+    recording: false,
   }),
-  components: { Microphone }
+  components: { Microphone, VTextMarquee },
+  methods: {
+    async startCountdown() {
+      if (!this.recording)
+        await sleep(1000);
+      this.recording = !this.recording;
+    }
+  },
+  computed: { 
+    scroll() {
+      return !this.recording;
+    }
+  }
 }
 </script>
 

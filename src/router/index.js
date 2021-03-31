@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import TestAudio from '../views/TestAudio.vue'
+import NotFound from '../views/NotFound.vue'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Form from '../views/gather/Form'
@@ -39,6 +40,11 @@ const routes = [
     path: '/test',
     name: 'TestAudio',
     component: TestAudio
+  },
+  {
+    path: '*',
+    name: '404',
+    component: NotFound
   }
 ]
 

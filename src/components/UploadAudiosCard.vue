@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { post } from 'axios'
 
 export default {
   name: 'UploadAudiosCard',

@@ -24,6 +24,7 @@
 
 <script>
 import UploadAudiosCard from '../components/UploadAudiosCard'
+import axios from 'axios'
 
 export default {
   name: 'Upload',

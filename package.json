@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "audio-recorder-polyfill": "^0.4.1",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "howler": "^2.2.1",
     "idb": "^6.0.0",

@@ -7,6 +7,7 @@ import About from '../views/About.vue'
 import Form from '../views/gather/Form'
 import Audios from '../views/gather/Audios'
 import Done from '../views/gather/Done.vue'
+import Upload from '../views/Upload'
 
 Vue.use(VueRouter)
 
@@ -45,7 +46,12 @@ const routes = [
     path: '*',
     name: '404',
     component: NotFound
-  }
+  },
+  {
+    path: '/upload',
+    name: 'Upload',
+    component: Upload,
+  },
 ]
 
 const router = new VueRouter({

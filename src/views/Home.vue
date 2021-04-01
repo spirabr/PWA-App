@@ -4,8 +4,10 @@
       <v-img 
         src='../assets/SpiraLogo.jpg'
         contain
-        max-height="150"
-        max-width="250"
+        height="100%"
+        width="100%"
+        max-height="115"
+        max-width="175"
       ></v-img>
       
       <h1>SPIRA</h1>
@@ -16,7 +18,7 @@
         <v-btn
           class="route-button"
           rounded
-          x-large
+          large
         >
           Fazer nova coleta
         </v-btn>
@@ -26,7 +28,7 @@
         <v-btn
           class="route-button"  
           rounded
-          x-large
+          large
         >
           Sobre o Spira
         </v-btn>
@@ -36,22 +38,23 @@
         <v-btn
           class="route-button"
           rounded
-          x-large
+          large
         >
           Teste de áudio
         </v-btn>
       </router-link>
     </div>
 
-    <v-footer>
-      <strong>Spira - 2021</strong>
-    </v-footer>
+    <Footer/>
   </v-container>
 </template>
 
 <script>
+import Footer from '@/components/Footer'
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  components: {Footer}
 }
 </script>
 
@@ -77,20 +80,5 @@ export default {
   .route-button {
     margin-top: 1rem;
     width: 100%;
-  }
-  .v-footer {
-    background-color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    position: absolute;
-    bottom: 0;
-    height: 50px;
-    width: 100%;
-  }
-  .theme--light.v-footer {
-    color: white;
-    background-color: #500486;
   }
 </style>

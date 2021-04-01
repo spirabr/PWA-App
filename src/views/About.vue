@@ -30,14 +30,17 @@
       </div>
     </main>
 
-    <v-footer>
-      <strong> Spira - 2021 </strong>
-    </v-footer>
+    <Footer></Footer>
   </v-container>
 </template>
 
 <script>
+import Footer from '@/components/Footer'
 
+export default {
+  name: 'About',
+  components: { Footer },
+}
 </script>
 
 <style scoped>
@@ -59,23 +62,8 @@
   .container main {
     width: 100%;
   }
-  .v-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    position: absolute;
-    bottom: 0;
-    height: 50px;
-    width: 100%;
-  }
-  .theme--light.v-footer {
-    color: white;
-    background-color: #500486;
-  }
   .v-btn:not(.v-btn--round).v-size--default {
     min-width: 0px;
-
   }
   .v-btn {
     border-radius: 32px;

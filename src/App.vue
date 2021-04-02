@@ -15,6 +15,17 @@ export default {
     --purple-color: #7c31f4;
     font-size: 13px;
   }
+  .theme--light.v-stepper .v-stepper__step:not(.v-stepper__step--active):not(.v-stepper__step--complete):not(.v-stepper__step--error) .v-stepper__step__step {
+    background-color: rgba(124, 31, 244, 0.38) !important;
+    height: 12px;
+    border-radius: 20%;
+  }
+  .v-application .v-stepper .primary {
+    background-color: var(--purple-color) !important;
+    border-color: var(--purple-color) !important;
+    border-radius: 20%;
+    height: 12px;
+  }
   .v-application .container {
     font-family: 'Barlow Condensed', sans-serif;
     font-family: 'Lexend', sans-serif;

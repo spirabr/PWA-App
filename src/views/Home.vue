@@ -63,7 +63,7 @@ export default {
     height: 100%;
     width: 100%;
     align-items: center;
-    padding: 2rem 2rem 0 2rem;
+    padding: inherit inherit 0 inherit;
     position: relative;
   }
   .logo{

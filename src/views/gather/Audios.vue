@@ -3,6 +3,7 @@
     <v-stepper v-model="cur_step">
       <v-stepper-header>
         <v-stepper-step
+          id="step-marker"
           step="1"
           :complete="cur_step > 1"
         >
@@ -48,18 +49,13 @@
             </div>
           </div>
 
-          <Microphone 
-            class="recorder"
+          <Microphone
+            :noiseSuppression="false"
+            :echoCancellation="false"
+            :autoGainControl="false"
+            @ready="updateStepper"
           />
-          <v-btn
-            color="var(--purple-color)"
-            @click="cur_step = 2; carousel = 1"
-            class="ready-btn placeholder"
-            block
-          >
-            Pronto
-            <p class="label"> [Botão 4.1-7] </p>
-          </v-btn>
+
         </v-stepper-content>
 
         <v-stepper-content step="2">
@@ -74,17 +70,13 @@
             </div>
           </div>
 
-          <Microphone/>
+          <Microphone
+            :noiseSuppression="false"
+            :echoCancellation="false"
+            :autoGainControl="false"
+            @ready="updateStepper"
+          />
 
-          <v-btn
-            color="var(--purple-color)"
-            @click="cur_step = 3"
-            class="ready-btn placeholder"
-            block
-          >
-            Pronto
-            <p class="label"> [Botão 5.1-3] </p>
-          </v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="3">
@@ -102,17 +94,13 @@
             </div>
           </div>
 
-          <Microphone/>
+          <Microphone
+            :noiseSuppression="false"
+            :echoCancellation="false"
+            :autoGainControl="false"
+            @ready="updateStepper"
+          />
 
-          <v-btn
-            color="var(--purple-color)"
-            @click="cur_step = 4"
-            class="ready-btn placeholder"
-            block
-          >
-            Pronto
-            <p class="label"> [Botão 5.1-3] </p>
-          </v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="4">
@@ -138,19 +126,9 @@
               :noiseSuppression="false"
               :echoCancellation="false"
               :autoGainControl="false"
+              @ready="goToDone"
             />
           </div>
-
-          <router-link to="/gather/done">
-            <v-btn 
-              block
-              color="var(--purple-color)"
-              class="ready-btn placeholder"
-            >
-              Pronto
-              <p class="label"> [Botão 5.1-3] </p>
-            </v-btn>
-          </router-link>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -160,6 +138,7 @@
 <script>
 import Microphone from '@/components/Microphone'
 import VTextMarquee from 'vue-marquee-text-component'
+import router from '@/router'
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -178,6 +157,12 @@ export default {
       if (!this.recording)
         await sleep(1000);
       this.recording = !this.recording;
+    },
+    async goToDone() {
+      await router.push('/gather/done');
+    },
+    updateStepper() {
+      this.cur_step++;
     }
   },
   computed: { 
@@ -205,9 +190,15 @@ export default {
     flex-direction: column;
     justify-content: space-around;
   }
+  .v-stepper__header {
+    padding: 0px 5%;
+    height: 36px;
+  }
+  .v-stepper__step {
+    padding: 0 20px;
+  }
   .v-stepper__step__step {
-    width: 100%;
-    border-radius: 0%;
+    border-radius: 20%;
   }
   .ready-btn {
     color: white;
@@ -227,6 +218,7 @@ export default {
   .v-stepper__content {
     padding: 1% 7%;
   }
+
   a {
     text-decoration: none;
   } 

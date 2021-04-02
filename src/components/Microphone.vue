@@ -3,10 +3,11 @@
     outlined
     rounded
     block
+    :disabled="micState > 2"
     @click="toggleMic"
-    :color="micState ? 'red' : ''"
+    :color="micState == 0 ? '' : micState == 1 ? 'red' : 'var(--purple-color)'"
     class="recorder"
-  >{{ micState == 0 ? 'Gravando' : micState == 1 ? 'Gravando' : 'Pronto' }}</v-btn>
+  >{{ micState == 0 ? 'Gravar' : micState == 1 ? 'Gravando' : 'Pronto' }}</v-btn>
 </template>
 
 <script>
@@ -27,7 +28,7 @@ export default {
           this.sound[audio].stop();
         this.activeAudio[audio] = false;
       }
-      if (this.micState != 0) {
+      if (this.micState == 0) {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           try {
             // O uso de noiseSuppression cria degraus no volume de voz
@@ -71,14 +72,17 @@ export default {
           console.log('getUserMedia not supported on your browser!');
         }
       }
-      else {
+      else if (this.micState == 1){
         if (this.mediaRecorder) {
           this.mediaRecorder.stop();
           this.mediaRecorder.stream.getTracks().forEach(track => {
             track.stop();
           })
         }
-        this.micState = !this.micState;
+        this.micState = 2;
+      }
+      else {
+        this.$emit('ready');
       }
     },
   }

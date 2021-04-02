@@ -4,9 +4,9 @@
     rounded
     block
     @click="toggleMic"
-    :color="activeMic ? 'red' : ''"
+    :color="micState ? 'red' : ''"
     class="recorder"
-  >{{ activeMic ? 'Gravando' : 'Gravar' }}</v-btn>
+  >{{ micState == 0 ? 'Gravando' : micState == 1 ? 'Gravando' : 'Pronto' }}</v-btn>
 </template>
 
 <script>
@@ -17,7 +17,7 @@ export default {
   name: "Microphone",
   props: ['noiseSuppression', 'echoCancellation', 'autoGainControl'],
   data: () => ({
-    activeMic: false,
+    micState: 0,
     mediaRecorder: undefined,
   }),
   methods: {
@@ -27,7 +27,7 @@ export default {
           this.sound[audio].stop();
         this.activeAudio[audio] = false;
       }
-      if (!this.activeMic) {
+      if (this.micState != 0) {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           try {
             // O uso de noiseSuppression cria degraus no volume de voz
@@ -61,7 +61,7 @@ export default {
              this.$emit('newAudio', audioURL);
             })
             
-            this.activeMic = !this.activeMic;
+            this.micState = 1;
           }
           catch (err) {
             console.log('The following getUserMedia error occurred: ' + err);
@@ -78,7 +78,7 @@ export default {
             track.stop();
           })
         }
-        this.activeMic = !this.activeMic;
+        this.micState = !this.micState;
       }
     },
   }

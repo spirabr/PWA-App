@@ -40,32 +40,11 @@
         <v-stepper-content step="1">
           <div>
             <div class="placeholder">
-              <h1>Aceite</h1>
-              <p class="label">[Título 4.1-1]</p>
+              <h1>TERMOS DE ACEITE</h1>
+              <p class="label">[4.1-1]</p>
             </div>
             <div class="placeholder">
-              <p>Termos para gravação:</p>
-              <p class="label">[Texto 4.1-2]</p>
-            </div>
-            <div class="placeholder">
-              <ol>
-                <li>
-                  Doe sua voz
-                  <p class="label">[Termo 4.1-3]</p>
-                </li>
-                <li> 
-                  Doe sua voz
-                  <p class="label">[Termo 4.1-4]</p>
-                </li>
-                <li> 
-                  Doe sua voz
-                  <p class="label">[Termo 4.1-5]</p>
-                </li>
-                <li> 
-                  Doe sua voz
-                  <p class="label">[Termo 4.1-6]</p>
-                </li>
-              </ol>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In viverra ac velit at pellentesque. Nullam eget pellentesque purus. Duis a orci ultrices, blandit diam nec, ultricies orci. Ut congue leo a massa varius, in pretium mauris vestibulum. Nam imperdiet vehicula facilisis. Fusce finibus mauris nec pharetra efficitur. Vivamus fermentum egestas lobortis. Nulla iaculis vel neque id ornare. Quisque quis consequat urna. Sed ac commodo purus. Morbi accumsan sapien ipsum, eget mollis turpis vulputate in. Quisque ut lectus at sem sodales aliquet et sed purus. Pellentesque tristique arcu ligula, quis facilisis ipsum condimentum at.
             </div>
           </div>
 
@@ -73,7 +52,7 @@
             class="recorder"
           />
           <v-btn
-            color="#500486"
+            color="var(--purple-color)"
             @click="cur_step = 2; carousel = 1"
             class="ready-btn placeholder"
             block
@@ -98,7 +77,7 @@
           <Microphone/>
 
           <v-btn
-            color="#500486"
+            color="var(--purple-color)"
             @click="cur_step = 3"
             class="ready-btn placeholder"
             block
@@ -126,7 +105,7 @@
           <Microphone/>
 
           <v-btn
-            color="#500486"
+            color="var(--purple-color)"
             @click="cur_step = 4"
             class="ready-btn placeholder"
             block
@@ -139,8 +118,8 @@
         <v-stepper-content step="4">
           <div>
             <div class="placeholder">
-              <h1>Frase lida</h1>
-              <p class="label">[Título 7.1-1]</p>
+              <h1> Frase lida </h1>
+              <p> [Título 7.1-1]</p>
             </div>
             <div class="placeholder">
               <p>Leia a frase a seguir em voz alta</p>
@@ -165,7 +144,7 @@
           <router-link to="/gather/done">
             <v-btn 
               block
-              color="#500486"
+              color="var(--purple-color)"
               class="ready-btn placeholder"
             >
               Pronto
@@ -232,6 +211,21 @@ export default {
   }
   .ready-btn {
     color: white;
+  }
+  .container h1 {
+    text-align: center;
+  }
+  .placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5% 0;
+  }
+  .placeholder h1 {
+    margin-right: 10px;
+  }
+  .v-stepper__content {
+    padding: 1% 7%;
   }
   a {
     text-decoration: none;

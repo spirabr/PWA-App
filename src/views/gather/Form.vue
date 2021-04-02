@@ -2,10 +2,9 @@
   <v-container>
     <header>
       <div class="placeholder">
-        <h1>Formulário</h1>
+        <h1>FORMULÁRIO</h1>
         <p class="label">[Título 3.1-1]</p>
       </div>
-      <hr>
     </header>
     <v-form>
       <v-text-field
@@ -45,7 +44,7 @@
 
     <router-link id="next-btn" to="/gather/audios">
       <v-btn
-        color="#500486"
+        color="var(--purple-color)"
         class="placeholder"
       >
         Próximo
@@ -65,12 +64,17 @@ export default {
   p {
     margin-bottom: 0;
   }
+  .container {
+    padding: 24px 18px 18px 18px;
+  }
   .container header {
     width: 100%;
     margin-bottom: 0.8rem;
   }
   .container header h1 {
+    color: var(--purple-color);
     width: 100%;
+    font-weight: normal;
     text-align: center;
   }
   .v-form {

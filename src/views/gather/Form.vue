@@ -7,17 +7,17 @@
       </div>
     </header>
     <v-form>
-      <v-text-field
+      <v-text-field v-model="rgh"
         label="Registro Geral Hospitalar [Dado 3.1-2]"
         required
       ></v-text-field>
-      <v-text-field
+      <v-text-field v-model="instituicao"
         label="Instituição Hospitalar [Dado 3.1-3]"
         required
       ></v-text-field>
 
       <p>Sexo</p>
-      <v-radio-group 
+      <v-radio-group v-model="sex"
         class="checkboxes"
         row
       >
@@ -35,7 +35,7 @@
         label="Instituição Hospitalar [Dado 3.1-3]"
         required
       ></v-text-field>
-      <v-text-field
+      <v-text-field v-model="date"
         label="Data de Hoje [Dado 3.1-3]"
         type="date"
         required
@@ -46,6 +46,7 @@
       <v-btn
         color="var(--purple-color)"
         class="placeholder"
+        @click="this.$emit('submit')"
       >
         Próximo
         <p class="label">[Botão 3.1-4]</p>
@@ -56,7 +57,15 @@
 
 <script>
 export default {
-
+  name: 'Form',
+  data: () => ({
+    data: undefined,
+  }),
+  methods: {
+    submit() {
+      console.log(this.data);
+    }
+  }
 }
 </script>
 

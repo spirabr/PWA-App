@@ -29,10 +29,16 @@
         ></v-radio>
       </v-radio-group>
 
+       <v-text-field v-model="age"
+        label="Data de Nascimento [Dado 3.1-3]"
+        type="date"
+        required
+      ></v-text-field>
+
       <p>Dados da Coleta</p>
 
-      <v-text-field
-        label="Instituição Hospitalar [Dado 3.1-3]"
+      <v-text-field v-model="local"
+        label="Local de Coleta [Dado 3.1-3]"
         required
       ></v-text-field>
       <v-text-field v-model="date"
@@ -46,7 +52,7 @@
       <v-btn
         color="var(--purple-color)"
         class="placeholder"
-        @click="this.$emit('submit')"
+        @click="submit"
       >
         Próximo
         <p class="label">[Botão 3.1-4]</p>
@@ -59,11 +65,24 @@
 export default {
   name: 'Form',
   data: () => ({
-    data: undefined,
+    rgh: "",
+    instituicao: "",
+    sex: "",
+    age: "",
+    local: "",
+    date: "",
   }),
   methods: {
     submit() {
-      console.log(this.data);
+      const data = {
+        rgh: this.rgh,
+        instituicao: this.instituicao,
+        sex: this.sex,
+        age: this.age,
+        local: this.local,
+        date: this.date,
+      }
+      console.log(data);
     }
   }
 }

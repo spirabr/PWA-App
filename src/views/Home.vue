@@ -2,15 +2,13 @@
   <v-container>
     <div class="logo">
       <v-img 
-        src='../assets/SpiraLogo.jpg'
+        src='../../public/img/video/logo_spira_anim.gif'
         contain
         height="100%"
         width="100%"
         max-height="115"
         max-width="175"
       ></v-img>
-      
-      <h1>SPIRA</h1>
     </div>
     
     <div class="buttons">
@@ -76,6 +74,9 @@ export default {
   .buttons a {
     color: black; 
     text-decoration: none;
+  }
+  .v-btn.v-size--large {
+    font-size: 1rem;
   }
   .route-button {
     margin-top: 1rem;

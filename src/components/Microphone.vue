@@ -7,7 +7,7 @@
     @click="toggleMic"
     :color="micState == 0 ? '' : micState == 1 ? 'red' : 'var(--purple-color)'"
     class="recorder"
-  >{{ micState == 0 ? 'Gravar' : micState == 1 ? 'Gravando' : 'Pronto' }}</v-btn>
+  >{{ micState == 0 ? 'gravar' : micState == 1 ? 'gravando' : 'pronto' }}</v-btn>
 </template>
 
 <script>
@@ -94,6 +94,11 @@ export default {
     margin-bottom: 0.5rem;
   }
   .v-btn:not(.v-btn--round).v-size--default {
-    height: 100px;
+    height: 60px;
+  }
+  .v-btn {
+    text-transform: none;
+    letter-spacing: inherit;
+    font-weight: normal;
   }
 </style>

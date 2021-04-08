@@ -17,16 +17,14 @@
         </v-btn>
       </router-link>
       <div class="placeholder">
-        <h1>Sobre o Spira</h1>
-        <p class="label">[Título 1.2-1]</p>
+        <h1>sobre o spira</h1>
       </div>
       <hr>
     </header>
 
     <main>
       <div class="placeholder">
-        <p>Spira é um projeto maneiro</p>
-        <p class="label">[Texto 1.2-2]</p>
+        <p>Texto descritivo sobre o projeto SPIRA</p>
       </div>
     </main>
 

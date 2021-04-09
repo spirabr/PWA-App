@@ -92,6 +92,8 @@ export default {
 <style scoped>
   .recorder {
     margin-bottom: 0.5rem;
+    display: flex;
+    justify-self: flex-start;
   }
   .v-btn:not(.v-btn--round).v-size--default {
     height: 60px;

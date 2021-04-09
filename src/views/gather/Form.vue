@@ -30,14 +30,10 @@
         </v-radio-group>
       </div>
 
-      <div>
+      <div class="data-input">
         <p>Data de Hoje</p>
 
-        <v-text-field
-          type="date"
-          required
-          class="data-input"
-        ></v-text-field>
+        <input type="date">
       </div>
     </v-form>
 
@@ -77,9 +73,18 @@ export default {
   .v-form {
     width: 100%;
     height: 100%;
+    padding-bottom: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
+  }
+  .v-form .v-input {
+    height: 80px;
+    display: flex;
+    align-items: start;
+  }
+  .v-form .v-text-field {
+    font-style: italic;
   }
   .checkboxes {
     display: flex;
@@ -111,7 +116,13 @@ export default {
     margin-top: 5px;
   }
   .data-input {
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80px;
+  }
+  .data-input input {
+    width: 100%;
   }
   .container {
     padding: 24px 18px 24px 18px;

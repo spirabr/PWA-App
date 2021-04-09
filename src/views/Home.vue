@@ -41,6 +41,7 @@
           Teste de áudio
         </v-btn>
       </router-link>
+      
     </div>
 
     <Footer/>
@@ -60,8 +61,8 @@ export default {
   .container {
     height: 100%;
     width: 100%;
-    align-items: center;
-    padding: inherit inherit 0 inherit;
+
+    padding: 24px 18px;
     position: relative;
   }
   .logo{
@@ -71,9 +72,22 @@ export default {
     align-items: center;
     justify-content: center;
   }
+  .buttons {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+    padding-bottom: 3.2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
   .buttons a {
     color: black; 
     text-decoration: none;
+
+    margin-bottom: 0.5rem;
   }
   .v-btn.v-size--large {
     font-size: 1rem;

@@ -1,7 +1,8 @@
 <template>
   <v-container>
     <v-stepper v-model="cur_step">
-      <v-stepper-header>
+
+      <v-stepper-header app>
         <v-stepper-step
           id="step-marker"
           step="1"
@@ -177,7 +178,7 @@ export default {
   .v-stepper__items, .v-stepper__content {
     height: 100%;
   }
-  .v-stepper__wrapper {
+  .v-stepper__wrapper{
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -189,9 +190,6 @@ export default {
   }
   .v-stepper__step {
     padding: 0 20px;
-  }
-  .v-stepper__step__step {
-    border-radius: 20%;
   }
   .ready-btn {
     color: white;

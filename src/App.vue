@@ -25,6 +25,7 @@ export default {
     border-color: var(--purple-color) !important;
     border-radius: 20%;
     height: 12px;
+    color: var(--purple-color);
   }
   .v-application .container {
     font-family: 'Barlow Condensed', sans-serif;
@@ -40,7 +41,7 @@ export default {
     display: flex;
     flex-direction: column;
     place-items: center;
-    padding: 24px 18px 18px 18px;
+    padding: 24px 18px;
   }
   .container h1 {
     text-align: center;
@@ -60,5 +61,9 @@ export default {
   }
   .container .v-input {
     font-size: 15px;
+  }
+  .container .v-btn {
+    text-transform: lowercase;
+    letter-spacing: normal;
   }
 </style>

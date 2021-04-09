@@ -82,7 +82,8 @@ export default {
         local: this.local,
         date: this.date,
       }
-      console.log(data);
+      this.$store.commit('addFormData', data);
+      console.log(this.$store.state.data);
     }
   }
 }

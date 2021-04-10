@@ -7,17 +7,17 @@
       </div>
     </header>
     <v-form>
-      <v-text-field
+      <v-text-field v-model="rgh"
         label="Registro Geral Hospitalar [Dado 3.1-2]"
         required
       ></v-text-field>
-      <v-text-field
+      <v-text-field v-model="instituicao"
         label="Instituição Hospitalar [Dado 3.1-3]"
         required
       ></v-text-field>
 
       <p>Sexo</p>
-      <v-radio-group 
+      <v-radio-group v-model="sex"
         class="checkboxes"
         row
       >
@@ -29,13 +29,19 @@
         ></v-radio>
       </v-radio-group>
 
-      <p>Dados da Coleta</p>
-
-      <v-text-field
-        label="Instituição Hospitalar [Dado 3.1-3]"
+       <v-text-field v-model="age"
+        label="Data de Nascimento [Dado 3.1-3]"
+        type="date"
         required
       ></v-text-field>
-      <v-text-field
+
+      <p>Dados da Coleta</p>
+
+      <v-text-field v-model="local"
+        label="Local de Coleta [Dado 3.1-3]"
+        required
+      ></v-text-field>
+      <v-text-field v-model="date"
         label="Data de Hoje [Dado 3.1-3]"
         type="date"
         required
@@ -46,6 +52,7 @@
       <v-btn
         color="var(--purple-color)"
         class="placeholder"
+        @click="submit"
       >
         Próximo
         <p class="label">[Botão 3.1-4]</p>
@@ -56,7 +63,28 @@
 
 <script>
 export default {
-
+  name: 'Form',
+  data: () => ({
+    rgh: "",
+    instituicao: "",
+    sex: "",
+    age: "",
+    local: "",
+    date: "",
+  }),
+  methods: {
+    submit() {
+      const data = {
+        rgh: this.rgh,
+        instituicao: this.instituicao,
+        sex: this.sex,
+        age: this.age,
+        local: this.local,
+        date: this.date,
+      }
+      this.$store.commit('addFormData', data);
+    }
+  }
 }
 </script>
 

@@ -3,49 +3,38 @@
     <header>
       <div class="placeholder">
         <h1>FORMULÁRIO</h1>
-        <p class="label">[Título 3.1-1]</p>
       </div>
     </header>
     <v-form>
-      <v-text-field v-model="rgh"
-        label="Registro Geral Hospitalar [Dado 3.1-2]"
+      <v-text-field
+        label="Registro Geral Hospitalar"
         required
       ></v-text-field>
-      <v-text-field v-model="instituicao"
-        label="Instituição Hospitalar [Dado 3.1-3]"
-        required
-      ></v-text-field>
-
-      <p>Sexo</p>
-      <v-radio-group v-model="sex"
-        class="checkboxes"
-        row
-      >
-        <v-radio
-          label="Masculino"
-        ></v-radio>
-        <v-radio
-          label="Feminino"
-        ></v-radio>
-      </v-radio-group>
-
-       <v-text-field v-model="age"
-        label="Data de Nascimento [Dado 3.1-3]"
-        type="date"
+      <v-text-field
+        label="Local de Coleta"
         required
       ></v-text-field>
 
-      <p>Dados da Coleta</p>
+      <div>
+        <p>Sexo</p>
+        <v-radio-group 
+          class="checkboxes"
+          row
+        >
+          <v-radio
+            label="Masculino"
+          ></v-radio>
+          <v-radio
+            label="Feminino"
+          ></v-radio>
+        </v-radio-group>
+      </div>
 
-      <v-text-field v-model="local"
-        label="Local de Coleta [Dado 3.1-3]"
-        required
-      ></v-text-field>
-      <v-text-field v-model="date"
-        label="Data de Hoje [Dado 3.1-3]"
-        type="date"
-        required
-      ></v-text-field>
+      <div class="data-input">
+        <p>Data de Hoje</p>
+
+        <input type="date">
+      </div>
     </v-form>
 
     <router-link id="next-btn" to="/gather/audios">
@@ -54,8 +43,7 @@
         class="placeholder"
         @click="submit"
       >
-        Próximo
-        <p class="label">[Botão 3.1-4]</p>
+        avançar
       </v-btn>
     </router-link>
   </v-container>
@@ -92,9 +80,6 @@ export default {
   p {
     margin-bottom: 0;
   }
-  .container {
-    padding: 24px 18px 18px 18px;
-  }
   .container header {
     width: 100%;
     margin-bottom: 0.8rem;
@@ -104,10 +89,23 @@ export default {
     width: 100%;
     font-weight: normal;
     text-align: center;
+    margin-bottom: 1rem;
   }
   .v-form {
     width: 100%;
     height: 100%;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .v-form .v-input {
+    height: 80px;
+    display: flex;
+    align-items: start;
+  }
+  .v-form .v-text-field {
+    font-style: italic;
   }
   .checkboxes {
     display: flex;
@@ -128,12 +126,26 @@ export default {
   .v-btn {
     height: 4rem;
     width: 100%;
-
+    font-size: 1.5rem;
     color: white;
-    font-weight: bold;
     margin-bottom: 1rem;
   }
   .v-btn:not(.v-btn--round).v-size--default {
     height: inherit;
+  }
+  .container  .v-input--selection-controls {
+    margin-top: 5px;
+  }
+  .data-input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80px;
+  }
+  .data-input input {
+    width: 100%;
+  }
+  .container {
+    padding: 24px 18px 24px 18px;
   }
 </style>

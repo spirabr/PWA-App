@@ -13,18 +13,19 @@ export default {
 <style>
   :root {
     --purple-color: #7c31f4;
-    font-size: 13px;
+    font-size: 15px;
   }
   .theme--light.v-stepper .v-stepper__step:not(.v-stepper__step--active):not(.v-stepper__step--complete):not(.v-stepper__step--error) .v-stepper__step__step {
     background-color: rgba(124, 31, 244, 0.38) !important;
     height: 12px;
-    border-radius: 20%;
+    border-radius: 20%; 
   }
   .v-application .v-stepper .primary {
     background-color: var(--purple-color) !important;
     border-color: var(--purple-color) !important;
     border-radius: 20%;
     height: 12px;
+    color: var(--purple-color);
   }
   .v-application .container {
     font-family: 'Barlow Condensed', sans-serif;
@@ -40,7 +41,11 @@ export default {
     display: flex;
     flex-direction: column;
     place-items: center;
-    padding-top: 18px;
+    padding: 24px 18px;
+  }
+  .container h1 {
+    text-align: center;
+    font-size: 1.5em;
   }
   h1 {
     font-weight: normal;
@@ -53,5 +58,12 @@ export default {
     font-size: 0.8rem;
     color: red;
     margin: 0;
+  }
+  .container .v-input {
+    font-size: 15px;
+  }
+  .container .v-btn {
+    text-transform: lowercase;
+    letter-spacing: normal;
   }
 </style>

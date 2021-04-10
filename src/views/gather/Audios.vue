@@ -1,7 +1,8 @@
 <template>
   <v-container>
     <v-stepper v-model="cur_step">
-      <v-stepper-header>
+
+      <v-stepper-header app>
         <v-stepper-step
           id="step-marker"
           step="1"
@@ -10,7 +11,6 @@
           Aceite
         </v-stepper-step>
         
-        <v-divider></v-divider>
         
         <v-stepper-step
           step="2"
@@ -19,7 +19,6 @@
           Vogal Sustentada
         </v-stepper-step>
 
-        <v-divider></v-divider>
 
         <v-stepper-step
           step="3"
@@ -28,7 +27,6 @@
           Parlenda
         </v-stepper-step>
 
-        <v-divider></v-divider>
 
         <v-stepper-step
           step="4"
@@ -41,11 +39,13 @@
         <v-stepper-content step="1">
           <div>
             <div class="placeholder">
-              <h1>TERMOS DE ACEITE</h1>
-              <p class="label">[4.1-1]</p>
+              <h1>termo de partipação</h1>
             </div>
             <div class="placeholder">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In viverra ac velit at pellentesque. Nullam eget pellentesque purus. Duis a orci ultrices, blandit diam nec, ultricies orci. Ut congue leo a massa varius, in pretium mauris vestibulum. Nam imperdiet vehicula facilisis. Fusce finibus mauris nec pharetra efficitur. Vivamus fermentum egestas lobortis. Nulla iaculis vel neque id ornare. Quisque quis consequat urna. Sed ac commodo purus. Morbi accumsan sapien ipsum, eget mollis turpis vulputate in. Quisque ut lectus at sem sodales aliquet et sed purus. Pellentesque tristique arcu ligula, quis facilisis ipsum condimentum at.
+              Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios. \n
+              Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador. \n
+              Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima. \n
+              Nenhum dado pessoal seu será incluído em nenhum documento do estudo. \n  
             </div>
           </div>
 
@@ -62,11 +62,9 @@
           <div>
             <div class="placeholder">
               <h1>Vogal Sustentada</h1>
-              <p class="label">[Título 5.1-1]</p>
             </div>
             <div class="placeholder">
               <p>Inspire e fale a vogal "a" até acabar o ar</p>
-              <p class="label">[Texto 5.1-2]</p>
             </div>
           </div>
 
@@ -83,14 +81,12 @@
           <div>
             <div class="placeholder">
               <h1>Parlenda</h1>
-              <p class="label">[Título 6.1-1]</p>
             </div>
             <div class="placeholder">
               <p>Recite uma frase que sabe de cor. 
                 Pode ser uma oração ou uma frase clássica.
                 Não cante a frase.
               </p>
-              <p class="label">[Texto 6.1-2]</p>
             </div>
           </div>
 
@@ -107,15 +103,13 @@
           <div>
             <div class="placeholder">
               <h1> Frase lida </h1>
-              <p> [Título 7.1-1]</p>
             </div>
             <div class="placeholder">
               <p>Leia a frase a seguir em voz alta</p>
-              <p class="label">[Texto 7.1-2]</p>
             </div>
-            <VTextMarquee :duration="10" :paused="scroll">
+            <VTextMarquee :duration="8" :paused="scroll">
               <h1>
-                ------------------------------------------------ 
+                -                                              - 
                 O amor ao próximo ajuda a enfrentar essa fase com a força que a gente precisa 
               </h1>
             </VTextMarquee>
@@ -184,7 +178,7 @@ export default {
   .v-stepper__items, .v-stepper__content {
     height: 100%;
   }
-  .v-stepper__wrapper {
+  .v-stepper__wrapper{
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -197,28 +191,21 @@ export default {
   .v-stepper__step {
     padding: 0 20px;
   }
-  .v-stepper__step__step {
-    border-radius: 20%;
-  }
   .ready-btn {
     color: white;
-  }
-  .container h1 {
-    text-align: center;
   }
   .placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 5% 0;
+    margin: 7% 0;
   }
   .placeholder h1 {
     margin-right: 10px;
   }
   .v-stepper__content {
-    padding: 1% 7%;
+    padding: 1% 8.5%;
   }
-
   a {
     text-decoration: none;
   } 

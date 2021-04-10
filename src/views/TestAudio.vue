@@ -113,11 +113,6 @@ export default {
     text-decoration: none;
     color: black;
   }
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
   .recorder, .listener {
     width: 100%;
     margin: 1rem;

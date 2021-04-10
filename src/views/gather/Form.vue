@@ -83,7 +83,6 @@ export default {
         date: this.date,
       }
       this.$store.commit('addFormData', data);
-      console.log(this.$store.state.data);
     }
   }
 }

@@ -15,6 +15,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     addFormData(state, data) {
+      console.log(data);
       state.patient = data;
     }
   }

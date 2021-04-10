@@ -6,18 +6,18 @@
       </div>
     </header>
     <v-form>
-      <v-text-field
+      <v-text-field v-model="rgh"
         label="Registro Geral Hospitalar"
         required
       ></v-text-field>
-      <v-text-field
+      <v-text-field v-model="local"
         label="Local de Coleta"
         required
       ></v-text-field>
 
       <div>
         <p>Sexo</p>
-        <v-radio-group 
+        <v-radio-group v-model="sex"
           class="checkboxes"
           row
         >
@@ -33,7 +33,7 @@
       <div class="data-input">
         <p>Data de Hoje</p>
 
-        <input type="date">
+        <input type="date" v-model="date">
       </div>
     </v-form>
 
@@ -54,20 +54,16 @@ export default {
   name: 'Form',
   data: () => ({
     rgh: "",
-    instituicao: "",
-    sex: "",
-    age: "",
     local: "",
+    sex: "",
     date: "",
   }),
   methods: {
     submit() {
       const data = {
         rgh: this.rgh,
-        instituicao: this.instituicao,
-        sex: this.sex,
-        age: this.age,
         local: this.local,
+        sex: this.sex,
         date: this.date,
       }
       this.$store.commit('addFormData', data);

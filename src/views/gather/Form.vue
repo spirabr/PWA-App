@@ -5,19 +5,25 @@
         <h1>FORMULÁRIO</h1>
       </div>
     </header>
-    <v-form>
-      <v-text-field v-model="rgh"
+    <v-form ref="form">
+      <v-text-field 
+        solo
+        v-model="rgh" 
+        :rules="nonEmpty"
         label="Registro Geral Hospitalar"
         required
       ></v-text-field>
-      <v-text-field v-model="local"
+      <v-text-field 
+        solo
+        v-model="local" 
+        :rules="nonEmpty"
         label="Local de Coleta"
         required
       ></v-text-field>
 
       <div>
         <p>Sexo</p>
-        <v-radio-group v-model="sex"
+        <v-radio-group v-model="sex" :rules="sexFormat"
           class="checkboxes"
           row
         >
@@ -33,23 +39,26 @@
       <div class="data-input">
         <p>Data de Hoje</p>
 
-        <input type="date" v-model="date">
+        <v-text-field
+          solo
+          type="date"
+          v-model="date" 
+          :rules="nonEmpty"
+        ></v-text-field>
       </div>
     </v-form>
-
-    <router-link id="next-btn" to="/gather/audios">
-      <v-btn
-        color="var(--purple-color)"
-        class="placeholder"
-        @click="submit"
-      >
-        avançar
-      </v-btn>
-    </router-link>
+    <v-btn
+      id="next-btn"
+      color="var(--purple-color)"
+      @click="submit"
+    >
+      avançar
+    </v-btn>
   </v-container>
 </template>
 
 <script>
+import router from '@/router';
 export default {
   name: 'Form',
   data: () => ({
@@ -57,16 +66,25 @@ export default {
     local: "",
     sex: "",
     date: "",
+    nonEmpty: [
+      v => !!v.trim() != "" || "Preencha este campo" 
+    ],
+    sexFormat: [
+      v => v !== undefined || "Preencha este campo"
+    ]
   }),
   methods: {
     submit() {
-      const data = {
-        rgh: this.rgh,
-        local: this.local,
-        sex: this.sex,
-        date: this.date,
+      if (this.$refs.form.validate()) {
+        const data = {
+          rgh: this.rgh,
+          local: this.local,
+          sex: this.sex ? "F" : "M",
+          date: this.date,
+        }
+        this.$store.commit('addFormData', data);        
+        router.push('/gather/audios');
       }
-      this.$store.commit('addFormData', data);
     }
   }
 }
@@ -98,9 +116,8 @@ export default {
   .v-form .v-input {
     height: 80px;
     display: flex;
-    align-items: start;
   }
-  .v-form .v-text-field {
+  .v-label label {
     font-style: italic;
   }
   .checkboxes {
@@ -120,14 +137,14 @@ export default {
     text-decoration: none;
   }
   .v-btn {
-    height: 4rem;
     width: 100%;
     font-size: 1.5rem;
     color: white;
     margin-bottom: 1rem;
   }
   .v-btn:not(.v-btn--round).v-size--default {
-    height: inherit;
+    width: 100%;
+    height: 4rem;
   }
   .container  .v-input--selection-controls {
     margin-top: 5px;

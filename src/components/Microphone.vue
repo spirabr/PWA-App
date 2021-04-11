@@ -42,13 +42,7 @@ export default {
                 autoGainControl: this.autoGainControl,
               } 
             })
-
-            console.log({
-              noiseSuppression: stream.getAudioTracks()[0].getSettings().noiseSuppression,
-              echoCancellation: stream.getAudioTracks()[0].getSettings().echoCancellation,
-              autoGainControl: stream.getAudioTracks()[0].getSettings().autoGainControl,              
-            });
-
+            
             this.mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/PCMU'});
             this.mediaRecorder.start();
 

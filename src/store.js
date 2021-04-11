@@ -1,7 +1,17 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
+import { openDB } from 'idb';
 
 Vue.use(Vuex);
+
+// Opening IndexedDB in here... Should I?
+openDB('local', undefined, {
+  upgrade(db) {
+    if (!db.objectStoreNames.contains('patients')) {
+      db.createObjectStore('patients', {autoIncrement: true});
+    }
+  }
+});
 
 const store = new Vuex.Store({
   state: {
@@ -16,26 +26,36 @@ const store = new Vuex.Store({
   mutations: {
     addFormData(state, data) {
       state.patient.form = data;
-      console.log(this.state.patient.form);
     },
     saveTermo(state, blobURL) {
       state.patient.aceite = blobURL;
-      console.log(this.state.patient);
     },
     saveSustentada(state, blobURL) {
       state.patient.sustentada = blobURL;
-      console.log(this.state.patient);
     },
     saveParlenda(state, blobURL) {
       state.patient.parlenda = blobURL;
-      console.log(this.state.patient);
     },
     saveFrase(state, blobURL) {
       state.patient.frase = blobURL;
-      console.log(this.state.patient);
     },
     async persistData(state) {
-      await indexedDB.open();
+      const audios = Object.keys(state.patient).map(key => {
+          if (key != 'form')
+            return new Promise(() => {
+              fetch(state.patient[key])
+                .then(preBlob => preBlob.blob())
+                .then(blob => new File([blob], key, { type: "audio/wav" } ));
+            })
+        });
+      console.log(await Promise.all(audios));
+
+      const db = await openDB('local');
+      const transaction = db.transaction(['patients'], 'readwrite');
+      const store = transaction.objectStore('patients');
+      store.add(state.patient);
+      
+      return transaction.complete;
     }
   },
 })

@@ -13,9 +13,9 @@
     >mdi-green-check</v-icon>
     <v-btn
       color="#500486"
-      block
       :disabled='loading'
-      class="back-home placeholder"
+      @click="goHome"
+      class="back-home"
     >
       Voltar para o início
     </v-btn>
@@ -23,14 +23,23 @@
 </template>
 
 <script>
+import router from '@/router'
+
 export default {
   name: 'Done',
   data: () => ({
     saving: true,
   }),
+  methods: {
+    goHome() {
+      if (this.saving === false) {
+        router.push('/');
+      }
+    }
+  },
   async created() {
-    console.log(this.$store.patient);
     await this.$store.commit('persistData');
+    this.saving = false;
   },
   computed: {
     loading() {
@@ -43,8 +52,14 @@ export default {
 <style scoped>
   .back-home {
     color: white;
+    height: 4rem;
+    width: 100%;
+
+    display: flex;
+    justify-self: flex-start;
   }
-  .container a {
-    text-decoration: none;
+  .container {
+    display: flex;
+    flex-direction: column;
   }
 </style>

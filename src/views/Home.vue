@@ -6,8 +6,8 @@
         contain
         height="100%"
         width="100%"
-        max-height="115"
-        max-width="175"
+        max-height="215"
+        max-width="255"
       ></v-img>
     </div>
     
@@ -66,7 +66,7 @@ export default {
     position: relative;
   }
   .logo{
-    margin-bottom: 1rem;
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -94,6 +94,7 @@ export default {
   }
   .route-button {
     margin-top: 1rem;
+    margin-bottom: 2rem;
     width: 100%;
   }
 </style>

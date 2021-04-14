@@ -3,14 +3,19 @@
     <div class="placeholder">
       <h1>Obrigado por Participar</h1>
     </div>
+
     <v-progress-circular
       indeterminate
       v-if="loading"
       color="var(--purple-color)"
     ></v-progress-circular>
+    
     <v-icon
       v-if="!loading"
     >mdi-green-check</v-icon>
+
+    <a href=""></a>
+
     <v-btn
       color="#500486"
       :disabled='loading'

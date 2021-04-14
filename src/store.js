@@ -40,16 +40,14 @@ const store = new Vuex.Store({
       state.patient.frase = blobURL;
     },
     async persistData(state) {
-      const audios = Object.keys(state.patient).map(key => {
-          if (key != 'form')
-            return new Promise(() => {
-              fetch(state.patient[key])
-                .then(preBlob => preBlob.blob())
-                .then(blob => new File([blob], key, { type: "audio/wav" } ));
-            })
-        });
-      console.log(await Promise.all(audios));
-
+      for (let field in state.patient) {
+        if (field !== 'form') {
+          const preBlob = await fetch(state.patient[field]);
+          const blob = await preBlob.blob();
+          state.patient[field] = new File([blob], field, { type: "audio/wav" } );
+          console.log(state.patient[field]);
+        }
+      }
       const db = await openDB('local');
       const transaction = db.transaction(['patients'], 'readwrite');
       const store = transaction.objectStore('patients');

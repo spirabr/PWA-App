@@ -15,9 +15,6 @@
         <v-btn class="upload" text @click="uploadAudios">
           Upload
         </v-btn>
-        <v-btn class="delete" text :color="'red'">
-          Delete
-        </v-btn>
       </v-card-actions>
     </div>
   </v-card>

@@ -38,11 +38,18 @@
       <v-stepper-items>
         <v-stepper-content step="1">
           <div>
-            <h1>termo de partipação</h1>
-            Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios. <br>
-            Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador. <br>
-            Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima. <br>
-            Nenhum dado pessoal seu será incluído em nenhum documento do estudo. <br>  
+            <div class="placeholder">
+              <h1>termo de partipação</h1>
+            </div>
+            <div class="placeholder">
+              Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios.
+
+              Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador.
+
+              Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima.
+              
+              Nenhum dado pessoal seu será incluído em nenhum documento do estudo.
+            </div>
           </div>
 
           <Microphone

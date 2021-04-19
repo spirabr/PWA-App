@@ -26,6 +26,7 @@ export default {
     color: white;
   }
   .container a {
+    margin-top: 1rem;
     text-decoration: none;
   }
 </style>

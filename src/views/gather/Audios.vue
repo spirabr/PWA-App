@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <v-stepper v-model="cur_step">
-
       <v-stepper-header app>
         <v-stepper-step
           id="step-marker"
@@ -10,8 +9,7 @@
         >
           Aceite
         </v-stepper-step>
-        
-        
+
         <v-stepper-step
           step="2"
           :complete="cur_step > 2"
@@ -19,14 +17,12 @@
           Vogal Sustentada
         </v-stepper-step>
 
-
         <v-stepper-step
           step="3"
           :complete="cur_step > 3"
         >
           Parlenda
         </v-stepper-step>
-
 
         <v-stepper-step
           step="4"
@@ -42,10 +38,10 @@
               <h1>termo de partipação</h1>
             </div>
             <div class="placeholder">
-              Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios. \n
-              Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador. \n
-              Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima. \n
-              Nenhum dado pessoal seu será incluído em nenhum documento do estudo. \n  
+              Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios.<br>
+              Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador.<br>
+              Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima.<br>
+              Nenhum dado pessoal seu será incluído em nenhum documento do estudo.<br>
             </div>
           </div>
 
@@ -83,7 +79,7 @@
               <h1>Parlenda</h1>
             </div>
             <div class="placeholder">
-              <p>Recite uma frase que sabe de cor. 
+              <p>Recite uma frase que sabe de cor.
                 Pode ser uma oração ou uma frase clássica.
                 Não cante a frase.
               </p>
@@ -109,8 +105,8 @@
             </div>
             <VTextMarquee :duration="8" :paused="scroll">
               <h1>
-                -                                              - 
-                O amor ao próximo ajuda a enfrentar essa fase com a força que a gente precisa 
+                -                                              -
+                O amor ao próximo ajuda a enfrentar essa fase com a força que a gente precisa
               </h1>
             </VTextMarquee>
           </div>
@@ -159,7 +155,7 @@ export default {
       this.cur_step++;
     }
   },
-  computed: { 
+  computed: {
     scroll() {
       return !this.recording;
     }
@@ -171,42 +167,34 @@ export default {
   .container {
     padding: 0;
   }
+
   .v-stepper {
     width: 100%;
     height: 100%;
   }
+
   .v-stepper__items, .v-stepper__content {
     height: 100%;
   }
+
   .v-stepper__wrapper{
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
   }
+
   .v-stepper__header {
-    padding: 0px 5%;
+    padding: 0px 2rem;
     height: 36px;
   }
+
   .v-stepper__step {
     padding: 0 20px;
   }
-  .ready-btn {
-    color: white;
-  }
+
   .placeholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 7% 0;
+    margin: 2rem 0;
   }
-  .placeholder h1 {
-    margin-right: 10px;
-  }
+
   .v-stepper__content {
-    padding: 1% 8.5%;
+    padding: 0.5rem 2rem;
   }
-  a {
-    text-decoration: none;
-  } 
 </style>

@@ -1,51 +1,51 @@
 <template>
-  <v-container>
-    <div class="logo">
-      <v-img 
-        src='../../public/img/video/logo_spira_anim.gif'
-        contain
-        height="100%"
-        width="100%"
-        max-height="115"
-        max-width="175"
-      ></v-img>
-    </div>
-    
-    <div class="buttons">
-      <router-link to="/gather/form">
-        <v-btn
-          class="route-button"
-          rounded
-          large
-        >
-          Fazer nova coleta
-        </v-btn>
-      </router-link>
-      
-      <router-link to="/about">
-        <v-btn
-          class="route-button"  
-          rounded
-          large
-        >
-          Sobre o Spira
-        </v-btn>
-      </router-link>
+  <v-main>
+    <v-container>
+      <div class="logo">
+        <v-img
+          src='../../public/img/video/logo_spira_anim.gif'
+          contain
+          height="100%"
+          width="100%"
+          max-height="115"
+          max-width="175"
+        ></v-img>
+      </div>
 
-      <router-link to="/test">
-        <v-btn
-          class="route-button"
-          rounded
-          large
-        >
-          Teste de áudio
-        </v-btn>
-      </router-link>
-      
-    </div>
+      <div class="buttons-container">
+        <router-link to="/gather/form">
+          <v-btn
+            class="route-button"
+            rounded
+            large
+          >
+            Fazer nova coleta
+          </v-btn>
+        </router-link>
 
-    <Footer/>
-  </v-container>
+        <router-link to="/about">
+          <v-btn
+            class="route-button"
+            rounded
+            large
+          >
+            Sobre o Spira
+          </v-btn>
+        </router-link>
+
+        <router-link to="/test">
+          <v-btn
+            class="route-button"
+            rounded
+            large
+          >
+            Teste de áudio
+          </v-btn>
+        </router-link>
+      </div>
+      <Footer/>
+    </v-container>
+  </v-main>
 </template>
 
 <script>
@@ -58,40 +58,27 @@ export default {
 </script>
 
 <style scoped>
-  .container {
-    height: 100%;
-    width: 100%;
-
-    padding: 24px 18px;
-    position: relative;
-  }
-  .logo{
+  .logo {
     margin-bottom: 1rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-  .buttons {
+
+  .buttons-container {
     width: 100%;
-    height: 100%;
-
-    position: relative;
-    padding-bottom: 3.2rem;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    padding-bottom: 3rem;
   }
-  .buttons a {
-    color: black; 
+
+  .buttons-container a {
+    color: black;
     text-decoration: none;
-
-    margin-bottom: 0.5rem;
   }
+
   .v-btn.v-size--large {
     font-size: 1rem;
   }
+
   .route-button {
     margin-top: 1rem;
     width: 100%;

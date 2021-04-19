@@ -18,7 +18,7 @@ export default {
   .theme--light.v-stepper .v-stepper__step:not(.v-stepper__step--active):not(.v-stepper__step--complete):not(.v-stepper__step--error) .v-stepper__step__step {
     background-color: rgba(124, 31, 244, 0.38) !important;
     height: 12px;
-    border-radius: 20%; 
+    border-radius: 20%;
   }
   .v-application .v-stepper .primary {
     background-color: var(--purple-color) !important;

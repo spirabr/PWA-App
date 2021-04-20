@@ -18,11 +18,11 @@ const store = new Vuex.Store({
   state: {
     patient: {
       id: null,
-      form: undefined,
-      aceite: undefined,
-      sustentada: undefined,
-      parlenda: undefined,
-      frase: undefined,
+      form: null,
+      aceite: null,
+      sustentada: null,
+      parlenda: null,
+      frase: null,
     },
   },
   mutations: {

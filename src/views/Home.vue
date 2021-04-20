@@ -18,7 +18,7 @@
           rounded
           large
         >
-          Fazer nova coleta
+          Iniciar coleta
         </v-btn>
       </router-link>
       

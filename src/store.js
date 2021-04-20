@@ -8,7 +8,8 @@ Vue.use(Vuex);
 openDB('local', undefined, {
   upgrade(db) {
     if (!db.objectStoreNames.contains('patients')) {
-      db.createObjectStore('patients', {autoIncrement: true});
+      let objectStore = db.createObjectStore('patients', {keyPath: 'id'});
+      objectStore.createIndex('patientId', 'id', {unique: false})
     }
   }
 });
@@ -16,6 +17,7 @@ openDB('local', undefined, {
 const store = new Vuex.Store({
   state: {
     patient: {
+      id: null,
       form: undefined,
       aceite: undefined,
       sustentada: undefined,
@@ -25,6 +27,8 @@ const store = new Vuex.Store({
   },
   mutations: {
     addFormData(state, data) {
+      //TODO: Think of a better way define ID? RGH-only is not unique
+      state.patient.id = `${data.local}_${data.rgh}`
       state.patient.form = data;
     },
     saveTermo(state, blobURL) {
@@ -41,7 +45,7 @@ const store = new Vuex.Store({
     },
     async persistData(state) {
       for (let field in state.patient) {
-        if (field !== 'form') {
+        if (field !== 'form' && field !== 'id') {
           const preBlob = await fetch(state.patient[field]);
           const blob = await preBlob.blob();
           state.patient[field] = new File([blob], field, { type: "audio/wav" } );

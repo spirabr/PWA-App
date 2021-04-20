@@ -10,6 +10,7 @@
   "dependencies": {
     "audio-recorder-polyfill": "^0.4.1",
     "axios": "^0.21.1",
+    "base-64": "^1.0.0",
     "core-js": "^3.6.5",
     "howler": "^2.2.1",
     "idb": "^6.0.0",

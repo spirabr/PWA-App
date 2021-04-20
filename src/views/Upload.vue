@@ -8,7 +8,7 @@
           max-width="250"
       ></v-img>
         
-      <h1>SPIRA</h1>
+      <h1 @click="testDb">SPIRA</h1>
     </div>
     <div class="cards-container">
       <UploadAudiosCard v-for="sample in samples" :key="sample.patient.id"
@@ -35,28 +35,35 @@ const instance = axios.create({
 export default {
   name: 'Upload',
   components: {UploadAudiosCard},
-  data: () => ({
-    instance: instance,
-    samples: [
-      {
+  methods: {
+    async testDb() {
+      console.log(await this.$store.getters.allPatients)
+    }
+  },
+  async created () {
+    const patients = await this.$store.getters.allPatients
+
+    this.samples = patients.map(e => {
+      return {
         patient: {
-          id: '123456',
-          name: 'Renan Nakazawa'
+          id: e.id,
+          rgh: e.form.rgh
         },
         location: {
-          name: 'Hospital Albert Einstein'
-        }
-      },
-      {
-        patient: {
-          id: '789123',
-          name: 'Juninho da Silva'
+          name: e.form.local
         },
-        location: {
-          name: 'Hospital Albert Einstein'
+        audios: {
+          aceite: btoa(e.aceite),
+          sustentada: btoa(e.sustentada),
+          parlenda: btoa(e.parlenda),
+          frase: btoa(e.frase)
         }
       }
-    ]
+    })
+  },
+  data: () => ({
+    instance: instance,
+    samples: []
   })
 }
 </script>

@@ -7,7 +7,7 @@
   >
     <div class="card-content">
       <v-card-title class="title">{{patient.name}}</v-card-title>
-      <v-card-subtitle class="subtitle">{{location.name}} - RGH: {{patient.id}}</v-card-subtitle>
+      <v-card-subtitle class="subtitle">{{location.name}} - RGH: {{patient.rgh}}</v-card-subtitle>
       <v-card-text class="description">Coleta realizada em: {{sampleDate}}</v-card-text>
     </div>
     <div class="card-actions">
@@ -33,13 +33,16 @@ export default {
   }),
   methods: {
     async uploadAudios() {
+      console.log(this)
       const requestData = {
         patientId: this.patient.id,
         collector: {
           name: this.patient.name,
           hospital: this.location.name
         },
-        // audioUrl1: "http://example.audio.com/audios/1" not used for now
+        audios: {
+          aceite: this.aceite
+        }
       }
       const response = await this.http.post('/', requestData)
     }

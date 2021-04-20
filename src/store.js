@@ -25,6 +25,15 @@ const store = new Vuex.Store({
       frase: null,
     },
   },
+  getters: {
+    allPatients: async (state, getters) => {
+      const db = await openDB('local');
+      const transaction = db.transaction(['patients'], 'readwrite');
+      const store = transaction.objectStore('patients');
+      const result = await store.getAll()
+      return result
+    }
+  },
   mutations: {
     addFormData(state, data) {
       //TODO: Think of a better way define ID? RGH-only is not unique

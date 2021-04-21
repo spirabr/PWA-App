@@ -107,9 +107,9 @@
             <div class="placeholder">
               <p>Leia a frase a seguir em voz alta</p>
             </div>
-            <VTextMarquee :duration="8" :paused="scroll">
+            <VTextMarquee :duration="14" :paused="scroll">
               <h1>
-                -                                              - 
+                -------------------------------------------------------- 
                 O amor ao próximo ajuda a enfrentar essa fase com a força que a gente precisa 
               </h1>
             </VTextMarquee>
@@ -149,7 +149,7 @@ export default {
   methods: {
     async startCountdown() {
       if (!this.recording)
-        await sleep(1000);
+        await sleep(3000);
       this.recording = !this.recording;
     },
     async goToDone() {

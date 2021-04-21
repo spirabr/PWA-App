@@ -9,6 +9,7 @@
       <v-text-field 
         solo
         v-model="rgh" 
+        v-mask="'###.###.###-##'"
         :rules="nonEmpty"
         label="Registro Geral Hospitalar"
         required

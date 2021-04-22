@@ -16,6 +16,7 @@
         :sampleDate="'31/03/2021'"
         :location="sample.location"
         :http="instance"
+        :audios="sample.audios"
       >
       </UploadAudiosCard>
     </div>
@@ -53,8 +54,7 @@ export default {
 
         fileReader.readAsDataURL(file)
       })
-
-      return {
+      const data = {
         patient: {
           id: e.id,
           rgh: e.form.rgh
@@ -69,6 +69,8 @@ export default {
           frase: await toBase64(e.frase)
         }
       }
+      // console.log({data})
+      return data
     })).then(e => e.map(sample => this.samples.push(sample)))
   },
   data: () => ({

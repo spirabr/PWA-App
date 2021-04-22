@@ -33,6 +33,8 @@ export default {
   }),
   methods: {
     async uploadAudios() {
+      const audios = this.$attrs.audios
+
       const requestData = {
         patientId: this.patient.id,
         collector: {
@@ -40,7 +42,10 @@ export default {
           hospital: this.location.name
         },
         audios: {
-          aceite: this.aceite
+          aceite: audios.aceite,
+          sustentada: audios.sustentada,
+          parlenda: audios.parlenda,
+          frase: audios.frase
         }
       }
       const response = await this.http.post('/', requestData)

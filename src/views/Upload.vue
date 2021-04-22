@@ -42,7 +42,18 @@ export default {
   },
   async created () {
     const patients = await this.$store.getters.allPatients
-    this.samples = patients.filter(e => (e && e.form)).map(e => {
+
+    // TODO: Refactor. toBase64 function needs to be async
+    Promise.all(patients.filter(e => (e && e.form && e.id)).map(async e => {
+      const fileReader = new FileReader()
+
+      const toBase64 = file => new Promise((resolve, reject) => {
+        fileReader.onload = () => resolve(fileReader.result)
+        fileReader.onerror = error => reject(error)
+
+        fileReader.readAsDataURL(file)
+      })
+
       return {
         patient: {
           id: e.id,
@@ -52,13 +63,13 @@ export default {
           name: e.form.local
         },
         audios: {
-          aceite: btoa(e.aceite),
-          sustentada: btoa(e.sustentada),
-          parlenda: btoa(e.parlenda),
-          frase: btoa(e.frase)
+          aceite: await toBase64(e.aceite),
+          sustentada: await toBase64(e.sustentada),
+          parlenda: await toBase64(e.parlenda),
+          frase: await toBase64(e.frase)
         }
       }
-    })
+    })).then(e => e.map(sample => this.samples.push(sample)))
   },
   data: () => ({
     instance: instance,

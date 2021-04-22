@@ -25,7 +25,7 @@
 
 <script>
 import UploadAudiosCard from '../components/UploadAudiosCard'
-import axios from 'axios'
+import axios from 'axios' // TODO: move this to global scope
 
 const baseURL = `${process.env.VUE_APP_BACKEND_URL}:${process.env.VUE_APP_BACKEND_PORT}`
 
@@ -52,7 +52,7 @@ export default {
         reader.readAsDataURL(file)
       })
 
-    Promise.all(patients.filter(e => (e && e.form && e.id)).map(async e => {
+    this.samples = patients.filter(e => (e && e.form && e.id)).map(e => {
 
       const data = {
         patient: {
@@ -63,15 +63,15 @@ export default {
           name: e.form.local
         },
         audios: {
-          aceite: await toBase64(e.aceite),
-          sustentada: await toBase64(e.sustentada),
-          parlenda: await toBase64(e.parlenda),
-          frase: await toBase64(e.frase)
+          aceite: e.aceite,
+          sustentada: e.sustentada,
+          parlenda: e.parlenda,
+          frase: e.frase
         }
       }
       // console.log({data})
       return data
-    })).then(e => e.map(sample => this.samples.push(sample)))
+    })
   },
   data: () => ({
     instance: instance,

@@ -35,18 +35,27 @@ export default {
     async uploadAudios() {
       const audios = this.$attrs.audios
 
+      // const formData = new FormData()
+      // formData.append('patientId', this.patient.id)
+      // formData.append('collector', JSON.stringify({
+      //   rgh: this.patient.rgh,
+      //   hospital: this.location.name
+      // }))
+      // formData.append('aceite', audios.aceite, `${this.patient.id}_aceite.wav`)
+
+      // Audios will be sent on a separate request
       const requestData = {
         patientId: this.patient.id,
         collector: {
           name: this.patient.name,
           hospital: this.location.name
         },
-        audios: {
-          aceite: audios.aceite,
-          sustentada: audios.sustentada,
-          parlenda: audios.parlenda,
-          frase: audios.frase
-        }
+        // audios: {
+        //   aceite: audios.aceite,
+        //   sustentada: audios.sustentada,
+        //   parlenda: audios.parlenda,
+        //   frase: audios.frase
+        // }
       }
       const response = await this.http.post('/', requestData)
     }

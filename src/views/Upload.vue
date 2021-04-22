@@ -42,8 +42,7 @@ export default {
   },
   async created () {
     const patients = await this.$store.getters.allPatients
-
-    this.samples = patients.map(e => {
+    this.samples = patients.filter(e => (e && e.form)).map(e => {
       return {
         patient: {
           id: e.id,

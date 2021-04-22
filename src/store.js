@@ -58,7 +58,7 @@ const store = new Vuex.Store({
           const preBlob = await fetch(state.patient[field]);
           const blob = await preBlob.blob();
           state.patient[field] = new File([blob], field, { type: "audio/wav" } );
-          console.log(state.patient[field]);
+          // console.log(state.patient[field]);
         }
       }
       const db = await openDB('local');

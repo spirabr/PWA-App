@@ -59,11 +59,11 @@ export default {
             this.micState = 1;
           }
           catch (err) {
-            console.log('The following getUserMedia error occurred: ' + err);
+            console.error('The following getUserMedia error occurred: ' + err);
           }
         } 
         else {
-          console.log('getUserMedia not supported on your browser!');
+          console.error('getUserMedia not supported on your browser!');
         }
       }
       else if (this.micState == 1){

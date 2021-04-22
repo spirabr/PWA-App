@@ -33,7 +33,6 @@ export default {
   }),
   methods: {
     async uploadAudios() {
-      console.log(this)
       const requestData = {
         patientId: this.patient.id,
         collector: {

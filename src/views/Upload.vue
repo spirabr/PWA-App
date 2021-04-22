@@ -45,15 +45,15 @@ export default {
     const patients = await this.$store.getters.allPatients
 
     // TODO: Refactor. toBase64 function needs to be async
-    Promise.all(patients.filter(e => (e && e.form && e.id)).map(async e => {
-      const fileReader = new FileReader()
+    const toBase64 = (file, reader = new FileReader()) => new Promise((resolve, reject) => {
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = error => reject(error)
 
-      const toBase64 = file => new Promise((resolve, reject) => {
-        fileReader.onload = () => resolve(fileReader.result)
-        fileReader.onerror = error => reject(error)
-
-        fileReader.readAsDataURL(file)
+        reader.readAsDataURL(file)
       })
+
+    Promise.all(patients.filter(e => (e && e.form && e.id)).map(async e => {
+
       const data = {
         patient: {
           id: e.id,

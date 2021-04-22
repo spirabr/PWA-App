@@ -38,21 +38,14 @@
       <v-stepper-items>
         <v-stepper-content step="1">
           <div>
-            <div class="placeholder">
-              <h1>termo de partipação</h1>
-            </div>
-            <div class="placeholder">
-              Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios. \n
-              Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador. \n
-              Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima. \n
-              Nenhum dado pessoal seu será incluído em nenhum documento do estudo. \n  
-            </div>
+            <h1>termo de partipação</h1>
+            Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios. \n
+            Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador. \n
+            Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima. \n
+            Nenhum dado pessoal seu será incluído em nenhum documento do estudo. \n  
           </div>
 
           <Microphone
-            :noiseSuppression="false"
-            :echoCancellation="false"
-            :autoGainControl="false"
             @ready="updateStepper"
           />
 
@@ -60,18 +53,11 @@
 
         <v-stepper-content step="2">
           <div>
-            <div class="placeholder">
-              <h1>Vogal Sustentada</h1>
-            </div>
-            <div class="placeholder">
-              <p>Inspire e fale a vogal "a" até acabar o ar</p>
-            </div>
+            <h1>Vogal Sustentada</h1>
+            <p>Inspire e fale a vogal "a" até acabar o ar</p>
           </div>
 
           <Microphone
-            :noiseSuppression="false"
-            :echoCancellation="false"
-            :autoGainControl="false"
             @ready="updateStepper"
           />
 
@@ -79,21 +65,14 @@
 
         <v-stepper-content step="3">
           <div>
-            <div class="placeholder">
-              <h1>Parlenda</h1>
-            </div>
-            <div class="placeholder">
-              <p>Recite uma frase que sabe de cor. 
+            <h1>Parlenda</h1>
+            <p>Recite uma frase que sabe de cor. 
                 Pode ser uma oração ou uma frase clássica.
                 Não cante a frase.
-              </p>
-            </div>
+            </p>
           </div>
 
           <Microphone
-            :noiseSuppression="false"
-            :echoCancellation="false"
-            :autoGainControl="false"
             @ready="updateStepper"
           />
 
@@ -101,25 +80,18 @@
 
         <v-stepper-content step="4">
           <div>
-            <div class="placeholder">
-              <h1> Frase lida </h1>
-            </div>
-            <div class="placeholder">
-              <p>Leia a frase a seguir em voz alta</p>
-            </div>
+            <h1> Frase lida </h1>
+            <p>Leia a frase a seguir em voz alta</p>
             <VTextMarquee :duration="8" :paused="scroll">
-              <h1>
+              <h2>
                 -                                              - 
                 O amor ao próximo ajuda a enfrentar essa fase com a força que a gente precisa 
-              </h1>
+              </h2>
             </VTextMarquee>
           </div>
 
           <div @click="startCountdown()">
             <Microphone
-              :noiseSuppression="false"
-              :echoCancellation="false"
-              :autoGainControl="false"
               @ready="goToDone"
             />
           </div>
@@ -200,10 +172,19 @@ export default {
     align-items: center;
     margin: 7% 0;
   }
-  .placeholder h1 {
+  h1 {
     margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 7% 0;
+  }
+  h2 {
+    color: var(--purple-color);
+    font-weight: normal;
   }
   .v-stepper__content {
+    position: relative;
     padding: 1% 8.5%;
   }
   a {

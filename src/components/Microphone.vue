@@ -23,6 +23,11 @@
       </v-icon>
       {{ activeSpeakers ? 'pausar' : 'escutar gravação' }}
     </v-btn>
+    <a 
+      v-if="micState == 2"
+      @click="reset"
+      class="reset"
+    > Refazer audio </a>
   </div>
 </template>
 
@@ -30,6 +35,8 @@
 import AudioRecorder from 'audio-recorder-polyfill';
 import { Howl } from 'howler';
 window.MediaRecorder = AudioRecorder;
+
+let time_out_id;
 
 export default {
   name: "Microphone",
@@ -117,6 +124,19 @@ export default {
         this.activeSpeakers = false;
       }
     },
+    wait() {
+      time_out_id = setTimeout(this.reset, 2);
+      console.log("Set timeout: ", time_out_id);
+    },
+    cancel() {
+      clearTimeout(time_out_id);
+      console.log("canceled timeout: ", time_out_id);
+    },
+    reset() {
+      this.audioURL = '';
+      this.micState = 0;
+      time_out_id = 0;
+    }
   },
   computed: {
     activateListeningButton() {
@@ -144,5 +164,14 @@ export default {
     text-transform: none;
     letter-spacing: inherit;
     font-weight: normal;
+  }
+  .reset {
+    position: absolute;
+    right: 0;
+    text-align: left;
+    color: red;
+    width: 100%;
+    height: 10px;
+    bottom: 3rem;
   }
 </style>

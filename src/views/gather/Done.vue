@@ -24,6 +24,8 @@ export default {
 <style scoped>
   .back-home {
     color: white;
+    position: absolute;
+    bottom: 2rem;
   }
   .container a {
     text-decoration: none;

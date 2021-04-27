@@ -37,16 +37,6 @@
         </v-radio-group>
       </div>
 
-      <div class="data-input">
-        <p>Data de Hoje</p>
-
-        <v-text-field
-          solo
-          type="date"
-          v-model="date" 
-          :rules="nonEmpty"
-        ></v-text-field>
-      </div>
     </v-form>
     <v-btn
       id="next-btn"
@@ -66,7 +56,6 @@ export default {
     rgh: "",
     local: "",
     sex: "",
-    date: "",
     nonEmpty: [
       v => !!v.trim() != "" || "Preencha este campo" 
     ],
@@ -81,12 +70,21 @@ export default {
           rgh: this.rgh,
           local: this.local,
           sex: this.sex ? "F" : "M",
-          date: this.date,
+          date: this.todaysDate(),
         }
+        console.log(data.date);
         this.$store.commit('addFormData', data);        
         router.push('/gather/audios');
       }
-    }
+    },
+    todaysDate() {
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      const yyyy = today.getFullYear();
+
+      return dd + '/' + mm + '/' + yyyy;
+    },
   }
 }
 </script>

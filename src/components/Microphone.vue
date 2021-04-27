@@ -8,7 +8,8 @@
       :color="micState == 0 ? '' : micState == 1 ? 'red' : 'var(--purple-color)'"
       :class="micState == 1 ? 'recorder white--text' : 'recorder'"
       @click="toggleMic"
-    >{{ micState == 0 ? 'gravar' : micState == 1 ? 'gravando' : 'pronto' }}</v-btn>
+    >{{ micState == 0 ? 'gravar' : micState == 1 ? 'gravando' : 'pronto' }}
+    </v-btn>
     <v-btn 
       v-if="micState == 2"
       outlined
@@ -95,6 +96,9 @@ export default {
         this.micState = 2;
       }
       else {
+        if (this.listener) {
+          this.listener.stop();
+        }
         this.$emit('ready');
       }
     },

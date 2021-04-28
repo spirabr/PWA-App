@@ -2,14 +2,13 @@
   <v-container>
     <header>
       <div class="placeholder">
-        <h1>FORMULÁRIO</h1>
+        <h1>formulário</h1>
       </div>
     </header>
     <v-form ref="form">
       <v-text-field 
         solo
-        v-model="rgh" 
-        v-mask="'###.###.###-##'"
+        v-model="rgh"
         :rules="nonEmpty"
         label="Registro Geral Hospitalar"
         required
@@ -39,6 +38,9 @@
 
     </v-form>
     <v-btn
+      block
+      outlined
+      rounded
       id="next-btn"
       color="var(--purple-color)"
       @click="submit"
@@ -125,25 +127,17 @@ export default {
     align-items: center;
   }
   .container .next-btn {
-    justify-self: flex-end;
-  }
-  #next-btn {
-    height: 4rem;
-    width: 100%;
-    align-self: flex-start;
-    justify-self: flex-start;
-
-    text-decoration: none;
+    position: absolute;
+    bottom: 4rem;
   }
   .v-btn {
     width: 100%;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: white;
-    margin-bottom: 1rem;
   }
   .v-btn:not(.v-btn--round).v-size--default {
-    width: 100%;
-    height: 4rem;
+    width: 93%;
+    height: 60px;
   }
   .container  .v-input--selection-controls {
     margin-top: 5px;

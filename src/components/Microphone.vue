@@ -1,34 +1,24 @@
 <template>
   <div>
     <v-btn
-      :outlined="micState != 1"
-      rounded
-      block
-      :disabled="micState > 2"
-      :color="micState == 0 ? '' : micState == 1 ? 'red' : 'var(--purple-color)'"
-      :class="micState == 1 ? 'recorder white--text' : 'recorder'"
-      @click="toggleMic"
-    >{{ micState == 0 ? 'gravar' : micState == 1 ? 'gravando' : 'pronto' }}
-    </v-btn>
-    <v-btn 
-      v-if="micState == 2"
       outlined
       rounded
       block
-      :color="activateListeningButton"
-      class="listener"
-      @click="listen"
-    >
-      <v-icon>
-        {{ activeSpeakers ? 'mdi-pause' : 'mdi-arrow-right-drop-circle' }}
-      </v-icon>
-      {{ activeSpeakers ? 'pausar' : 'escutar gravação' }}
+      :color="btnColor"
+      class="recorder"
+      @click="toggleMic"
+    >{{ btnText }}
     </v-btn>
-    <a 
-      v-if="micState == 2"
-      @click="reset"
+    <v-btn 
+      v-if="micState == 4"
+      outlined
+      rounded
+      block
       class="reset"
-    > Refazer audio </a>
+      @click="reset"
+    >
+    refazer gravação
+    </v-btn>
   </div>
 </template>
 
@@ -45,87 +35,86 @@ export default {
     micState: 0,
     audioURL: '',
     mediaRecorder: undefined,
-    activeSpeakers: false,
     listener: undefined,
   }),
   methods: {
-    async toggleMic() {
-      for (let audio in this.activeAudio) {
-        if (this.activeAudio[audio])
-          this.sound[audio].stop();
-        this.activeAudio[audio] = false;
-      }
-      if (this.micState == 0) {
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-          try {
-            // O uso de noiseSuppression cria degraus no volume de voz
-            // O uso de echoCancellation cria pequenos desvios na voz (não mto perceptiveis)
-            // O uso de autoGainControl torna a voz um pouco mais audivel ajustando o volume de
-            // forma suave, resta saber se causa grande alteração no esquema
-            const stream = await navigator.mediaDevices.getUserMedia({ 
-              audio: {
-                noiseSuppression: false,
-                echoCancellation: false,
-                autoGainControl: false,
-              } 
-            })
-
-            this.mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/PCMU'});
-            this.mediaRecorder.start();
-
-            let chunks = [];
-            this.mediaRecorder.ondataavailable = ( e => {
-              chunks.push(e.data);
-            })
-
-            this.mediaRecorder.addEventListener('dataavailable', e => {
-             this.audioURL = window.URL.createObjectURL(e.data);
-             this.$emit('newAudio', this.audioURL);
-            })
-            
-            this.micState = 1;
-          }
-          catch (err) {
-            console.log('The following getUserMedia error occurred: ' + err);
-          }
-        } 
-        else {
-          console.log('getUserMedia not supported on your browser!');
-        }
-      }
-      else if (this.micState == 1){
-        if (this.mediaRecorder) {
-          this.mediaRecorder.stop();
-          this.mediaRecorder.stream.getTracks().forEach(track => {
-            track.stop();
+    async activateMicrophone() {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+              noiseSuppression: false,
+              echoCancellation: false,
+              autoGainControl: false,
+            } 
           })
+
+          this.mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/PCMU'});
+          this.mediaRecorder.start();
+
+          let chunks = [];
+          this.mediaRecorder.ondataavailable = ( e => {
+            chunks.push(e.data);
+          })
+
+          this.mediaRecorder.addEventListener('dataavailable', e => {
+            this.audioURL = window.URL.createObjectURL(e.data);
+            this.$emit('newAudio', this.audioURL);
+          })
+          
+          this.micState = 1;
         }
-        this.micState = 2;
-      }
+        catch (err) {
+          console.error('The following getUserMedia error occurred: ' + err);
+        }
+      } 
       else {
-        if (this.listener) {
-          this.listener.stop();
-        }
-        this.$emit('ready');
+        console.error('getUserMedia not supported on your browser!');
       }
     },
+
+    stopMicrophone() {
+      if (this.mediaRecorder) {
+        this.mediaRecorder.stop();
+        this.mediaRecorder.stream.getTracks().forEach(track => {
+          track.stop();
+        })
+      }
+      this.micState = 2;
+    },
+
     listen() {
-      if (!this.activeSpeakers) {
-        this.activeSpeakers = true;
-        if (this.listener === undefined) {
-          this.listener = new Howl({
-            src: [this.audioURL],
-            format: "wav",
-            onend: () => {
-              this.activeSpeakers = false;
+      if (this.listener === undefined) {
+        this.listener = new Howl({
+          src: [this.audioURL],
+          format: "wav",
+          onend: () => {
+            if (this.micState < 4) {
+              this.micState = 4;
             }
-          })
-        }
-        this.listener.play();
+          }
+        })
+      }
+      this.micState = 3;
+      this.listener.play();
+    },
+
+    async toggleMic() {
+      if (this.micState == 0) {
+        await this.activateMicrophone();
+      }
+      else if (this.micState == 1){
+        this.stopMicrophone();
+      }
+      else if (this.micState == 2) {
+        this.listen();
+      }
+      else if (this.micState == 3) {
+        this.listener.stop();
+        this.micState = 4;
       }
       else {
-        this.listener.stop();
-        this.activeSpeakers = false;
+        this.$emit('ready');
       }
     },
     wait() {
@@ -143,9 +132,34 @@ export default {
     }
   },
   computed: {
-    activateListeningButton() {
-      return this.activeSpeakers ? 'green' : 'blue'
+    btnColor() {
+      switch(this.micState) {
+        case 0:
+          return '';
+        case 1:
+          return 'red';
+        case 2:
+          return 'blue';
+        case 3:
+          return 'green';
+        default:
+          return 'var(--purple-color)';
+      }
     },
+    btnText() {
+      switch(this.micState) {
+        case 0:
+          return 'gravar';
+        case 1:
+          return 'gravando';
+        case 2:
+          return 'escutar gravação';
+        case 3:
+          return 'parar gravação';
+        default:
+          return 'avançar';
+      }
+    }
   }
 }
 </script>
@@ -156,26 +170,29 @@ export default {
     justify-self: flex-start;
     bottom: 4rem;
   }
-  .listener {
-    bottom: 8.5rem;
-  }
   .v-btn:not(.v-btn--round).v-size--default {
     height: 60px;
+    width: 93%;
+  }
+  .v-btn:not(.v-btn--round).v-size--default .reset {
+    height: 30px;
   }
   .v-btn {
     position: absolute;
     right: 0;
     text-transform: none;
     letter-spacing: inherit;
-    font-weight: normal;
+    font-weight: bold;
   }
-  .reset {
+  .v-btn.v-size--default {
+    font-size: 1.3rem;
+  }
+  .container .reset{
     position: absolute;
     right: 0;
     text-align: left;
-    color: red;
-    width: 100%;
+    width: 50%;
     height: 10px;
-    bottom: 3rem;
+    bottom: 9rem;
   }
 </style>

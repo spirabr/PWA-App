@@ -1,15 +1,15 @@
 <template>
   <v-container>
-    <div class="placeholder">
-      <h1>Obrigado por Participar</h1>
-    </div>
+    <h1>obrigado por participar</h1>
     <router-link to="/">
       <v-btn
-        color="#500486"
+        outlined
+        rounded
         block
-        class="back-home placeholder"
+        color="#500486"
+        class="back-home"
       >
-        Voltar para o início
+        voltar para o início
       </v-btn>
     </router-link>
   </v-container>
@@ -22,12 +22,25 @@ export default {
 </script>
 
 <style scoped>
+  .container {
+    display: flex;
+    justify-content: center;
+  }
+  .container h1 {
+    height: 45%;
+  }
   .back-home {
     color: white;
-    position: absolute;
-    bottom: 2rem;
   }
   .container a {
+    position: absolute;
+    bottom: 2rem;
+    height: 60px;
+    width: 93%;
     text-decoration: none;
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: 60px;
+    font-size: 1.3rem;
   }
 </style>

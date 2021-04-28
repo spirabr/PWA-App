@@ -45,25 +45,23 @@ export default {
   }
   .container h1 {
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.7em;
   }
   h1 {
     font-weight: normal;
     color: var(--purple-color);
-  }
-  .placeholder {
-    text-align: inherit;
-  }
-  .placeholder .label {
-    font-size: 0.8rem;
-    color: red;
-    margin: 0;
   }
   .container .v-input {
     font-size: 15px;
   }
   .container .v-btn {
     text-transform: lowercase;
-    letter-spacing: normal;
+    letter-spacing: 1px;
+  }
+  .v-btn {
+    width: 93%;
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: 60px;
   }
 </style>

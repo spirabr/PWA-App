@@ -14,9 +14,11 @@
     <div class="buttons">
       <router-link to="/gather/form">
         <v-btn
-          class="route-button"
+          outlined
+          block
           rounded
           large
+          class="route-button"
         >
           Iniciar coleta
         </v-btn>
@@ -24,9 +26,11 @@
       
       <router-link to="/about">
         <v-btn
-          class="route-button"  
+          outlined
+          block
           rounded
           large
+          class="route-button"  
         >
           Sobre o Spira
         </v-btn>
@@ -34,9 +38,11 @@
 
       <router-link to="/test">
         <v-btn
-          class="route-button"
+          outlined
+          block
           rounded
           large
+          class="route-button"
         >
           Teste de áudio
         </v-btn>
@@ -83,14 +89,14 @@ export default {
     flex-direction: column;
     justify-content: flex-end;
   }
+  .v-size--large {
+    font-size: 1.3rem;
+  }
   .buttons a {
     color: black; 
     text-decoration: none;
 
     margin-bottom: 0.5rem;
-  }
-  .v-btn.v-size--large {
-    font-size: 1rem;
   }
   .route-button {
     margin-top: 1rem;

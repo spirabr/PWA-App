@@ -39,10 +39,10 @@
         <v-stepper-content step="1">
           <div>
             <h1>termo de partipação</h1>
-            Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios. \n
-            Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador. \n
-            Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima. \n
-            Nenhum dado pessoal seu será incluído em nenhum documento do estudo. \n  
+            Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios. <br>
+            Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador. <br>
+            Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima. <br>
+            Nenhum dado pessoal seu será incluído em nenhum documento do estudo. <br>  
           </div>
 
           <Microphone
@@ -54,7 +54,15 @@
         <v-stepper-content step="2">
           <div>
             <h1>Vogal Sustentada</h1>
-            <p>Inspire e fale a vogal "a" até acabar o ar</p>
+            <p>Favor cumprir os seguintes passos: </p>
+            <ol>
+              <li>
+                respire fundo
+              </li>
+              <li>
+                fale em voz alta a vogal “A” até acabar o ar
+              </li>
+            </ol>     
           </div>
 
           <Microphone
@@ -66,9 +74,11 @@
         <v-stepper-content step="3">
           <div>
             <h1>Parlenda</h1>
-            <p>Recite uma frase que sabe de cor. 
-                Pode ser uma oração ou uma frase clássica.
-                Não cante a frase.
+            <p>Favor falar um verso que saiba de cor. <br>
+              Por exemplo: <br>
+              <i> “Batatinha quando nasce <br>
+                Esparrama pelo chão …” <br> </i>
+              Caso não se lembre de nenhum verso, pode ser substituído por uma oração.
             </p>
           </div>
 
@@ -81,7 +91,17 @@
         <v-stepper-content step="4">
           <div>
             <h1> Frase lida </h1>
-            <p>Leia a frase a seguir em voz alta</p>
+            <p>Favor perguntar se o paciente se importa em ler a frase a seguir. <br>
+              Caso contrário, pular esta etapa.</p>
+            <v-btn
+              outlined
+              rounded
+              block
+              color="red"
+              @click="goToDone"
+            >
+              pular
+            </v-btn>
             <VTextMarquee :duration="8" :paused="scroll">
               <h2>
                 -                                              - 

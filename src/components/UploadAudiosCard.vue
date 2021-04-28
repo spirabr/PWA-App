@@ -1,14 +1,19 @@
 <template>
-  <v-card class="upload-audios-card"
+  <v-card
+    class="upload-audios-card"
     outlined
     hover
     :loading="isUploading"
-    :disabled="isUploading"
+    :disabled="isDisabled"
   >
     <div class="card-content">
-      <v-card-title class="title">{{patient.name}}</v-card-title>
-      <v-card-subtitle class="subtitle">{{location.name}} - RGH: {{patient.id}}</v-card-subtitle>
-      <v-card-text class="description">Coleta realizada em: {{sampleDate}}</v-card-text>
+      <v-card-title class="title">{{ patient.name }}</v-card-title>
+      <v-card-subtitle class="subtitle"
+        >{{ location.name }} - RGH: {{ patient.rgh }}</v-card-subtitle
+      >
+      <v-card-text class="description"
+        >Coleta realizada em: {{ sampleDate }}</v-card-text
+      >
     </div>
     <div class="card-actions">
       <v-card-actions class="flex-column">
@@ -21,43 +26,78 @@
 </template>
 
 <script>
-
 export default {
-  name: 'UploadAudiosCard',
-  props: ['patient', 'location', 'sampleDate', 'http'],
+  name: "UploadAudiosCard",
+  props: ["patient", "location", "sampleDate", "http"],
   data: () => ({
     isUploading: false,
+    isDisabled: false,
   }),
   methods: {
     async uploadAudios() {
+      this.isUploading = true;
+      this.isDisabled = true;
+      // Audios will be sent on a separate request
       const requestData = {
         patientId: this.patient.id,
         collector: {
-          name: this.patient.name,
-          hospital: this.location.name
+          patientRgh: this.patient.rgh,
+          hospitalName: this.location.name,
         },
-        // audioUrl1: "http://example.audio.com/audios/1" not used for now
+      };
+
+      try {
+        const patientRegisterResponse = await this.http.post(
+          "patient",
+          requestData
+        );
+        if (patientRegisterResponse.status === 201) {
+          const audios = this.$attrs.audios;
+          const audiosFormData = new FormData();
+          audiosFormData.append("aceite", audios.aceite);
+          audiosFormData.append("sustentada", audios.sustentada);
+          audiosFormData.append("parlenda", audios.parlenda);
+          audiosFormData.append("frase", audios.frase);
+          const requestOptions = {
+            headers: {
+              "Content-Type": `multipart/form-data; boundary=${audiosFormData._boundary}`,
+            },
+          };
+          const audioUploadResponse = await this.http.put(
+            `/patient/${this.location.name}/${this.patient.rgh}/audio`,
+            audiosFormData,
+            requestOptions
+          );
+          if (audioUploadResponse.status === 200) {
+            // TODO: Make a "success" style
+            this.isDisabled = true;
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        this.isDisabled = false;
       }
-      const response = await this.http.post('/', requestData)
-    }
-  }
-}
+
+      this.isUploading = false;
+    },
+  },
+};
 </script>
 
 <style>
-  .upload-audios-card {
-    display: flex;
-    flex: 1 1 auto;
-    padding: 5px;
-    margin-bottom: 20px;
-  }
-  .upload-audios-card .title {
-    font-weight: 600
-  }
-  .upload-audios-card .card-actions {
-    align-self: center
-  }
-  .card-actions {
-    min-width: 100px;
-  }
+.upload-audios-card {
+  display: flex;
+  flex: 1 1 auto;
+  padding: 5px;
+  margin-bottom: 20px;
+}
+.upload-audios-card .title {
+  font-weight: 600;
+}
+.upload-audios-card .card-actions {
+  align-self: center;
+}
+.card-actions {
+  min-width: 100px;
+}
 </style>

@@ -53,6 +53,10 @@
           </div>
 
           <Microphone
+            :noiseSuppression="false"
+            :echoCancellation="false"
+            :autoGainControl="false"
+            @newAudio="saveTermo"
             @ready="updateStepper"
           />
 
@@ -73,6 +77,10 @@
           </div>
 
           <Microphone
+            :noiseSuppression="false"
+            :echoCancellation="false"
+            :autoGainControl="false"
+            @newAudio="saveSustentada"
             @ready="updateStepper"
           />
 
@@ -90,6 +98,10 @@
           </div>
 
           <Microphone
+            :noiseSuppression="false"
+            :echoCancellation="false"
+            :autoGainControl="false"
+            @newAudio="saveParlenda"
             @ready="updateStepper"
           />
 
@@ -110,8 +122,8 @@
               pular
             </v-btn>
             <VTextMarquee :duration="8" :paused="scroll">
-              <h2>
-                -                                              - 
+              <h1>
+                ------------------------------------------------ 
                 O amor ao próximo ajuda a enfrentar essa fase com a força que a gente precisa 
               </h2>
             </VTextMarquee>
@@ -119,6 +131,10 @@
 
           <div @click="startCountdown()">
             <Microphone
+              :noiseSuppression="false"
+              :echoCancellation="false"
+              :autoGainControl="false"
+              @newAudio="saveFrase"
               @ready="goToDone"
             />
           </div>
@@ -141,7 +157,6 @@ export default {
   name: 'Gather',
   data: () => ({
     cur_step: 1,
-    carousel: 1,
     recording: false,
   }),
   components: { Microphone, VTextMarquee },
@@ -156,7 +171,19 @@ export default {
     },
     updateStepper() {
       this.cur_step++;
-    }
+    },
+    saveTermo(blobURL) {
+      this.$store.commit('saveTermo', blobURL)
+    },
+    saveSustentada(blobURL) {
+      this.$store.commit('saveSustentada', blobURL)
+    },
+    saveParlenda(blobURL) {
+      this.$store.commit('saveParlenda', blobURL)
+    },
+    saveFrase(blobURL) {
+      this.$store.commit('saveFrase', blobURL)
+    },
   },
   computed: { 
     scroll() {

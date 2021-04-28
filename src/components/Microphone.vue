@@ -73,6 +73,7 @@ export default {
       }
     },
 
+<<<<<<< HEAD
     stopMicrophone() {
       if (this.mediaRecorder) {
         this.mediaRecorder.stop();
@@ -102,6 +103,22 @@ export default {
     async toggleMic() {
       if (this.micState == 0) {
         await this.activateMicrophone();
+=======
+            this.mediaRecorder.addEventListener('dataavailable', e => {
+             const audioURL = window.URL.createObjectURL(e.data);
+             this.$emit('newAudio', audioURL);
+            })
+            
+            this.micState = 1;
+          }
+          catch (err) {
+            console.error('The following getUserMedia error occurred: ' + err);
+          }
+        } 
+        else {
+          console.error('getUserMedia not supported on your browser!');
+        }
+>>>>>>> feature/vuex-persistence
       }
       else if (this.micState == 1){
         this.stopMicrophone();

@@ -8,7 +8,7 @@
           max-width="250"
       ></v-img>
         
-      <h1>SPIRA</h1>
+      <h1 @click="testDb">SPIRA</h1>
     </div>
     <div class="cards-container">
       <UploadAudiosCard v-for="sample in samples" :key="sample.patient.id"
@@ -16,6 +16,7 @@
         :sampleDate="'31/03/2021'"
         :location="sample.location"
         :http="instance"
+        :audios="sample.audios"
       >
       </UploadAudiosCard>
     </div>
@@ -24,7 +25,7 @@
 
 <script>
 import UploadAudiosCard from '../components/UploadAudiosCard'
-import axios from 'axios'
+import axios from 'axios' // TODO: move this to global scope
 
 const baseURL = `${process.env.VUE_APP_BACKEND_URL}:${process.env.VUE_APP_BACKEND_PORT}`
 
@@ -35,28 +36,38 @@ const instance = axios.create({
 export default {
   name: 'Upload',
   components: {UploadAudiosCard},
-  data: () => ({
-    instance: instance,
-    samples: [
-      {
+  methods: {
+    async testDb() {
+      console.log(await this.$store.getters.allPatients)
+    }
+  },
+  async created () {
+    const patients = await this.$store.getters.allPatients
+
+    this.samples = patients.filter(e => (e && e.form && e.id)).map(e => {
+
+      const data = {
         patient: {
-          id: '123456',
-          name: 'Renan Nakazawa'
+          id: e.id,
+          rgh: e.form.rgh
         },
         location: {
-          name: 'Hospital Albert Einstein'
-        }
-      },
-      {
-        patient: {
-          id: '789123',
-          name: 'Juninho da Silva'
+          name: e.form.local
         },
-        location: {
-          name: 'Hospital Albert Einstein'
+        audios: {
+          aceite: e.aceite,
+          sustentada: e.sustentada,
+          parlenda: e.parlenda,
+          frase: e.frase
         }
       }
-    ]
+      // console.log({data})
+      return data
+    })
+  },
+  data: () => ({
+    instance: instance,
+    samples: []
   })
 }
 </script>

@@ -59,6 +59,7 @@
 <script>
 import { Howl } from 'howler';
 import Microphone from '../components/Microphone'
+import { openDB } from 'idb';
 
 export default {
   name: 'TestAudio',
@@ -100,10 +101,22 @@ export default {
       this.audios.push(url);
     }
   },
-  created() {
+  async created() {
     this.audios.forEach(audio => {
       this.$set(this.activeAudio, audio, false);
     })
+    const db = await openDB('local');
+    const transaction = db.transaction(['patients'], "readonly");
+    const store = transaction.objectStore('patients');
+    const storedPatients = await store.getAll();
+    for (let i = 0; i < storedPatients.length; i++) {
+      for(let field in storedPatients[i]) {
+        if (storedPatients[i][field] != 'form') {
+          this.names.push(storedPatients[i].form.rgh);
+          this.audios.push(URL.createObjectURL(storedPatients[i][field]));
+        }
+      }
+    }
   }
 }
 </script>

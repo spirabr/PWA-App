@@ -7,15 +7,14 @@
       </v-btn>
     </router-link>
 
-    <v-footer>
-      <strong>Spira - 2021</strong>
-    </v-footer>
+    <Footer/>
   </v-container>
 </template>
 
 <script>
+import Footer from '../components/Footer'
 export default {
-
+  components: { Footer }
 }
 </script>
 

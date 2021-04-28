@@ -16,8 +16,29 @@
 </template>
 
 <script>
-export default {
+import router from '@/router'
 
+export default {
+  name: 'Done',
+  data: () => ({
+    saving: true,
+  }),
+  methods: {
+    goHome() {
+      if (this.saving === false) {
+        router.push('/');
+      }
+    }
+  },
+  async created() {
+    await this.$store.commit('persistData');
+    this.saving = false;
+  },
+  computed: {
+    loading() {
+      return this.saving;
+    }
+  }
 }
 </script>
 
@@ -31,6 +52,11 @@ export default {
   }
   .back-home {
     color: white;
+    height: 4rem;
+    width: 100%;
+
+    display: flex;
+    justify-self: flex-start;
   }
   .container a {
     position: absolute;

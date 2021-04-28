@@ -122,7 +122,7 @@
               pular
             </v-btn>
             <VTextMarquee :duration="8" :paused="scroll">
-              <h1>
+              <h2>
                 ------------------------------------------------ 
                 O amor ao próximo ajuda a enfrentar essa fase com a força que a gente precisa 
               </h2>

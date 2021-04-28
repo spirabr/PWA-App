@@ -67,6 +67,9 @@ const store = new Vuex.Store({
       store.add(state.patient);
       
       return transaction.complete;
+    },
+    async deletePatient(state, id) {
+      
     }
   },
 })

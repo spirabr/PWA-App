@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import TestAudio from '../views/TestAudio.vue'
 import NotFound from '../views/NotFound.vue'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
@@ -36,11 +35,6 @@ const routes = [
     path: '/gather/done',
     name: 'Done',
     component: Done
-  },
-  {
-    path: '/test',
-    name: 'TestAudio',
-    component: TestAudio
   },
   {
     path: '*',

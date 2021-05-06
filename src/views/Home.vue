@@ -20,7 +20,19 @@
           large
           class="route-button"
         >
-          Iniciar coleta
+          iniciar coleta
+        </v-btn>
+      </router-link>
+
+      <router-link to="/upload">
+        <v-btn
+          outlined
+          block
+          rounded
+          large
+          class="route-button"
+        >
+          upload
         </v-btn>
       </router-link>
       
@@ -32,34 +44,19 @@
           large
           class="route-button"  
         >
-          Sobre o Spira
+          sobre o spira
         </v-btn>
       </router-link>
 
-      <router-link to="/test">
-        <v-btn
-          outlined
-          block
-          rounded
-          large
-          class="route-button"
-        >
-          Teste de áudio
-        </v-btn>
-      </router-link>
-      
     </div>
 
-    <Footer/>
   </v-container>
 </template>
 
 <script>
-import Footer from '@/components/Footer'
 
 export default {
-  name: 'Home',
-  components: {Footer}
+  name: 'Home'
 }
 </script>
 

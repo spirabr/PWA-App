@@ -76,7 +76,7 @@ export default {
         }
         console.log(data.date);
         this.$store.commit('addFormData', data);        
-        router.push('/gather/audios');
+        router.push('/gather/aceite');
       }
     },
     todaysDate() {
@@ -118,8 +118,8 @@ export default {
     height: 80px;
     display: flex;
   }
-  .v-label label {
-    font-style: italic;
+  .v-label .checkboxes {
+    font-style: normal;
   }
   .checkboxes {
     display: flex;
@@ -132,7 +132,9 @@ export default {
   }
   .v-btn {
     width: 100%;
+
     font-size: 1.3rem;
+    font-weight: bold;
     color: white;
   }
   .v-btn:not(.v-btn--round).v-size--default {

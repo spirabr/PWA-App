@@ -28,19 +28,13 @@ export default {
     color: var(--purple-color);
   }
   .v-application .container {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-family: 'Lexend', sans-serif;
-    font-family: 'PT Sans', sans-serif;
-    font-family: 'Rajdhani', sans-serif;
-    font-family: 'Titillium Web', sans-serif;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Jost', sans-serif;
   }
   .container {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    place-items: center;
     padding: 24px 18px;
   }
   .container h1 {
@@ -57,6 +51,11 @@ export default {
   .container .v-btn {
     text-transform: lowercase;
     letter-spacing: 1px;
+    font-family: 'Baloo 2', sans-serif;
+    justify-self: flex-start;
+  }
+  .v-label {
+    font-style: italic;
   }
   .v-btn {
     width: 93%;

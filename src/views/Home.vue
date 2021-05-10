@@ -68,7 +68,7 @@ export default {
     padding: 24px 18px;
     position: relative;
   }
-  .logo{
+  .logo {
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -85,8 +85,10 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+
   }
   .v-size--large {
+    font-weight: bold;
     font-size: 1.3rem;
   }
   .buttons a {

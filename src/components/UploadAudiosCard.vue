@@ -48,7 +48,7 @@ export default {
 
       try {
         const patientRegisterResponse = await this.http.post(
-          "patient",
+          `${process.env.BACKEND_URL}/patient`,
           requestData
         );
         if (patientRegisterResponse.status === 201) {
@@ -64,7 +64,7 @@ export default {
             },
           };
           const audioUploadResponse = await this.http.put(
-            `/patient/${this.location.name}/${this.patient.rgh}/audio`,
+            `${process.env.BACKEND_URL}/patient/${this.location.name}/${this.patient.rgh}/audio`,
             audiosFormData,
             requestOptions
           );

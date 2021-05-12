@@ -29,11 +29,7 @@
 import UploadAudiosCard from '../components/UploadAudiosCard'
 import axios from 'axios' // TODO: move this to global scope
 
-const baseURL = `${process.env.BACKEND_URL}`
-
-const instance = axios.create({
-  baseURL: baseURL
-})
+const instance = axios.create()
 
 export default {
   name: 'Upload',

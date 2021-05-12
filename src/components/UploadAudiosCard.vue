@@ -48,7 +48,7 @@ export default {
 
       try {
         const patientRegisterResponse = await this.http.post(
-          `${process.env.BACKEND_URL}/patient`,
+          `https://inspirada.ime.usp.br/api/patient`,
           requestData
         );
         if (patientRegisterResponse.status === 201) {
@@ -64,7 +64,7 @@ export default {
             },
           };
           const audioUploadResponse = await this.http.put(
-            `${process.env.BACKEND_URL}/patient/${this.location.name}/${this.patient.rgh}/audio`,
+            `https://inspirada.ime.usp.br/api/patient/${this.location.name}/${this.patient.rgh}/audio`,
             audiosFormData,
             requestOptions
           );

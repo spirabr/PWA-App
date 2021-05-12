@@ -1,11 +1,20 @@
 <template>
   <v-container>
     <header>
-      <div class="placeholder">
-        <h1>formulário</h1>
-      </div>
+      <h1>formulário</h1>
     </header>
     <v-form ref="form">
+      <v-radio-group 
+        v-model="keyType" 
+        row
+      >
+        <v-radio
+          label="RGH"
+        ></v-radio>
+        <v-radio
+          label="Outro"
+        ></v-radio>
+      </v-radio-group>
       <v-text-field 
         solo
         v-model="rgh"
@@ -56,6 +65,7 @@ export default {
   name: 'Form',
   data: () => ({
     rgh: "",
+    keyType: 0,
     local: "",
     sex: "",
     nonEmpty: [
@@ -69,12 +79,13 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         const data = {
-          rgh: this.rgh,
+          rgh: this.keyType ? "Outro" : this.rgh,
           local: this.local,
           sex: this.sex ? "F" : "M",
           date: this.todaysDate(),
         }
-        this.$store.commit('addFormData', data);        
+        console.log(data.rgh);
+        this.$store.commit('addFormData', data);
         router.push('/gather/aceite');
       }
     },

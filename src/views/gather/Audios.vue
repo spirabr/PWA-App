@@ -3,33 +3,25 @@
     <v-stepper v-model="cur_step">
 
       <v-stepper-header app>
+        
         <v-stepper-step
-          id="step-marker"
           step="1"
           :complete="cur_step > 1"
-        >
-          Aceite
-        </v-stepper-step>
-        
-        
-        <v-stepper-step
-          step="2"
-          :complete="cur_step > 2"
         >
           Vogal Sustentada
         </v-stepper-step>
 
 
         <v-stepper-step
-          step="3"
-          :complete="cur_step > 3"
+          step="2"
+          :complete="cur_step > 2"
         >
           Parlenda
         </v-stepper-step>
 
 
         <v-stepper-step
-          step="4"
+          step="3"
         >
           Frase
         </v-stepper-step>
@@ -37,32 +29,6 @@
 
       <v-stepper-items>
         <v-stepper-content step="1">
-          <div>
-            <div class="placeholder">
-              <h1>termo de partipação</h1>
-            </div>
-            <div class="placeholder">
-              Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios.
-
-              Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador.
-
-              Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima.
-              
-              Nenhum dado pessoal seu será incluído em nenhum documento do estudo.
-            </div>
-          </div>
-
-          <Microphone
-            :noiseSuppression="false"
-            :echoCancellation="false"
-            :autoGainControl="false"
-            @newAudio="saveTermo"
-            @ready="updateStepper"
-          />
-
-        </v-stepper-content>
-
-        <v-stepper-content step="2">
           <div>
             <h1>Vogal Sustentada</h1>
             <p>Favor cumprir os seguintes passos: </p>
@@ -77,16 +43,14 @@
           </div>
 
           <Microphone
-            :noiseSuppression="false"
-            :echoCancellation="false"
-            :autoGainControl="false"
+            :Reset=true
             @newAudio="saveSustentada"
             @ready="updateStepper"
           />
 
         </v-stepper-content>
 
-        <v-stepper-content step="3">
+        <v-stepper-content step="2">
           <div>
             <h1>Parlenda</h1>
             <p>Favor falar um verso que saiba de cor. <br>
@@ -98,16 +62,14 @@
           </div>
 
           <Microphone
-            :noiseSuppression="false"
-            :echoCancellation="false"
-            :autoGainControl="false"
+            :Reset=true
             @newAudio="saveParlenda"
             @ready="updateStepper"
           />
 
         </v-stepper-content>
 
-        <v-stepper-content step="4">
+        <v-stepper-content step="3">
           <div>
             <h1> Frase lida </h1>
             <p>Favor perguntar se o paciente se importa em ler a frase a seguir. <br>
@@ -131,9 +93,7 @@
 
           <div @click="startCountdown()">
             <Microphone
-              :noiseSuppression="false"
-              :echoCancellation="false"
-              :autoGainControl="false"
+              :Reset=true
               @newAudio="saveFrase"
               @ready="goToDone"
             />
@@ -172,9 +132,6 @@ export default {
     updateStepper() {
       this.cur_step++;
     },
-    saveTermo(blobURL) {
-      this.$store.commit('saveTermo', blobURL)
-    },
     saveSustentada(blobURL) {
       this.$store.commit('saveSustentada', blobURL)
     },
@@ -208,7 +165,7 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    align-content: space-around;
   }
   .v-stepper__header {
     padding: 0px 5%;

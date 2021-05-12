@@ -1,5 +1,15 @@
 <template>
   <div>
+    <v-btn 
+      v-if="micState == 4 && Reset"
+      outlined
+      rounded
+      block
+      class="reset"
+      @click="reset"
+    >
+    refazer gravação
+    </v-btn>
     <v-btn
       outlined
       rounded
@@ -8,16 +18,6 @@
       class="recorder"
       @click="toggleMic"
     >{{ btnText }}
-    </v-btn>
-    <v-btn 
-      v-if="micState == 4"
-      outlined
-      rounded
-      block
-      class="reset"
-      @click="reset"
-    >
-    refazer gravação
     </v-btn>
   </div>
 </template>
@@ -31,6 +31,7 @@ let time_out_id;
 
 export default {
   name: "Microphone",
+  props: [ 'Reset' ],
   data: () => ({
     micState: 0,
     audioURL: '',
@@ -105,6 +106,9 @@ export default {
       }
       else if (this.micState == 1){
         this.stopMicrophone();
+        if (!this.Reset) {
+          this.micState = 4
+        }
       }
       else if (this.micState == 2) {
         this.listen();
@@ -166,9 +170,9 @@ export default {
 
 <style scoped>
   .recorder {
+    margin-top: 1rem;
     display: flex;
-    justify-self: flex-start;
-    bottom: 4rem;
+    align-self: start;
   }
   .v-btn:not(.v-btn--round).v-size--default {
     height: 60px;
@@ -179,10 +183,11 @@ export default {
   }
   .v-btn {
     position: absolute;
-    right: 0;
     text-transform: none;
     letter-spacing: inherit;
     font-weight: bold;
+    right: 0;
+    bottom: 4rem;
   }
   .v-btn.v-size--default {
     font-size: 1.3rem;
@@ -193,6 +198,6 @@ export default {
     text-align: left;
     width: 50%;
     height: 10px;
-    bottom: 9rem;
+    bottom: 8.5rem;
   }
 </style>

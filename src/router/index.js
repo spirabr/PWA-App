@@ -1,13 +1,13 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import TestAudio from '../views/TestAudio.vue'
-import NotFound from '../views/NotFound.vue'
-import Home from '../views/Home.vue'
-import About from '../views/About.vue'
-import Form from '../views/gather/Form'
-import Audios from '../views/gather/Audios'
-import Done from '../views/gather/Done.vue'
-import Upload from '../views/Upload'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import NotFound from '../views/NotFound';
+import Home from '../views/Home';
+import About from '../views/About';
+import Form from '../views/gather/Form';
+import Aceite from '../views/gather/Aceite';
+import Audios from '../views/gather/Audios';
+import Done from '../views/gather/Done';
+import Upload from '../views/Upload';
 
 Vue.use(VueRouter)
 
@@ -28,6 +28,11 @@ const routes = [
     component: Form
   },
   {
+    path: '/gather/aceite',
+    name: 'Aceite',
+    component: Aceite
+  },
+  {
     path: '/gather/audios',
     name: 'Audios',
     component: Audios
@@ -36,11 +41,6 @@ const routes = [
     path: '/gather/done',
     name: 'Done',
     component: Done
-  },
-  {
-    path: '/test',
-    name: 'TestAudio',
-    component: TestAudio
   },
   {
     path: '*',

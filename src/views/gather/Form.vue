@@ -10,14 +10,14 @@
         solo
         v-model="rgh"
         :rules="nonEmpty"
-        label="Registro Geral Hospitalar"
+        label="Modelo do Celular"
         required
       ></v-text-field>
       <v-text-field 
         solo
         v-model="local" 
         :rules="nonEmpty"
-        label="Local de Coleta"
+        label="Navegador Utilizado"
         required
       ></v-text-field>
 
@@ -74,9 +74,8 @@ export default {
           sex: this.sex ? "F" : "M",
           date: this.todaysDate(),
         }
-        console.log(data.date);
         this.$store.commit('addFormData', data);        
-        router.push('/gather/audios');
+        router.push('/gather/aceite');
       }
     },
     todaysDate() {
@@ -118,8 +117,8 @@ export default {
     height: 80px;
     display: flex;
   }
-  .v-label label {
-    font-style: italic;
+  .v-label .checkboxes {
+    font-style: normal;
   }
   .checkboxes {
     display: flex;
@@ -132,7 +131,9 @@ export default {
   }
   .v-btn {
     width: 100%;
+
     font-size: 1.3rem;
+    font-weight: bold;
     color: white;
   }
   .v-btn:not(.v-btn--round).v-size--default {

@@ -2,10 +2,12 @@
   <v-container>
     <div class="logo">
       <v-img 
-          src='../assets/SpiraLogo.jpg'
-          contain
-          max-height="150"
-          max-width="250"
+        src='../../public/img/video/logo_spira_anim.gif'
+        contain
+        height="100%"
+        width="100%"
+        max-height="215"
+        max-width="255"
       ></v-img>
         
       <h1 @click="testDb">SPIRA</h1>

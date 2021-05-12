@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn 
-      v-if="micState == 4"
+      v-if="micState == 4 && Reset"
       outlined
       rounded
       block
@@ -31,6 +31,7 @@ let time_out_id;
 
 export default {
   name: "Microphone",
+  props: [ 'Reset' ],
   data: () => ({
     micState: 0,
     audioURL: '',
@@ -105,6 +106,9 @@ export default {
       }
       else if (this.micState == 1){
         this.stopMicrophone();
+        if (!this.Reset) {
+          this.micState = 4
+        }
       }
       else if (this.micState == 2) {
         this.listen();

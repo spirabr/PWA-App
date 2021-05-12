@@ -43,9 +43,7 @@
           </div>
 
           <Microphone
-            :noiseSuppression="false"
-            :echoCancellation="false"
-            :autoGainControl="false"
+            :Reset=true
             @newAudio="saveSustentada"
             @ready="updateStepper"
           />
@@ -64,9 +62,7 @@
           </div>
 
           <Microphone
-            :noiseSuppression="false"
-            :echoCancellation="false"
-            :autoGainControl="false"
+            :Reset=true
             @newAudio="saveParlenda"
             @ready="updateStepper"
           />
@@ -97,9 +93,7 @@
 
           <div @click="startCountdown()">
             <Microphone
-              :noiseSuppression="false"
-              :echoCancellation="false"
-              :autoGainControl="false"
+              :Reset=true
               @newAudio="saveFrase"
               @ready="goToDone"
             />

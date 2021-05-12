@@ -10,14 +10,14 @@
         solo
         v-model="rgh"
         :rules="nonEmpty"
-        label="Registro Geral Hospitalar"
+        label="Modelo do Celular"
         required
       ></v-text-field>
       <v-text-field 
         solo
         v-model="local" 
         :rules="nonEmpty"
-        label="Local de Coleta"
+        label="Navegador Utilizado"
         required
       ></v-text-field>
 
@@ -74,7 +74,6 @@ export default {
           sex: this.sex ? "F" : "M",
           date: this.todaysDate(),
         }
-        console.log(data.date);
         this.$store.commit('addFormData', data);        
         router.push('/gather/aceite');
       }

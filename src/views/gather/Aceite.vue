@@ -12,6 +12,7 @@
     </p>
 
     <Microphone
+      :Reset=false
       @newAudio="saveTermo"
       @ready="nextPage"
     />

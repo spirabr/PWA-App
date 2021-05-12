@@ -15,7 +15,7 @@
     <div class="cards-container">
       <UploadAudiosCard v-for="sample in samples" :key="sample.patient.id"
         :patient="sample.patient"
-        :sampleDate="'31/03/2021'"
+        :sampleDate="sample.date"
         :location="sample.location"
         :http="instance"
         :audios="sample.audios"
@@ -56,6 +56,7 @@ export default {
         location: {
           name: e.form.local
         },
+        date: e.form.date,
         audios: {
           aceite: e.aceite,
           sustentada: e.sustentada,

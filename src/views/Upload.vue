@@ -1,28 +1,31 @@
 <template>
-  <v-container>
-    <div class="logo">
-      <v-img 
-        src='../../public/img/video/logo_spira_anim.gif'
-        contain
-        height="100%"
-        width="100%"
-        max-height="215"
-        max-width="255"
-      ></v-img>
-        
-      <h1 @click="testDb">SPIRA</h1>
-    </div>
-    <div class="cards-container">
-      <UploadAudiosCard v-for="sample in samples" :key="sample.patient.id"
-        :patient="sample.patient"
-        :sampleDate="sample.date"
-        :location="sample.location"
-        :http="instance"
-        :audios="sample.audios"
-      >
-      </UploadAudiosCard>
-    </div>
-  </v-container>
+  <transition name="slideUp">
+    <v-container>
+      <router-link to="/">
+        <v-icon 
+          class="close-btn"
+        >
+          mdi-window-close
+        </v-icon>
+      </router-link>
+      <h1>
+        upload
+      </h1>
+      <p>
+        clique em "upload" para enviar o áudio.
+      </p>
+      <div class="cards-container">
+        <UploadAudiosCard v-for="sample in samples" :key="sample.patient.id"
+          :patient="sample.patient"
+          :sampleDate="sample.date"
+          :location="sample.location"
+          :http="instance"
+          :audios="sample.audios"
+        >
+        </UploadAudiosCard>
+      </div>
+    </v-container>
+  </transition>
 </template>
 
 <script>
@@ -34,11 +37,6 @@ const instance = axios.create()
 export default {
   name: 'Upload',
   components: {UploadAudiosCard},
-  methods: {
-    async testDb() {
-      console.log(await this.$store.getters.allPatients)
-    }
-  },
   async created () {
     const patients = await this.$store.getters.allPatients
 
@@ -73,35 +71,26 @@ export default {
 
 <style scoped>
   .container {
-    height: 100%;
-    width: 100%;
-    align-items: center;
-    padding: 2rem 2rem 0 2rem;
-    position: relative;
-  }
-  .logo{
-    margin-bottom: 1rem;
+    padding: 24px 18px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
-  .cards-container {
-    margin: 20;
+  .slideUp-enter-active {
+    transition: opacity 1s;
+    transform: translateY(200px);
   }
-  .v-footer {
-    background-color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+  .close-btn {
     position: absolute;
-    bottom: 0;
-    height: 50px;
-    width: 100%;
+    top: 1rem;
+    left: 1rem;
   }
-  .theme--light.v-footer {
-    color: white;
-    background-color: #500486;
+  h1 {
+    margin: 7.5% 0;
+  }
+  p {
+    text-align: center;
+    font-weight: normal;
+    color: var(--purple-color);
+    padding-bottom: 3%;
   }
 </style>

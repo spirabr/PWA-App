@@ -1,34 +1,22 @@
 <template>
   <v-container>
+    <router-link to="/">
+      <v-icon 
+        class="close-btn"
+      >
+        mdi-window-close
+      </v-icon>
+    </router-link>
+
     <header>
-      <router-link to="/">
-        <v-btn
-          class="ma-1"
-          color="#500486"
-          dark
-        >
-          <v-icon
-            dark
-            small
-            center
-          >
-            mdi-arrow-left
-          </v-icon>
-        </v-btn>
-      </router-link>
-      <div class="placeholder">
-        <h1>sobre o spira</h1>
-      </div>
+      <h1>sobre o spira</h1>
       <hr>
     </header>
 
     <main>
-      <div class="placeholder">
-        <p>Texto descritivo sobre o projeto SPIRA</p>
-      </div>
+      <p>Texto descritivo sobre o projeto SPIRA</p>
     </main>
 
-    <Footer></Footer>
   </v-container>
 </template>
 
@@ -39,13 +27,14 @@ export default {
 </script>
 
 <style scoped>
+  .container {
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+  }
   .container header {
     width: 100%;
     text-align: center;
-  }
-  .container a {
-    text-decoration: none;
-    color: white;
   }
   .container main{
     width: 100%;
@@ -57,10 +46,20 @@ export default {
   .container main {
     width: 100%;
   }
-  .v-btn:not(.v-btn--round).v-size--default {
-    min-width: 0px;
+  .close-btn {
+    left: 0rem;
+    top: 0rem;
+    bottom: 1rem;
   }
-  .v-btn {
-    border-radius: 32px;
+  header {
+    margin: 7.5% 0;
+  }
+  a {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 0;
+    height: 0;
+    text-decoration: none;
   }
 </style>

@@ -1,14 +1,11 @@
 <template>
   <v-container>
     <div class="logo">
-      <v-img 
-        src='../../public/img/video/logo_spira_anim.gif'
-        contain
-        height="100%"
-        width="100%"
-        max-height="215"
-        max-width="255"
-      ></v-img>
+      <video 
+        autoplay
+        muted
+        src='../../public/img/video/Spira_logo_anim.webm'
+      ></video>
     </div>
     
     <div class="buttons">
@@ -101,5 +98,11 @@ export default {
     margin-top: 1rem;
     margin-bottom: 2rem;
     width: 100%;
+  }
+  video {
+    height: 100%;
+    width: 100%;
+    max-height: 215px;
+    max-width: 255px;
   }
 </style>

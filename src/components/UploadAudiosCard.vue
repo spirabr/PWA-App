@@ -90,6 +90,7 @@ export default {
   flex: 1 1 auto;
   padding: 5px;
   margin-bottom: 20px;
+  background-color: var(--purple-color);
 }
 .upload-audios-card .title {
   font-weight: 600;

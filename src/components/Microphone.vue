@@ -188,6 +188,8 @@ export default {
     font-weight: bold;
     right: 0;
     bottom: 4rem;
+    
+    border: 2.7px solid;
   }
   .v-btn.v-size--default {
     font-size: 1.3rem;

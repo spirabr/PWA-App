@@ -30,7 +30,7 @@
       <v-stepper-items>
         <v-stepper-content step="1">
           <div>
-            <h1>Vogal Sustentada</h1>
+            <h1>vogal sustentada</h1>
             <p>Favor cumprir os seguintes passos: </p>
             <ol>
               <li>
@@ -52,7 +52,7 @@
 
         <v-stepper-content step="2">
           <div>
-            <h1>Parlenda</h1>
+            <h1>parlenda</h1>
             <p>Favor falar um verso que saiba de cor. <br>
               Por exemplo: <br>
               <i> “Batatinha quando nasce <br>
@@ -71,7 +71,7 @@
 
         <v-stepper-content step="3">
           <div>
-            <h1> Frase lida </h1>
+            <h1> frase lida </h1>
             <p>Favor perguntar se o paciente se importa em ler a frase a seguir. <br>
               Caso contrário, pular esta etapa.</p>
             <v-btn
@@ -172,7 +172,7 @@ export default {
     height: 36px;
   }
   .v-stepper__step {
-    padding: 0 20px;
+    padding: 0;
   }
   .ready-btn {
     color: white;
@@ -188,7 +188,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 7% 0;
+    margin: 7% 0 14% 0;
   }
   h2 {
     color: var(--purple-color);

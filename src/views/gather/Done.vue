@@ -9,6 +9,7 @@
       large
       color="var(--purple-color)"
       class="back-home"
+      @click="goHome"
     >
       voltar para o início
     </v-btn>

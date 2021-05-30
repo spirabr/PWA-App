@@ -46,6 +46,20 @@ export default {
     text-align: center;
     font-size: 1.7em;
   }
+  i.v-icon.notranslate.mdi.mdi-check.theme--light {
+    display: none;
+  }
+  .v-stepper__wrapper {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .container .microphone {
+    align-self: flex-start;
+  }
   p {
     font-size: 1.1em;
   }

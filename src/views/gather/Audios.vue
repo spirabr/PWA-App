@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-stepper v-model="cur_step">
+    <v-stepper v-model="curStep">
 
       <v-stepper-header 
         app
@@ -9,8 +9,7 @@
         
         <v-stepper-step
           step=""
-          :complete="cur_step > 1"
-          :active-step="cur_step == 1"
+          :complete="curStep >= 1"
         >
           Vogal Sustentada
         </v-stepper-step>
@@ -18,7 +17,7 @@
 
         <v-stepper-step
           step=""
-          :complete="cur_step > 2"
+          :complete="curStep >= 2"
         >
           Parlenda
         </v-stepper-step>
@@ -26,6 +25,7 @@
 
         <v-stepper-step
           step=""
+          :complete="curStep >= 3"
         >
           Frase
         </v-stepper-step>
@@ -33,7 +33,7 @@
 
       <v-stepper-items id="stepper-content">
         <v-stepper-content step="1">
-          <div>
+          <div class="instruction">
             <h1>vogal sustentada</h1>
             <p>Favor cumprir os seguintes passos: </p>
             <ol>
@@ -41,9 +41,9 @@
                 respire fundo
               </li>
               <li>
-                fale em voz alta a vogal “A” até acabar o ar
+                fale em voz alta a vogal “<strong>A</strong>” até acabar o ar
               </li>
-            </ol>     
+            </ol>
           </div>
 
           <Microphone
@@ -55,7 +55,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <div>
+          <div class="instruction">
             <h1>parlenda</h1>
             <p>Favor falar um verso que saiba de cor. <br>
               Por exemplo: 
@@ -64,7 +64,7 @@
               Esparrama pelo chão …”
             </p>
             <p>
-              Caso não se lembre de nenhum verso, pode ser substituído por uma oração.
+              Caso não se lembre de nenhum verso, pode ser substituído por uma oração
             </p>
           </div>
 
@@ -77,7 +77,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="3">
-          <div>
+          <div class="instruction">
             <h1> frase lida </h1>
             <p>Favor perguntar se o paciente se importa em ler a frase a seguir. <br>
               Caso contrário, pular esta etapa.</p>
@@ -97,7 +97,7 @@
           >
             pular esta etapa
           </v-btn>
-          <div @click="startCountdown()">
+          <div @click="disallowSkip()">
             <Microphone
               :Reset=true
               @newAudio="saveFrase"
@@ -114,30 +114,23 @@
 import Microphone from '@/components/Microphone'
 import router from '@/router'
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 export default {
   name: 'Gather',
   data: () => ({
-    cur_step: 1,
+    curStep: 1,
     recording: false,
     allowSkip: true,
   }),
   components: { Microphone},
   methods: {
-    async startCountdown() {
+    disallowSkip() {
       this.allowSkip = false;
-      if (!this.recording)
-        await sleep(1000);
-      this.recording = !this.recording;
     },
     async goToDone() {
       await router.push('/gather/done');
     },
     updateStepper() {
-      this.cur_step++;
+      this.curStep++;
     },
     saveSustentada(blobURL) {
       this.$store.commit('saveSustentada', blobURL)
@@ -165,12 +158,12 @@ export default {
     padding: 0;
   }
   .parlenda {
-    width: 100%;
-    height: 100%;
-
     font-weight: bold;
     font-style: italic;
     text-align: center;
+  }
+  .parlenda-text {
+    height: 100%;
   }
   .v-stepper {
     width: 100%;
@@ -180,9 +173,7 @@ export default {
     height: calc(100vh - 36px);
   }
   .v-stepper__content {
-    display: flex;
-    justify-content: stretch;
-    padding: 0 22px 30px 22px;
+    padding: 0 22px 30px;
   }
   .v-stepper__header {
     padding: 0 22px;
@@ -202,6 +193,7 @@ export default {
   h2 {
     color: var(--purple-color);
     font-weight: normal;
+    text-align: center;
   }
   li::marker {
     padding: 0;
@@ -216,6 +208,8 @@ export default {
     
     font-weight: bold;
     font-size: 1.3rem;
+
+    flex: unset;
 
     border: 2.7px solid var(--purple-color);
   }

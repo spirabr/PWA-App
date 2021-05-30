@@ -170,13 +170,13 @@ export default {
 </script>
 
 <style scoped>
-  .container .microphone{
+  .container .microphone {
     height: calc(17px + 2*47px);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     
-    align-self: end;
+    align-self: flex-end;
     padding: 0;
   }
   .v-btn:not(.v-btn--round).v-size--default {

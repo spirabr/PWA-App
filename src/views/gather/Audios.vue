@@ -2,18 +2,22 @@
   <v-container>
     <v-stepper v-model="cur_step">
 
-      <v-stepper-header app>
+      <v-stepper-header 
+        app
+        class="elevation-0"
+      >
         
         <v-stepper-step
-          step="1"
+          step=""
           :complete="cur_step > 1"
+          :active-step="cur_step == 1"
         >
           Vogal Sustentada
         </v-stepper-step>
 
 
         <v-stepper-step
-          step="2"
+          step=""
           :complete="cur_step > 2"
         >
           Parlenda
@@ -21,13 +25,13 @@
 
 
         <v-stepper-step
-          step="3"
+          step=""
         >
           Frase
         </v-stepper-step>
       </v-stepper-header>
 
-      <v-stepper-items>
+      <v-stepper-items id="stepper-content">
         <v-stepper-content step="1">
           <div>
             <h1>vogal sustentada</h1>
@@ -54,9 +58,12 @@
           <div>
             <h1>parlenda</h1>
             <p>Favor falar um verso que saiba de cor. <br>
-              Por exemplo: <br>
-              <i> “Batatinha quando nasce <br>
-                Esparrama pelo chão …” <br> </i>
+              Por exemplo: 
+            </p>
+            <p class="parlenda"> “Batatinha quando nasce <br>
+              Esparrama pelo chão …”
+            </p>
+            <p>
               Caso não se lembre de nenhum verso, pode ser substituído por uma oração.
             </p>
           </div>
@@ -74,23 +81,22 @@
             <h1> frase lida </h1>
             <p>Favor perguntar se o paciente se importa em ler a frase a seguir. <br>
               Caso contrário, pular esta etapa.</p>
-            <v-btn
-              outlined
-              rounded
-              block
-              color="red"
-              @click="goToDone"
-            >
-              pular
-            </v-btn>
-            <VTextMarquee :duration="8" :paused="scroll">
-              <h2>
-                ------------------------------------------------ 
-                O amor ao próximo ajuda a enfrentar essa fase com a força que a gente precisa 
-              </h2>
-            </VTextMarquee>
+            <h2>
+              O amor ao próximo ajuda a enfrentar <br> 
+              essa fase com a força que a gente precisa 
+            </h2>
           </div>
-
+          <v-btn
+            outlined
+            rounded
+            block
+            color="var(--purple-color)"
+            @click="goToDone"
+            class="skip-btn"
+            v-if="skipBtn"
+          >
+            pular esta etapa
+          </v-btn>
           <div @click="startCountdown()">
             <Microphone
               :Reset=true
@@ -106,7 +112,6 @@
 
 <script>
 import Microphone from '@/components/Microphone'
-import VTextMarquee from 'vue-marquee-text-component'
 import router from '@/router'
 
 function sleep(ms) {
@@ -118,10 +123,12 @@ export default {
   data: () => ({
     cur_step: 1,
     recording: false,
+    allowSkip: true,
   }),
-  components: { Microphone, VTextMarquee },
+  components: { Microphone},
   methods: {
     async startCountdown() {
+      this.allowSkip = false;
       if (!this.recording)
         await sleep(1000);
       this.recording = !this.recording;
@@ -145,6 +152,9 @@ export default {
   computed: { 
     scroll() {
       return !this.recording;
+    },
+    skipBtn() {
+      return this.allowSkip;
     }
   }
 }
@@ -154,51 +164,62 @@ export default {
   .container {
     padding: 0;
   }
+  .parlenda {
+    width: 100%;
+    height: 100%;
+
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+  }
   .v-stepper {
     width: 100%;
     height: 100%;
   }
   .v-stepper__items, .v-stepper__content {
-    height: 100%;
+    height: calc(100vh - 36px);
   }
-  .v-stepper__wrapper{
-    height: 100%;
+  .v-stepper__content {
     display: flex;
-    flex-direction: column;
-    align-content: space-around;
+    justify-content: stretch;
+    padding: 0 22px 30px 22px;
   }
   .v-stepper__header {
-    padding: 0px 5%;
+    padding: 0 22px;
+    margin-top: 14px;
     height: 36px;
   }
   .v-stepper__step {
     padding: 0;
-  }
-  .ready-btn {
-    color: white;
-  }
-  .placeholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 7% 0;
   }
   h1 {
     margin-right: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 7% 0 14% 0;
+    margin: 14px 0 28px 0;
   }
   h2 {
     color: var(--purple-color);
     font-weight: normal;
   }
-  .v-stepper__content {
-    position: relative;
-    padding: 1% 8.5%;
+  li::marker {
+    padding: 0;
+    font-weight: bold;
   }
-  a {
-    text-decoration: none;
-  } 
+  .skip-btn {
+    align-self: flex-end;
+    position: relative;
+    top: 47px;
+
+    opacity: 66%;
+    
+    font-weight: bold;
+    font-size: 1.3rem;
+
+    border: 2.7px solid var(--purple-color);
+  }
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: 47px;
+  }
 </style>

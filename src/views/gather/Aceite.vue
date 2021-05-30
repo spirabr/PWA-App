@@ -39,7 +39,10 @@ export default {
 
 <style scoped>
   .container {
-    padding: 24px 18px;
+    padding: 30px 22px;
+
+    display: flex;
+    flex-direction: column;
   }
   h1 {
     margin-right: 10px;

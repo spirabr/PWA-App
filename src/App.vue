@@ -13,12 +13,15 @@ export default {
 <style>
   :root {
     --purple-color: #7c31f4;
+    --purple-box-shadow: rgba(124, 31, 244, 0.38);
+    --grey-color: #707070;
+    --grey-color-faded: #707070;
     font-size: 15px;
   }
   .theme--light.v-stepper .v-stepper__step:not(.v-stepper__step--active):not(.v-stepper__step--complete):not(.v-stepper__step--error) .v-stepper__step__step {
-    background-color: rgba(124, 31, 244, 0.38) !important;
-    height: 15px;
-    width: 50px;
+    background-color: var(--purple-box-shadow) !important;
+    height: 10.5px;
+    width: 70px;
     border-radius: 43px;
     padding: 0; 
   }
@@ -26,16 +29,8 @@ export default {
     background-color: var(--purple-color) !important;
     border-color: var(--purple-color) !important;
     border-radius: 43px;
-    height: 15px;
-    width: 50px;
-    padding: 0; 
-    color: var(--purple-color);
-  }
-  .v-stepper__step .v-stepper__step--inactive {
-    padding: 0;
-  }
-  .v-stepper__header {
-    padding: 22px 0;
+    height: 10.5px;
+    width: 70px;
   }
   .v-application .container {
     font-family: 'Jost', sans-serif;

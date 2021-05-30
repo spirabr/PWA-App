@@ -1,17 +1,17 @@
 <template>
   <v-container>
-    <h1>obrigado por participar</h1>
-    <router-link to="/">
-      <v-btn
-        outlined
-        rounded
-        block
-        color="#500486"
-        class="back-home"
-      >
-        voltar para o início
-      </v-btn>
-    </router-link>
+    <main>
+      <h1>obrigado por participar</h1>
+    </main>
+    <v-btn
+      block
+      rounded
+      large
+      color="var(--purple-color)"
+      class="back-home"
+    >
+      voltar para o início
+    </v-btn>
   </v-container>
 </template>
 
@@ -45,28 +45,31 @@ export default {
 <style scoped>
   .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+
+    padding: 30px 22px;
   }
-  .container h1 {
-    height: 45%;
+  main {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .back-home {
     color: white;
-    height: 4rem;
-    width: 100%;
+    
+    font-weight: bold;
+    font-size: 18.5px;
+    
+    height: 50px;
 
-    display: flex;
-    justify-self: flex-start;
+    align-self: flex-end;
+    flex: unset;
   }
-  .container a {
-    position: absolute;
-    bottom: 2rem;
-    height: 60px;
-    width: 93%;
-    text-decoration: none;
-  }
-  .v-btn:not(.v-btn--round).v-size--default {
-    height: 60px;
-    font-size: 1.3rem;
+  .v-btn:not(.v-btn--round).v-size--large {
+    height: 52px;
   }
 </style>

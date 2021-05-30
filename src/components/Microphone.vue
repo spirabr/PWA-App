@@ -1,25 +1,26 @@
 <template>
-  <div>
+  <v-container class="microphone">
     <v-btn 
-      v-if="micState == 4 && Reset"
+      v-show="micState == 4 && Reset"
       outlined
       rounded
       block
+      color="var(--grey-color-faded)"
       class="reset"
       @click="reset"
     >
     refazer gravação
     </v-btn>
     <v-btn
-      outlined
+      :outlined="micState < 4"
       rounded
       block
       :color="btnColor"
-      class="recorder"
+      :class="micState < 4 ? '' : 'advance'"
       @click="toggleMic"
     >{{ btnText }}
     </v-btn>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -139,7 +140,7 @@ export default {
     btnColor() {
       switch(this.micState) {
         case 0:
-          return '';
+          return 'var(--purple-color)';
         case 1:
           return 'red';
         case 2:
@@ -169,37 +170,41 @@ export default {
 </script>
 
 <style scoped>
-  .recorder {
-    margin-top: 1rem;
+  .container .microphone{
+    height: calc(17px + 2*47px);
     display: flex;
-    align-self: start;
+    flex-direction: column;
+    justify-content: flex-end;
+    
+    align-self: end;
+    padding: 0;
   }
   .v-btn:not(.v-btn--round).v-size--default {
-    height: 60px;
-    width: 93%;
+    height: 47px;
   }
   .v-btn:not(.v-btn--round).v-size--default .reset {
     height: 30px;
   }
   .v-btn {
-    position: absolute;
     text-transform: none;
     letter-spacing: inherit;
     font-weight: bold;
-    right: 0;
-    bottom: 4rem;
     
+    align-self: flex-start;
     border: 2.7px solid;
+
+    flex: unset;
   }
   .v-btn.v-size--default {
     font-size: 1.3rem;
   }
-  .container .reset{
-    position: absolute;
-    right: 0;
-    text-align: left;
-    width: 50%;
-    height: 10px;
-    bottom: 8.5rem;
+  .container .reset {
+    height: 47px;
+    width: 276px;
+    opacity: 66%;
+    margin-bottom: 17px;
+  }
+  .advance {
+    color: white;
   }
 </style>

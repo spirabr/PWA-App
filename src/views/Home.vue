@@ -81,7 +81,6 @@ export default {
     justify-content: center;
   }
   .route-button {
-    height: 47px;
     margin-top: 16px;
     margin-bottom: 0px;
   }

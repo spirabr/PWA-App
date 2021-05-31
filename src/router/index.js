@@ -43,14 +43,14 @@ const routes = [
     component: Done
   },
   {
-    path: '*',
-    name: '404',
-    component: NotFound
-  },
-  {
     path: '/upload',
     name: 'Upload',
     component: Upload,
+  },
+  {
+    path: '*',
+    name: '404',
+    component: NotFound
   },
 ]
 

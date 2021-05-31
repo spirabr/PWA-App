@@ -9,41 +9,38 @@
     </div>
     
     <div class="buttons">
-      <router-link to="/gather/form">
-        <v-btn
-          outlined
-          block
-          rounded
-          large
-          class="route-button"
-        >
-          iniciar coleta
-        </v-btn>
-      </router-link>
+      <v-btn
+        block
+        rounded
+        large
+        color="var(--purple-color)"
+        class="route-button"
+        @click="goToColeta"
+      >
+        iniciar coleta
+      </v-btn>
 
-      <router-link to="/upload">
-        <v-btn
-          outlined
-          block
-          rounded
-          large
-          class="route-button"
-        >
-          upload
-        </v-btn>
-      </router-link>
-      
-      <router-link to="/about">
-        <v-btn
-          outlined
-          block
-          rounded
-          large
-          class="route-button"  
-        >
-          sobre o spira
-        </v-btn>
-      </router-link>
+      <v-btn
+        block
+        rounded
+        large
+        color="var(--purple-color)"
+        class="route-button"
+        @click="goToUpload"
+      >
+        upload
+      </v-btn>
+    
+      <v-btn
+        block
+        rounded
+        large
+        color="var(--purple-color)"
+        class="route-button"
+        @click="goToAbout"
+      >
+        sobre o spira
+      </v-btn>
 
     </div>
 
@@ -51,9 +48,21 @@
 </template>
 
 <script>
+import router from '@/router'
 
 export default {
-  name: 'Home'
+  name: 'Home',
+  methods: {
+    goToColeta() {
+      router.push('/gather/form');
+    },
+    goToUpload() {
+      router.push('/upload');
+    },
+    goToAbout() {
+      router.push('/about');
+    },   
+  }
 }
 </script>
 
@@ -62,8 +71,7 @@ export default {
     height: 100%;
     width: 100%;
 
-    padding: 24px 18px;
-    position: relative;
+    padding: 30px 22px;
   }
   .logo {
     margin-top: 1rem;
@@ -72,32 +80,29 @@ export default {
     align-items: center;
     justify-content: center;
   }
+  .route-button {
+    margin-top: 16px;
+    margin-bottom: 0px;
+  }
   .buttons {
     width: 100%;
     height: 100%;
 
-    position: relative;
-    padding-bottom: 3.2rem;
-
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-
   }
   .v-size--large {
     font-weight: bold;
-    font-size: 1.3rem;
-  }
-  .buttons a {
-    color: black; 
-    text-decoration: none;
+    font-size: 18.5px;
 
-    margin-bottom: 0.5rem;
+    color: white;
   }
-  .route-button {
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-    width: 100%;
+  .v-btn--block {
+    flex: unset;
+  }
+  .v-btn:not(.v-btn--round).v-size--large {
+    height: 47px;
   }
   video {
     height: 100%;

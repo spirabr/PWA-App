@@ -4,6 +4,8 @@
       <router-link to="/">
         <v-icon 
           class="close-btn"
+          color="var(--purple-color)"
+          x-large
         >
           mdi-window-close
         </v-icon>
@@ -12,7 +14,8 @@
         upload
       </h1>
       <p>
-        clique em "upload" para enviar o áudio.
+        Clique em <strong>upload</strong> para enviar o áudio.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui officia nobis sint cumque aspernatur quia et temporibus repellendus assumenda, nesciunt quo. Atque alias pariatur enim et a rerum modi incidunt.
       </p>
       <div class="cards-container">
         <UploadAudiosCard v-for="sample in samples" :key="sample.patient.id"
@@ -71,7 +74,7 @@ export default {
 
 <style scoped>
   .container {
-    padding: 24px 18px;
+    padding: 24px 22px;
     display: flex;
     flex-direction: column;
   }
@@ -81,16 +84,16 @@ export default {
   }
   .close-btn {
     position: absolute;
-    top: 1rem;
+    top: 1.5rem;
     left: 1rem;
   }
   h1 {
-    margin: 7.5% 0;
+    margin: 0 0 35px 0;
   }
   p {
-    text-align: center;
+    text-align: left;
     font-weight: normal;
-    color: var(--purple-color);
+    color: #707070;
     padding-bottom: 3%;
   }
 </style>

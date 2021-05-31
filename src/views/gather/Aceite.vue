@@ -1,15 +1,17 @@
 <template>
   <v-container>
-    <h1>termo de participação</h1>
-    <p>
-      Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios.
+    <div class="instruction">
+      <h1>termo de participação</h1>
+      <p>
+        Você está sendo convidado a participar de um estudo para desenvolver um método automático para detectar pessoas que possam evoluir com problemas respiratórios.
 
-      Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador.
+        Caso você concorde iremos pedir para que você grave uma ou mais frases pelo computador.
 
-      Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima.
-                
-      Nenhum dado pessoal seu será incluído em nenhum documento do estudo.
-    </p>
+        Os dados de sua voz serão analisados por pesquisadores da Universidade de São Paulo de forma anônima.
+                  
+        Nenhum dado pessoal seu será incluído em nenhum documento do estudo.
+      </p>
+    </div>
 
     <Microphone
       :Reset=false
@@ -39,7 +41,11 @@ export default {
 
 <style scoped>
   .container {
-    padding: 24px 18px;
+    padding: 30px 22px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   h1 {
     margin-right: 10px;

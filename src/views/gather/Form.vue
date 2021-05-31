@@ -6,7 +6,9 @@
       </div>
     </header>
     <v-form ref="form">
+      <p>Registro do Paciente</p>
       <v-text-field 
+        class="text-input"
         solo
         v-model="rgh"
         :rules="nonEmpty"
@@ -14,6 +16,7 @@
         required
       ></v-text-field>
       <v-text-field 
+        class="text-input"
         solo
         v-model="local" 
         :rules="nonEmpty"
@@ -21,7 +24,7 @@
         required
       ></v-text-field>
 
-      <div>
+      <div class="sexo-input">
         <p>Sexo</p>
         <v-radio-group v-model="sex" :rules="sexFormat"
           class="checkboxes"
@@ -39,7 +42,6 @@
     </v-form>
     <v-btn
       block
-      outlined
       rounded
       id="next-btn"
       color="var(--purple-color)"
@@ -92,7 +94,9 @@ export default {
 
 <style scoped>
   p {
-    margin-bottom: 0;
+    text-align: left;
+    font-weight: bold;
+    color: var(--purple-color);
   }
   .container header {
     width: 100%;
@@ -101,7 +105,7 @@ export default {
   .container header h1 {
     color: var(--purple-color);
     width: 100%;
-    font-weight: normal;
+    font-weight: bold;
     text-align: center;
     margin-bottom: 1rem;
   }
@@ -109,15 +113,19 @@ export default {
     width: 100%;
     height: 100%;
     padding-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-  .v-form .v-input {
-    height: 80px;
-    display: flex;
   }
   .v-label .checkboxes {
+    font-style: normal;
+  }
+  .sexo-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .sexo-input p {
+    margin: 0;
+  }
+  .sexo-input label {
     font-style: normal;
   }
   .checkboxes {
@@ -137,8 +145,8 @@ export default {
     color: white;
   }
   .v-btn:not(.v-btn--round).v-size--default {
-    width: 93%;
-    height: 60px;
+    width: 100%;
+    height: 47px;
   }
   .container  .v-input--selection-controls {
     margin-top: 5px;
@@ -153,6 +161,7 @@ export default {
     width: 100%;
   }
   .container {
-    padding: 24px 18px 24px 18px;
+    padding: 30px 22px;
+    height: 100%;
   }
 </style>

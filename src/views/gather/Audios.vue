@@ -1,45 +1,49 @@
 <template>
   <v-container>
-    <v-stepper v-model="cur_step">
+    <v-stepper v-model="curStep">
 
-      <v-stepper-header app>
+      <v-stepper-header 
+        app
+        class="elevation-0"
+      >
         
         <v-stepper-step
-          step="1"
-          :complete="cur_step > 1"
+          step=""
+          :complete="curStep >= 1"
         >
           Vogal Sustentada
         </v-stepper-step>
 
 
         <v-stepper-step
-          step="2"
-          :complete="cur_step > 2"
+          step=""
+          :complete="curStep >= 2"
         >
           Parlenda
         </v-stepper-step>
 
 
         <v-stepper-step
-          step="3"
+          step=""
+          :complete="curStep >= 3"
         >
           Frase
         </v-stepper-step>
       </v-stepper-header>
 
-      <v-stepper-items>
+      <v-stepper-items id="stepper-content">
         <v-stepper-content step="1">
-          <div>
-            <h1>Vogal Sustentada</h1>
+          <div class="instruction">
+            <h1>vogal sustentada</h1>
             <p>Favor cumprir os seguintes passos: </p>
             <ol>
               <li>
                 respire fundo
               </li>
               <li>
-                fale em voz alta a vogal “A” até acabar o ar
+                fale em voz alta a vogal “<strong>A</strong>” até acabar o ar
               </li>
-            </ol>     
+            </ol>
           </div>
 
           <Microphone
@@ -51,13 +55,16 @@
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <div>
-            <h1>Parlenda</h1>
+          <div class="instruction">
+            <h1>parlenda</h1>
             <p>Favor falar um verso que saiba de cor. <br>
-              Por exemplo: <br>
-              <i> “Batatinha quando nasce <br>
-                Esparrama pelo chão …” <br> </i>
-              Caso não se lembre de nenhum verso, pode ser substituído por uma oração.
+              Por exemplo: 
+            </p>
+            <p class="parlenda"> “Batatinha quando nasce <br>
+              Esparrama pelo chão …”
+            </p>
+            <p>
+              Caso não se lembre de nenhum verso, pode ser substituído por uma oração
             </p>
           </div>
 
@@ -70,28 +77,27 @@
         </v-stepper-content>
 
         <v-stepper-content step="3">
-          <div>
-            <h1> Frase lida </h1>
+          <div class="instruction">
+            <h1> frase lida </h1>
             <p>Favor perguntar se o paciente se importa em ler a frase a seguir. <br>
               Caso contrário, pular esta etapa.</p>
-            <v-btn
-              outlined
-              rounded
-              block
-              color="red"
-              @click="goToDone"
-            >
-              pular
-            </v-btn>
-            <VTextMarquee :duration="8" :paused="scroll">
-              <h2>
-                ------------------------------------------------ 
-                O amor ao próximo ajuda a enfrentar essa fase com a força que a gente precisa 
-              </h2>
-            </VTextMarquee>
+            <h2>
+              O amor ao próximo ajuda a enfrentar <br> 
+              essa fase com a força que a gente precisa 
+            </h2>
           </div>
-
-          <div @click="startCountdown()">
+          <v-btn
+            outlined
+            rounded
+            block
+            color="var(--purple-color)"
+            @click="goToDone"
+            class="skip-btn"
+            v-if="skipBtn"
+          >
+            pular esta etapa
+          </v-btn>
+          <div @click="disallowSkip()">
             <Microphone
               :Reset=true
               @newAudio="saveFrase"
@@ -106,31 +112,25 @@
 
 <script>
 import Microphone from '@/components/Microphone'
-import VTextMarquee from 'vue-marquee-text-component'
 import router from '@/router'
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 export default {
   name: 'Gather',
   data: () => ({
-    cur_step: 1,
+    curStep: 1,
     recording: false,
+    allowSkip: true,
   }),
-  components: { Microphone, VTextMarquee },
+  components: { Microphone},
   methods: {
-    async startCountdown() {
-      if (!this.recording)
-        await sleep(1000);
-      this.recording = !this.recording;
+    disallowSkip() {
+      this.allowSkip = false;
     },
     async goToDone() {
       await router.push('/gather/done');
     },
     updateStepper() {
-      this.cur_step++;
+      this.curStep++;
     },
     saveSustentada(blobURL) {
       this.$store.commit('saveSustentada', blobURL)
@@ -145,6 +145,9 @@ export default {
   computed: { 
     scroll() {
       return !this.recording;
+    },
+    skipBtn() {
+      return this.allowSkip;
     }
   }
 }
@@ -154,51 +157,63 @@ export default {
   .container {
     padding: 0;
   }
+  .parlenda {
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+  }
+  .parlenda-text {
+    height: 100%;
+  }
   .v-stepper {
     width: 100%;
     height: 100%;
   }
   .v-stepper__items, .v-stepper__content {
-    height: 100%;
+    height: calc(100vh - 36px);
   }
-  .v-stepper__wrapper{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-content: space-around;
+  .v-stepper__content {
+    padding: 0 22px 30px;
   }
   .v-stepper__header {
-    padding: 0px 5%;
+    padding: 0 22px;
+    margin-top: 14px;
     height: 36px;
   }
   .v-stepper__step {
-    padding: 0 20px;
-  }
-  .ready-btn {
-    color: white;
-  }
-  .placeholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 7% 0;
+    padding: 0;
   }
   h1 {
     margin-right: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 7% 0;
+    margin: 14px 0 28px 0;
   }
   h2 {
     color: var(--purple-color);
     font-weight: normal;
+    text-align: center;
   }
-  .v-stepper__content {
+  li::marker {
+    padding: 0;
+    font-weight: bold;
+  }
+  .skip-btn {
+    align-self: flex-end;
     position: relative;
-    padding: 1% 8.5%;
+    top: 47px;
+
+    opacity: 66%;
+    
+    font-weight: bold;
+    font-size: 1.3rem;
+
+    flex: unset;
+
+    border: 2.7px solid var(--purple-color);
   }
-  a {
-    text-decoration: none;
-  } 
+  .v-btn:not(.v-btn--round).v-size--default {
+    height: 47px;
+  }
 </style>

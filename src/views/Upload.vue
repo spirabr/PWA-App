@@ -15,7 +15,6 @@
       </h1>
       <p>
         Clique em <strong>upload</strong> para enviar o áudio.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui officia nobis sint cumque aspernatur quia et temporibus repellendus assumenda, nesciunt quo. Atque alias pariatur enim et a rerum modi incidunt.
       </p>
       <div class="cards-container">
         <UploadAudiosCard v-for="sample in samples" :key="sample.patient.id"

@@ -38,10 +38,11 @@
             <p>Favor cumprir os seguintes passos: </p>
             <ol>
               <li>
-                respire fundo
+                você vai inspirar, ou seja, respirar fundo 
               </li>
               <li>
-                fale em voz alta a vogal “<strong>A</strong>” até acabar o ar
+                fazer um [<strong>A</strong>] comprido o máximo de tempo que puder. <br>
+                Assim: "<strong>aaa</strong>"
               </li>
             </ol>
           </div>
@@ -57,14 +58,16 @@
         <v-stepper-content step="2">
           <div class="instruction">
             <h1>parlenda</h1>
-            <p>Favor falar um verso que saiba de cor. <br>
+            <p>Agora você poderia dizer alguma coisa de cor? Por exemplo: algo que você
+              aprendeu na infância e sabe até hoje?
+              <br>
               Por exemplo: 
             </p>
             <p class="parlenda"> “Batatinha quando nasce <br>
               Esparrama pelo chão …”
             </p>
             <p>
-              Caso não se lembre de nenhum verso, pode ser substituído por uma oração
+              Caso não se lembre de nenhum verso, você gostaria de dizer uma prece ou oração?
             </p>
           </div>
 
@@ -79,7 +82,7 @@
         <v-stepper-content step="3">
           <div class="instruction">
             <h1> frase lida </h1>
-            <p>Favor perguntar se o paciente se importa em ler a frase a seguir. <br>
+            <p>Você poderia ler a frase destacada abaixo?<br>
               Caso contrário, pular esta etapa.</p>
             <h2>
               O amor ao próximo ajuda a enfrentar <br> 

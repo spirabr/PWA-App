@@ -201,7 +201,6 @@ export default {
   .container .reset {
     height: 47px;
     width: 276px;
-    opacity: 66%;
     margin-bottom: 17px;
   }
   .advance {

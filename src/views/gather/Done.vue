@@ -2,6 +2,10 @@
   <v-container>
     <main>
       <h1>obrigado por participar</h1>
+      <p>a coleta está salva, para enviar os dados, vá até a aba 
+        <strong> 
+          <router-link to="/upload"> upload </router-link> 
+        </strong> e selecione a coleta a ser enviada</p>
     </main>
     <v-btn
       block
@@ -29,7 +33,7 @@ export default {
       if (this.saving === false) {
         router.push('/');
       }
-    }
+    },
   },
   async created() {
     await this.$store.commit('persistData');
@@ -68,9 +72,15 @@ export default {
     height: 50px;
 
     align-self: flex-end;
-    flex: unset;
   }
   .v-btn:not(.v-btn--round).v-size--large {
-    height: 52px;
+    height: 47px;
+  }
+  main p {
+    text-align: center;
+  }
+  main a {
+    text-decoration: none;
+    color: black;
   }
 </style>

@@ -41,7 +41,7 @@
                 você vai inspirar, ou seja, respirar fundo 
               </li>
               <li>
-                fazer um [<strong>A</strong>] comprido o máximo de tempo que puder. <br>
+                fazer um [<strong>a</strong>] comprido o máximo de tempo que puder. <br>
                 Assim: "<strong>aaa</strong>"
               </li>
             </ol>

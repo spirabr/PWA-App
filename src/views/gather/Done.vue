@@ -36,7 +36,7 @@ export default {
     },
   },
   async created() {
-    await this.$store.commit('persistData');
+    this.$store.commit('persistData');
     this.saving = false;
   },
   computed: {

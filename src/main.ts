@@ -4,9 +4,10 @@ import './registerServiceWorker'
 import store from './store.js'
 import router from './router'
 import vuetify from './plugins/vuetify';
-import VueMask from 'v-mask';
+import VScrollLock from 'v-scroll-lock'
 
 Vue.config.productionTip = false;
+Vue.use(VScrollLock)
 
 new Vue({
   router,

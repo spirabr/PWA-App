@@ -1,51 +1,94 @@
 <template>
   <v-container>
     <header>
-      <div class="placeholder">
+      <div class='placeholder'>
         <h1>formulário</h1>
       </div>
     </header>
-    <v-form ref="form">
+    <v-form id='form' ref='form' v-scroll-lock='true'>
       <p>Registro do Paciente</p>
       <v-text-field 
-        class="text-input"
+        class='text-input'
         solo
-        v-model="rgh"
-        :rules="nonEmpty"
-        label="Modelo do Celular"
-        required
-      ></v-text-field>
-      <v-text-field 
-        class="text-input"
-        solo
-        v-model="local" 
-        :rules="nonEmpty"
-        label="Navegador Utilizado"
+        v-model='form.rgh'
+        :rules='nonEmptyRule'
+        label='Modelo do Celular'
         required
       ></v-text-field>
 
-      <div class="sexo-input">
+      <v-select
+        v-model='form.local'
+        :items='hospitals'
+        label='Local de coleta'
+        solo
+        required
+      ></v-select>
+
+      <div class='sexo-input'>
         <p>Sexo</p>
-        <v-radio-group v-model="sex" :rules="sexFormat"
-          class="checkboxes"
+        <v-radio-group v-model='form.sex' :rules='radioRule'
+          class='checkboxes'
           row
         >
           <v-radio
-            label="Masculino"
+            label='Masculino'
+            value='Masculino'
+            color='var(--purple-color)'
           ></v-radio>
           <v-radio
-            label="Feminino"
+            label='Feminino'
+            value='Feminino'
+            color='var(--purple-color)'
           ></v-radio>
         </v-radio-group>
       </div>
 
+      <div class='covid-input'>
+        <p>Já testou positivo para COVID-19?</p>
+        <v-radio-group 
+          v-model='form.covid'
+          :rules='radioRule'
+          class='checkboxes'
+          row
+        >
+          <v-radio
+            label='Sim'
+            value='Sim'
+            color='var(--purple-color)'
+          ></v-radio>
+          <v-radio
+            label='Não'
+            value='Não'
+            color='var(--purple-color)'
+          ></v-radio>
+          <v-radio
+            label='Não se recorda /
+                  Não deseja declarar'
+            value='Não se recorda/
+                  Não deseja declarar'
+            color='var(--purple-color)'
+          ></v-radio>
+        </v-radio-group>
+      </div>
+
+      <div>
+        <p>O paciente está usando máscara?</p>
+        <v-select
+          v-model='form.mask'
+          :items='maskTypes'
+          solo
+          label='Tipo de Máscara'
+          required
+        ></v-select>
+      </div>
     </v-form>
+
     <v-btn
       block
       rounded
-      id="next-btn"
-      color="var(--purple-color)"
-      @click="submit"
+      id='next-btn'
+      color='var(--purple-color)'
+      @click='submit'
     >
       avançar
     </v-btn>
@@ -54,29 +97,40 @@
 
 <script>
 import router from '@/router';
+import axios from 'axios';
+
+async function loadOrRequestHospitals(component) {
+  try {
+    const newHospitals = await axios.get(process.env.HOSPITALS_URL);
+    component.$store.commit('loadHospitals', newHospitals);
+    return newHospitals;
+  }
+  catch {
+    return await component.$store.getters.getHospitals;
+  }
+}
+
 export default {
   name: 'Form',
   data: () => ({
-    rgh: "",
-    local: "",
-    sex: "",
-    nonEmpty: [
-      v => !!v.trim() != "" || "Preencha este campo" 
-    ],
-    sexFormat: [
-      v => v !== undefined || "Preencha este campo"
-    ]
+    form: {
+      rgh: '',
+      local: '',
+      sex: '',
+      covid: '',
+      mask: '',
+      date: '',
+    },
+    hospitals: [],
+    maskTypes: ['Nenhuma', 'Sim, Máscara Fina (pano, cirúrgica)', 'Sim, Máscara grossa (N-95)'],
+    nonEmptyRule: [ v => !!v.trim() != '' || 'Preencha este campo' ],
+    radioRule: [ v => v.trim() !== '' || 'Preencha este campo' ]
   }),
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        const data = {
-          rgh: this.rgh,
-          local: this.local,
-          sex: this.sex ? "F" : "M",
-          date: this.todaysDate(),
-        }
-        this.$store.commit('addFormData', data);        
+        this.form.date = this.todaysDate();
+        this.$store.commit('addFormData', this.form);
         router.push('/gather/aceite');
       }
     },
@@ -87,8 +141,11 @@ export default {
       const yyyy = today.getFullYear();
 
       return dd + '/' + mm + '/' + yyyy;
-    },
-  }
+    }
+  },
+  mounted() {
+    loadOrRequestHospitals(this).then(val => {this.hospitals = val;});
+  },
 }
 </script>
 

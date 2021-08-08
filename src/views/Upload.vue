@@ -39,35 +39,32 @@ const instance = axios.create()
 export default {
   name: 'Upload',
   components: {UploadAudiosCard},
-  async created () {
-    const patients = await this.$store.getters.allPatients
-
-    this.samples = patients.filter(e => (e && e.form && e.id)).map(e => {
-
-      const data = {
-        patient: {
-          id: e.id,
-          rgh: e.form.rgh
-        },
-        location: {
-          name: e.form.local
-        },
-        date: e.form.date,
-        audios: {
-          aceite: e.aceite,
-          sustentada: e.sustentada,
-          parlenda: e.parlenda,
-          frase: e.frase
-        }
-      }
-      // console.log({data})
-      return data
-    })
-  },
   data: () => ({
     instance: instance,
     samples: []
-  })
+  }),
+  async created() {
+    const patients = await this.$store.getters.allPatients;
+
+    this.samples = patients.filter(patient => (patient && patient.form && patient.id))
+    .map(patient => (
+      {
+        patient: {
+          id: patient.id,
+          rgh: patient.form.rgh
+        },
+        location: {
+          name: patient.form.local
+        },
+        date: patient.form.date,
+        audios: {
+          aceite: patient.aceite,
+          sustentada: patient.sustentada,
+          parlenda: patient.parlenda,
+          frase: patient.frase
+        }
+      }));
+  },
 }
 </script>
 

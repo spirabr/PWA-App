@@ -48,7 +48,7 @@ export default {
 
       try {
         const patientRegisterResponse = await this.http.post(
-          `${process.env.local.VUE_APP_BACKEND_URL}/patient`,
+          `${process.env.VUE_APP_BACKEND_URL}/patient`,
           requestData
         );
         if (patientRegisterResponse.status === 201) {

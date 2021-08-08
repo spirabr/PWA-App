@@ -122,7 +122,7 @@ export default {
       date: '',
     },
     hospitals: [],
-    maskTypes: ['Nenhuma', 'Sim, Máscara Fina (pano, cirúrgica)', 'Sim, Máscara grossa (N-95)'],
+    maskTypes: ['Nenhuma', 'Sim, Máscara fina (pano, cirúrgica)', 'Sim, Máscara grossa (N-95)'],
     nonEmptyRule: [ v => !!v.trim() != '' || 'Preencha este campo' ],
     radioRule: [ v => v.trim() !== '' || 'Preencha este campo' ]
   }),

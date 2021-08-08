@@ -62,7 +62,6 @@ const store = new Vuex.Store({
       state.patient.frase = blobURL;
     },
     async persistData(state) {
-      console.log(state.patient);
       for (let field in state.patient) {
         if (field !== 'form' && field !== 'id') {
           const preBlob = await fetch(state.patient[field]);

@@ -5,7 +5,7 @@
         <h1>formulário</h1>
       </div>
     </header>
-    <v-form id='form' ref='form' v-scroll-lock='true'>
+    <v-form ref='form'>
       <p>Registro do Paciente</p>
       <v-text-field 
         class='text-input'

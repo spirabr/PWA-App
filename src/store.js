@@ -4,12 +4,15 @@ import { openDB } from 'idb';
 
 Vue.use(Vuex);
 
-// Opening IndexedDB in here... Should I?
 openDB('local', undefined, {
   upgrade(db) {
     if (!db.objectStoreNames.contains('patients')) {
       let objectStore = db.createObjectStore('patients', {keyPath: 'id'});
-      objectStore.createIndex('patientId', 'id', {unique: false})
+      objectStore.createIndex('patientId', 'id', {unique: false});
+    }
+    if (!db.objectStoreNames.contains('hospitals')) {
+      let objectStore = db.createObjectStore('hospitals', {keyPath: 'id'});
+      objectStore.createIndex('hospitalId', 'id');
     }
   }
 });
@@ -24,20 +27,26 @@ const store = new Vuex.Store({
       parlenda: null,
       frase: null,
     },
+    hospitals: [],
   },
   getters: {
-    allPatients: async (state, getters) => {
-      const db = await openDB('local');
-      const transaction = db.transaction(['patients'], 'readwrite');
-      const store = transaction.objectStore('patients');
-      const result = await store.getAll()
-      return result
-    }
+    async allPatients() {
+      const { store } = await openStore('patients');
+      const result = await store.getAll();
+      return result;
+    },
+    async getHospitals(state) {
+      if (state.hospitals.length <= 0) {
+        const { store } = await openStore('hospitals');
+        state.hospitals = await store.get(0) || ['Hospital das clínicas'];
+      }
+      return state.hospitals;
+    },
   },
   mutations: {
     addFormData(state, data) {
       //TODO: Think of a better way define ID? RGH-only is not unique
-      state.patient.id = `${data.local}_${data.rgh}`
+      state.patient.id = `${data.local}_${data.rgh}`;
       state.patient.form = data;
     },
     saveTermo(state, blobURL) {
@@ -58,20 +67,36 @@ const store = new Vuex.Store({
           const preBlob = await fetch(state.patient[field]);
           const blob = await preBlob.blob();
           state.patient[field] = new File([blob], field, { type: "audio/wav" } );
-          // console.log(state.patient[field]);
         }
       }
-      const db = await openDB('local');
-      const transaction = db.transaction(['patients'], 'readwrite');
-      const store = transaction.objectStore('patients');
+      const {store, transaction} = await openStore('patients');
       store.add(state.patient);
       
       return transaction.complete;
     },
-    async deletePatient(state, id) {
-      
+    async deletePatient(id) {
+      const { store, transaction } = await openStore('patients');
+      store.delete(id);
+      return transaction.complete;
+    },
+    async loadHospitals(state, newHospitals) {
+      state.hospitals = newHospitals;
+
+      const {store, transaction} = await openStore('hospitals');
+      if (await store.get(0)) {
+        store.put(state.hospitals, 0);
+      } else {
+        store.add(state.hospitals);
+      }
+      return transaction.complete;
     }
   },
 })
+
+async function openStore(name) {
+  const db = await openDB('local');
+  const transaction = db.transaction([name], 'readwrite');
+  return { store: transaction.objectStore(name), transaction};
+}
 
 export default store;

@@ -206,15 +206,15 @@ export default {
     align-self: flex-end;
     position: relative;
     top: 47px;
-
-    opacity: 66%;
     
+    color: var(--grey-color);
+
     font-weight: bold;
     font-size: 1.3rem;
 
     flex: unset;
 
-    border: 2.7px solid var(--purple-color);
+    border: 2.7px solid var(--grey-color);
   }
   .v-btn:not(.v-btn--round).v-size--default {
     height: 47px;

@@ -101,7 +101,7 @@ import axios from 'axios';
 
 async function loadOrRequestHospitals(component) {
   try {
-    const newHospitals = await axios.get(process.env.HOSPITALS_URL);
+    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/${process.env.HOSPITALS_URL}`);
     component.$store.commit('loadHospitals', newHospitals);
     return newHospitals;
   }
@@ -144,7 +144,7 @@ export default {
     }
   },
   mounted() {
-    loadOrRequestHospitals(this).then(val => {this.hospitals = val;});
+    loadOrRequestHospitals(this).then(val => {this.hospitals = val.map(hospital => hospital.name);});
   },
 }
 </script>

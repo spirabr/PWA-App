@@ -43,6 +43,9 @@ export default {
         collector: {
           patientRgh: this.patient.rgh,
           hospitalName: this.location.name,
+          patientSex: this.patient.sex,
+          patientCovid: this.patient.covid,
+          patientMask: this.patient.mask,
         },
       };
 
@@ -53,7 +56,9 @@ export default {
         );
         if (patientRegisterResponse.status === 201) {
           const audios = this.$attrs.audios;
+
           const audiosFormData = new FormData();
+
           audiosFormData.append("aceite", audios.aceite);
           audiosFormData.append("sustentada", audios.sustentada);
           audiosFormData.append("parlenda", audios.parlenda);

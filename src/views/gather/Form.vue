@@ -101,7 +101,7 @@ import axios from 'axios';
 
 async function loadOrRequestHospitals(component) {
   try {
-    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/${process.env.HOSPITALS_URL}`);
+    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}${process.env.HOSPITALS_URI}`);
     component.$store.commit('loadHospitals', newHospitals);
     return newHospitals;
   }

@@ -51,7 +51,10 @@ export default {
       {
         patient: {
           id: patient.id,
-          rgh: patient.form.rgh
+          rgh: patient.form.rgh,
+          sex: patient.form.sex,
+          mask: patient.form.mask,
+          covid: patient.form.covid,
         },
         location: {
           name: patient.form.local

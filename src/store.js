@@ -38,7 +38,7 @@ const store = new Vuex.Store({
     async getHospitals(state) {
       if (state.hospitals.length <= 0) {
         const { store } = await openStore('hospitals');
-        state.hospitals = await store.get(0) || ['Hospital das clínicas'];
+        state.hospitals = await store.get(0) || [{name: 'Hospital das clínicas'}];
       }
       return state.hospitals;
     },

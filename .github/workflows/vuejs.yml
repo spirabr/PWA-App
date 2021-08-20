@@ -3,8 +3,6 @@ name: VueJS CI/CD
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
 
 jobs:
   build:
@@ -24,5 +22,5 @@ jobs:
             cd PWA-App
             git stash
             git pull origin master
-            npm install
-            npm run build
+            yarn install
+            yarn run build

@@ -12,7 +12,7 @@
         solo
         v-model='form.rgh'
         :rules='nonEmptyRule'
-        label='Modelo do Celular'
+        label='Registro Geral Hospitalar'
         required
       ></v-text-field>
 
@@ -101,7 +101,7 @@ import axios from 'axios';
 
 async function loadOrRequestHospitals(component) {
   try {
-    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}${process.env.HOSPITALS_URI}`);
+    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/${process.env.VUE_APP_HOSPITAL_URI}`);
     component.$store.commit('loadHospitals', newHospitals);
     return newHospitals;
   }
@@ -144,7 +144,12 @@ export default {
     }
   },
   mounted() {
-    loadOrRequestHospitals(this).then(val => {this.hospitals = val.map(hospital => hospital.name);});
+    try {
+      loadOrRequestHospitals(this).then(val => {this.hospitals = val.map(hospital => hospital.name);});
+    }
+    catch {
+      this.hospitals = [{name: 'Hospital das Clínicas'}];
+    }
   },
 }
 </script>

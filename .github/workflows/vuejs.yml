@@ -19,6 +19,7 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
 
           script: |
+            npm install --global yarn
             cd PWA-App
             git stash
             git pull origin master

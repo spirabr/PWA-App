@@ -147,7 +147,8 @@ export default {
     try {
       loadOrRequestHospitals(this).then(val => {this.hospitals = val.map(hospital => hospital.name);});
     }
-    catch {
+    catch (e) {
+      console.error(e);
       this.hospitals = [{name: 'Hospital das Clínicas'}];
     }
   },

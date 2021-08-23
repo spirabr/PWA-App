@@ -19,7 +19,8 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
 
           script: |
-            npm install --global yarn
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             cd PWA-App
             git stash
             git pull origin master

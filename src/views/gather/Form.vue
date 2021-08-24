@@ -144,13 +144,13 @@ export default {
     }
   },
   mounted() {
-    try {
-      loadOrRequestHospitals(this).then(val => {this.hospitals = val.map(hospital => hospital.name);});
-    }
-    catch (e) {
-      console.error(e);
-      this.hospitals = [{name: 'Hospital das Clínicas'}];
-    }
+    loadOrRequestHospitals(this).then(val => {
+      if (val && val.map) {
+        this.hospitals = val.map(hospital => hospital.name);
+      } else {
+        this.hospitals = ['Hospital das Clínicas'];
+      }
+    });
   },
 }
 </script>

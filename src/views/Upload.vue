@@ -1,15 +1,7 @@
 <template>
   <transition name="slideUp">
     <v-container>
-      <router-link to="/">
-        <v-icon 
-          class="close-btn"
-          color="var(--purple-color)"
-          x-large
-        >
-          mdi-window-close
-        </v-icon>
-      </router-link>
+      <back-home-button/>
       <h1>
         upload
       </h1>
@@ -31,14 +23,15 @@
 </template>
 
 <script>
-import UploadAudiosCard from '../components/UploadAudiosCard'
+import UploadAudiosCard from '@/components/UploadAudiosCard.vue'
 import axios from 'axios' // TODO: move this to global scope
+import BackHomeButton from '@/components/BackHomeButton.vue';
 
 const instance = axios.create()
 
 export default {
   name: 'Upload',
-  components: {UploadAudiosCard},
+  components: { UploadAudiosCard, BackHomeButton },
   data: () => ({
     instance: instance,
     samples: []
@@ -80,11 +73,6 @@ export default {
   .slideUp-enter-active {
     transition: opacity 1s;
     transform: translateY(200px);
-  }
-  .close-btn {
-    position: absolute;
-    top: 1.5rem;
-    left: 1rem;
   }
   h1 {
     margin: 0 0 35px 0;

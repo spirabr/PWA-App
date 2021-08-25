@@ -61,8 +61,8 @@ export default {
     },
     goToAbout() {
       router.push('/about');
-    },   
-  }
+    },
+  },
 }
 </script>
 

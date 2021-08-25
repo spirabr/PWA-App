@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <header>
+      <back-home-button/>
       <div class='placeholder'>
         <h1>formulário</h1>
       </div>
@@ -98,10 +99,11 @@
 <script>
 import router from '@/router';
 import axios from 'axios';
+import BackHomeButton from '@/components/BackHomeButton.vue';
 
 async function loadOrRequestHospitals(component) {
   try {
-    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/${process.env.VUE_APP_HOSPITAL_URI}`);
+    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/hospital`);
     component.$store.commit('loadHospitals', newHospitals);
     return newHospitals;
   }
@@ -111,6 +113,7 @@ async function loadOrRequestHospitals(component) {
 }
 
 export default {
+  components: { BackHomeButton },
   name: 'Form',
   data: () => ({
     form: {
@@ -137,7 +140,7 @@ export default {
     todaysDate() {
       const today = new Date();
       const dd = String(today.getDate()).padStart(2, '0');
-      const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
       const yyyy = today.getFullYear();
 
       return dd + '/' + mm + '/' + yyyy;
@@ -146,11 +149,14 @@ export default {
   mounted() {
     loadOrRequestHospitals(this).then(val => {
       if (val && val.map) {
-        this.hospitals = val.map(hospital => hospital.name);
+        this.hospitals = val.map(hospital => hospital.hospitalName);
       } else {
         this.hospitals = ['Hospital das Clínicas'];
       }
     });
+  },
+  created() {
+    this.$store.commit('clearPatient');
   },
 }
 </script>

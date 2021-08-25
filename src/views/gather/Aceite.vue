@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <div class="instruction">
+      <back-home-button/>
       <h1>termo de participação</h1>
       <p>
         Você está sendo convidado/a participar, como voluntário/a, de um estudo que desenvolve 
@@ -28,11 +29,12 @@
 
 <script>
 import router from '@/router';
-import Microphone from '../../components/Microphone';
+import Microphone from '@/components/Microphone.vue';
+import BackHomeButton from '@/components/BackHomeButton.vue';
 
 export default {
   name: 'Aceite',
-  components: { Microphone },
+  components: { Microphone, BackHomeButton },
   methods: {
     saveTermo(blobURL) {
       this.$store.commit('saveTermo', blobURL);

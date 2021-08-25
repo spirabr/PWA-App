@@ -1,14 +1,6 @@
 <template>
   <v-container>
-    <router-link to="/">
-      <v-icon 
-        class="close-btn"
-        color="var(--purple-color)"
-        x-large
-      >
-        mdi-window-close
-      </v-icon>
-    </router-link>
+    <back-home-button/>
 
     <h1>sobre o spira</h1>
 
@@ -20,7 +12,9 @@
 </template>
 
 <script>
+import BackHomeButton from '@/components/BackHomeButton.vue';
 export default {
+  components: { BackHomeButton },
   name: 'About',
 }
 </script>
@@ -50,19 +44,7 @@ export default {
   .container main {
     width: 100%;
   }
-  .close-btn {
-    position: absolute;
-    top: 0.5rem;
-  }
   header {
     margin: 7.5% 0;
-  }
-  a {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    width: 0;
-    height: 0;
-    text-decoration: none;
   }
 </style>

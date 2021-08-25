@@ -34,6 +34,7 @@
       <v-stepper-items id="stepper-content">
         <v-stepper-content step="1">
           <div class="instruction">
+            <back-home-button/>
             <h1>vogal sustentada</h1>
             <p>Favor cumprir os seguintes passos: </p>
             <ol>
@@ -57,6 +58,7 @@
 
         <v-stepper-content step="2">
           <div class="instruction">
+            <back-home-button/>
             <h1>parlenda</h1>
             <p>Agora você poderia dizer alguma coisa de cor? Por exemplo: algo que você
               aprendeu na infância e sabe até hoje?
@@ -81,6 +83,7 @@
 
         <v-stepper-content step="3">
           <div class="instruction">
+            <back-home-button/>
             <h1> frase lida </h1>
             <p>Você poderia ler a frase destacada abaixo?<br>
               Caso contrário, pular esta etapa.</p>
@@ -114,8 +117,9 @@
 </template>
 
 <script>
-import Microphone from '@/components/Microphone'
-import router from '@/router'
+import Microphone from '@/components/Microphone.vue';
+import BackHomeButton from '@/components/BackHomeButton.vue';
+import router from '@/router';
 
 export default {
   name: 'Gather',
@@ -124,7 +128,7 @@ export default {
     recording: false,
     allowSkip: true,
   }),
-  components: { Microphone},
+  components: { Microphone, BackHomeButton },
   methods: {
     disallowSkip() {
       this.allowSkip = false;

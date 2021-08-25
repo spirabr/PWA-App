@@ -5,8 +5,12 @@
 </template>
 
 <script>
+import { createIndexedDB } from './store';
 export default {
   name: 'App',
+  beforeCreate() {
+    createIndexedDB();
+  }
 }
 </script>
 

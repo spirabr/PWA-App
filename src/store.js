@@ -4,18 +4,20 @@ import { openDB } from 'idb';
 
 Vue.use(Vuex);
 
-openDB('local', undefined, {
-  upgrade(db) {
-    if (!db.objectStoreNames.contains('patients')) {
-      let objectStore = db.createObjectStore('patients', {keyPath: 'id'});
-      objectStore.createIndex('patientId', 'id', {unique: false});
+export function createIndexedDB() {
+  openDB('local', undefined, {
+    upgrade(db) {
+      if (!db.objectStoreNames.contains('patients')) {
+        let objectStore = db.createObjectStore('patients', {keyPath: 'id'});
+        objectStore.createIndex('patientId', 'id', {unique: false});
+      }
+      if (!db.objectStoreNames.contains('hospitals')) {
+        let objectStore = db.createObjectStore('hospitals', {keyPath: 'id'});
+        objectStore.createIndex('hospitalId', 'id');
+      }
     }
-    if (!db.objectStoreNames.contains('hospitals')) {
-      let objectStore = db.createObjectStore('hospitals', {keyPath: 'id'});
-      objectStore.createIndex('hospitalId', 'id');
-    }
-  }
-});
+  });
+}
 
 const store = new Vuex.Store({
   state: {
@@ -38,12 +40,25 @@ const store = new Vuex.Store({
     async getHospitals(state) {
       if (state.hospitals.length <= 0) {
         const { store } = await openStore('hospitals');
-        state.hospitals = await store.get(0) || [{name: 'Hospital das clínicas'}];
+        state.hospitals = await store.get(0) || [{ hospitalName: 'Hospital das Clínicas'}];
       }
       return state.hospitals;
     },
   },
   mutations: {
+    clearPatient(state) {
+      state.patient = {
+        patient: {
+          id: null,
+          form: null,
+          aceite: null,
+          sustentada: null,
+          parlenda: null,
+          frase: null,
+        },
+        hospitals: [],
+      };
+    },
     addFormData(state, data) {
       //TODO: Think of a better way define ID? RGH-only is not unique
       state.patient.id = `${data.local}_${data.rgh}`;
@@ -82,12 +97,11 @@ const store = new Vuex.Store({
     async loadHospitals(state, newHospitals) {
       state.hospitals = newHospitals;
 
-      const {store, transaction} = await openStore('hospitals');
-      if (await store.get(0)) {
-        store.put(state.hospitals, 0);
-      } else {
-        store.add(state.hospitals);
+      const { store, transaction } = await openStore('hospitals');
+      for (let i = 0; i < state.hospitals.data.length; i += 1) {
+        store.put(state.hospitals.data[i]);
       }
+      
       return transaction.complete;
     }
   },

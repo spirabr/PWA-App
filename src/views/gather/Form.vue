@@ -103,7 +103,7 @@ import BackHomeButton from '@/components/BackHomeButton.vue';
 
 async function loadOrRequestHospitals(component) {
   try {
-    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/${process.env.VUE_APP_HOSPITAL_URI}`);
+    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/hospital`);
     component.$store.commit('loadHospitals', newHospitals);
     return newHospitals;
   }

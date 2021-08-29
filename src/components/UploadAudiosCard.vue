@@ -44,8 +44,8 @@ export default {
           patientRgh: this.patient.rgh,
           hospitalName: this.location.name,
           patientSex: this.patient.sex,
-          patientCovid: this.patient.covid,
-          patientMask: this.patient.mask,
+          covidStatus: this.patient.covid,
+          maskType: this.patient.mask,
         },
       };
 

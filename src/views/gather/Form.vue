@@ -53,34 +53,31 @@
           row
         >
           <v-radio
-            label='Sim'
-            value='Sim'
-            color='var(--purple-color)'
-          ></v-radio>
-          <v-radio
-            label='Não'
-            value='Não'
-            color='var(--purple-color)'
-          ></v-radio>
-          <v-radio
-            label='Não se recorda /
-                  Não deseja declarar'
-            value='Não se recorda/
-                  Não deseja declarar'
+            v-for="(option, index) in covidOptions"
+            :key='index'
+            :label='option'
+            :value='apiCovidOptions[index]'
             color='var(--purple-color)'
           ></v-radio>
         </v-radio-group>
       </div>
 
-      <div>
+      <div class='mask-input'>
         <p>O paciente está usando máscara?</p>
-        <v-select
+        <v-radio-group 
           v-model='form.mask'
-          :items='maskTypes'
-          solo
-          label='Tipo de Máscara'
-          required
-        ></v-select>
+          :rules='radioRule'
+          class='checkboxes'
+          row
+        >
+          <v-radio
+            v-for="(option, index) in maskOptions"
+            :key='index'
+            :label='option'
+            :value='apiMaskOptions[index]'
+            color='var(--purple-color)'
+          ></v-radio>
+        </v-radio-group>
       </div>
     </v-form>
 
@@ -125,7 +122,10 @@ export default {
       date: '',
     },
     hospitals: [],
-    maskTypes: ['Nenhuma', 'Sim, Máscara fina (pano, cirúrgica)', 'Sim, Máscara grossa (N-95)'],
+    maskOptions: ['Nenhuma', 'Sim, Máscara fina (pano, cirúrgica)', 'Sim, Máscara grossa (N-95)'],
+    apiMaskOptions: ['NONE', 'THIN', 'THICK'],
+    covidOptions: ['Sim', 'Não', 'Não deseja declarar ou não sabe'],
+    apiCovidOptions: ['TRUE', 'FALSE', 'UNKNOWN'],
     nonEmptyRule: [ v => !!v.trim() != '' || 'Preencha este campo' ],
     radioRule: [ v => v.trim() !== '' || 'Preencha este campo' ]
   }),
@@ -135,6 +135,7 @@ export default {
         this.form.date = this.todaysDate();
         this.$store.commit('addFormData', this.form);
         router.push('/gather/aceite');
+        console.log(this.form);
       }
     },
     todaysDate() {

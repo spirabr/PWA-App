@@ -133,6 +133,7 @@ export default {
     reset() {
       this.audioURL = '';
       this.micState = 0;
+      this.listener = undefined;
       time_out_id = 0;
     }
   },

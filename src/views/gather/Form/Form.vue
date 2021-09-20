@@ -8,26 +8,32 @@
     </header>
     <v-form ref='form'>
       <p>Registro do Paciente</p>
-      <v-text-field 
-        class='text-input'
-        solo
-        v-model='form.rgh'
-        :rules='nonEmptyRule'
-        label='Registro Geral Hospitalar'
-        required
-      ></v-text-field>
-
       <v-select
         v-model='form.local'
         :items='hospitals'
         label='Local de coleta'
+        :rules='nonEmptyRule'
         solo
         required
       ></v-select>
 
+      <v-text-field 
+        class='text-input'
+        solo
+        v-model='form.rgh'
+        :disabled='!form.local'
+        :rule='nonEmptyRule'
+        persistent-hint
+        :hint='validRGH'
+        label='Registro Geral Hospitalar'
+        required
+      ></v-text-field>
+
       <div class='sexo-input'>
         <p>Sexo</p>
-        <v-radio-group v-model='form.sex' :rules='radioRule'
+        <v-radio-group 
+          v-model='form.sex' 
+          :rules='nonEmptyRule'
           class='checkboxes'
           row
         >
@@ -48,7 +54,7 @@
         <p>Já testou positivo para COVID-19?</p>
         <v-radio-group 
           v-model='form.covid'
-          :rules='radioRule'
+          :rules='nonEmptyRule'
           class='checkboxes'
           row
         >
@@ -66,7 +72,7 @@
         <p>O paciente está usando máscara?</p>
         <v-radio-group 
           v-model='form.mask'
-          :rules='radioRule'
+          :rules='nonEmptyRule'
           class='checkboxes'
           row
         >
@@ -95,19 +101,8 @@
 
 <script>
 import router from '@/router';
-import axios from 'axios';
 import BackHomeButton from '@/components/BackHomeButton.vue';
-
-async function loadOrRequestHospitals(component) {
-  try {
-    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/hospital`);
-    component.$store.commit('loadHospitals', newHospitals);
-    return newHospitals;
-  }
-  catch {
-    return await component.$store.getters.getHospitals;
-  }
-}
+import { validateRGH, loadOrRequestHospitals, todaysDate } from './Form.js';
 
 export default {
   components: { BackHomeButton },
@@ -126,25 +121,20 @@ export default {
     apiMaskOptions: ['NONE', 'THIN', 'THICK'],
     covidOptions: ['Sim', 'Não', 'Não deseja declarar ou não sabe'],
     apiCovidOptions: ['TRUE', 'FALSE', 'UNKNOWN'],
-    nonEmptyRule: [ v => !!v.trim() != '' || 'Preencha este campo' ],
-    radioRule: [ v => v.trim() !== '' || 'Preencha este campo' ]
+    nonEmptyRule: [ v => v.trim() !== '' || 'Preencha este campo' ],
   }),
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        this.form.date = this.todaysDate();
+        this.form.date = todaysDate();
         this.$store.commit('addFormData', this.form);
         router.push('/gather/aceite');
-        console.log(this.form);
       }
-    },
-    todaysDate() {
-      const today = new Date();
-      const dd = String(today.getDate()).padStart(2, '0');
-      const mm = String(today.getMonth() + 1).padStart(2, '0');
-      const yyyy = today.getFullYear();
-
-      return dd + '/' + mm + '/' + yyyy;
+    }
+  },
+  computed: {
+    validRGH() {
+      return validateRGH(this.form.local, this.form.rgh) ? '' : 'RGH inválido';
     }
   },
   mounted() {

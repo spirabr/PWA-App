@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import NotFound from '../views/NotFound';
 import Home from '../views/Home';
 import About from '../views/About';
-import Form from '../views/gather/Form';
+import Form from '../views/gather/Form/Form.vue';
 import Aceite from '../views/gather/Aceite';
 import Audios from '../views/gather/Audios';
 import Done from '../views/gather/Done';

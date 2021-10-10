@@ -103,6 +103,7 @@
 import router from '@/router';
 import BackHomeButton from '@/components/BackHomeButton.vue';
 import { validateRGH, loadOrRequestHospitals, todaysDate } from './Form.js';
+import { maskOptions, apiMaskOptions, covidOptions, apiCovidOptions } from './FormOptions';
 
 export default {
   components: { BackHomeButton },
@@ -117,10 +118,10 @@ export default {
       date: '',
     },
     hospitals: [],
-    maskOptions: ['Nenhuma', 'Sim, Máscara fina (pano, cirúrgica)', 'Sim, Máscara grossa (N-95)'],
-    apiMaskOptions: ['NONE', 'THIN', 'THICK'],
-    covidOptions: ['Sim', 'Não', 'Não deseja declarar ou não sabe'],
-    apiCovidOptions: ['TRUE', 'FALSE', 'UNKNOWN'],
+    maskOptions,
+    apiMaskOptions,
+    covidOptions,
+    apiCovidOptions,
     nonEmptyRule: [ v => v.trim() !== '' || 'Preencha este campo' ],
   }),
   methods: {
@@ -137,16 +138,13 @@ export default {
       return validateRGH(this.form.local, this.form.rgh) ? '' : 'RGH inválido';
     }
   },
-  mounted() {
-    loadOrRequestHospitals(this).then(val => {
-      if (val && val.map) {
-        this.hospitals = val.map(hospital => hospital.hospitalName);
-      } else {
-        this.hospitals = ['Hospital das Clínicas'];
-      }
-    });
-  },
   created() {
+    loadOrRequestHospitals(this)
+      .then(val => {
+        this.hospitals = val
+          .map(hospital => hospital.hospitalName)
+          .filter(hospitalName => hospitalName && hospitalName.trim());
+      });
     this.$store.commit('clearPatient');
   },
 }

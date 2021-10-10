@@ -31,7 +31,7 @@ window.MediaRecorder = AudioRecorder;
 let time_out_id;
 
 export default {
-  name: "Microphone",
+  name: 'Microphone',
   props: [ 'Reset' ],
   data: () => ({
     micState: 0,
@@ -89,7 +89,7 @@ export default {
       if (this.listener === undefined) {
         this.listener = new Howl({
           src: [this.audioURL],
-          format: "wav",
+          format: 'wav',
           onend: () => {
             if (this.micState < 4) {
               this.micState = 4;
@@ -124,11 +124,11 @@ export default {
     },
     wait() {
       time_out_id = setTimeout(this.reset, 2);
-      console.log("Set timeout: ", time_out_id);
+      console.log('Set timeout: ', time_out_id);
     },
     cancel() {
       clearTimeout(time_out_id);
-      console.log("canceled timeout: ", time_out_id);
+      console.log('canceled timeout: ', time_out_id);
     },
     reset() {
       this.audioURL = '';
@@ -140,30 +140,30 @@ export default {
   computed: {
     btnColor() {
       switch(this.micState) {
-        case 0:
-          return 'var(--purple-color)';
-        case 1:
-          return 'red';
-        case 2:
-          return 'blue';
-        case 3:
-          return 'green';
-        default:
-          return 'var(--purple-color)';
+      case 0:
+        return 'var(--purple-color)';
+      case 1:
+        return 'red';
+      case 2:
+        return 'blue';
+      case 3:
+        return 'green';
+      default:
+        return 'var(--purple-color)';
       }
     },
     btnText() {
       switch(this.micState) {
-        case 0:
-          return 'gravar';
-        case 1:
-          return 'gravando';
-        case 2:
-          return 'escutar gravação';
-        case 3:
-          return 'parar gravação';
-        default:
-          return 'avançar';
+      case 0:
+        return 'gravar';
+      case 1:
+        return 'gravando';
+      case 2:
+        return 'escutar gravação';
+      case 3:
+        return 'parar gravação';
+      default:
+        return 'avançar';
       }
     }
   }

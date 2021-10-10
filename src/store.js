@@ -24,6 +24,7 @@ const store = new Vuex.Store({
     patient: {
       id: null,
       form: null,
+      sent: false,
       aceite: null,
       sustentada: null,
       parlenda: null,
@@ -40,8 +41,9 @@ const store = new Vuex.Store({
     async getHospitals(state) {
       if (state.hospitals.length <= 0) {
         const { store } = await openStore('hospitals');
-        state.hospitals = await store.get(0) || [{ hospitalName: 'Hospital das Clínicas'}];
+        state.hospitals = await store.getAll() || [{ hospitalName: 'Hospital das Clínicas'}];
       }
+      console.log(state.hospitals);
       return state.hospitals;
     },
   },
@@ -78,10 +80,10 @@ const store = new Vuex.Store({
     },
     async persistData(state) {
       for (let field in state.patient) {
-        if (field !== 'form' && field !== 'id') {
+        if (field !== 'form' && field !== 'id' && field !== 'sent') {
           const preBlob = await fetch(state.patient[field]);
           const blob = await preBlob.blob();
-          state.patient[field] = new File([blob], field, { type: "audio/wav" } );
+          state.patient[field] = new File([blob], field, { type: 'audio/wav' } );
         }
       }
       const {store, transaction} = await openStore('patients');

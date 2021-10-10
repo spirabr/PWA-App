@@ -100,8 +100,8 @@ const store = new Vuex.Store({
       state.hospitals = newHospitals;
 
       const { store, transaction } = await openStore('hospitals');
-      for (let i = 0; i < state.hospitals.data.length; i += 1) {
-        store.put(state.hospitals.data[i]);
+      for (let i = 0; i < state.hospitals.length; i += 1) {
+        store.put(state.hospitals[i]);
       }
       
       return transaction.complete;

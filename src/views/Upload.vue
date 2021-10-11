@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import UploadAudiosCard from '@/components/UploadAudiosCard.vue'
-import axios from 'axios' // TODO: move this to global scope
-import BackHomeButton from '@/components/BackHomeButton.vue';
+import UploadAudiosCard from '@/components/UploadAudiosCard/UploadAudiosCard.vue'
+import axios from 'axios'; // TODO: move this to global scope
+import BackHomeButton from '@/components/BackHomeButton';
 
-const instance = axios.create()
+const instance = axios.create();
 
 export default {
   name: 'Upload',
@@ -40,26 +40,27 @@ export default {
     const patients = await this.$store.getters.allPatients;
 
     this.samples = patients.filter(patient => (patient && patient.form && patient.id))
-    .map(patient => (
-      {
-        patient: {
-          id: patient.id,
-          rgh: patient.form.rgh,
-          sex: patient.form.sex,
-          mask: patient.form.mask,
-          covid: patient.form.covid,
-        },
-        location: {
-          name: patient.form.local
-        },
-        date: patient.form.date,
-        audios: {
-          aceite: patient.aceite,
-          sustentada: patient.sustentada,
-          parlenda: patient.parlenda,
-          frase: patient.frase
-        }
-      }));
+      .map(patient => (
+        {
+          patient: {
+            id: patient.id,
+            rgh: patient.form.rgh,
+            sex: patient.form.sex,
+            mask: patient.form.mask,
+            covid: patient.form.covid,
+          },
+          location: {
+            name: patient.form.local
+          },
+          date: patient.form.date,
+          audios: {
+            aceite: patient.aceite,
+            sustentada: patient.sustentada,
+            parlenda: patient.parlenda,
+            frase: patient.frase
+          },
+          sent: patient.sent
+        }));
   },
 }
 </script>

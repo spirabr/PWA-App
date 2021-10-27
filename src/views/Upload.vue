@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import UploadAudiosCard from '@/components/UploadAudiosCard/UploadAudiosCard.vue'
+import UploadAudiosCard from '@/components/UploadAudiosCard/UploadAudiosCard.vue';
 import axios from 'axios'; // TODO: move this to global scope
 import BackHomeButton from '@/components/BackHomeButton';
 
@@ -62,7 +62,7 @@ export default {
           sent: patient.sent
         }));
   },
-}
+};
 </script>
 
 <style scoped>

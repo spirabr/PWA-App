@@ -107,7 +107,7 @@ const store = new Vuex.Store({
       return transaction.complete;
     }
   },
-})
+});
 
 async function openStore(name) {
   const db = await openDB('local');

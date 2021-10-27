@@ -9,7 +9,7 @@ import Audios from '../views/gather/Audios';
 import Done from '../views/gather/Done';
 import Upload from '../views/Upload';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -52,15 +52,15 @@ const routes = [
     name: '404',
     component: NotFound
   },
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   scrollBehavior() {
-    return {x: 0, y: 0}
+    return {x: 0, y: 0};
   },  
   base: process.env.BASE_URL,
   routes
-})
+});
 
-export default router
+export default router;

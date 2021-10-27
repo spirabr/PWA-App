@@ -147,7 +147,7 @@ export default {
       });
     this.$store.commit('clearPatient');
   },
-}
+};
 </script>
 
 <style scoped>

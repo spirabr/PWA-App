@@ -43,7 +43,7 @@ export default {
       router.push('./audios');
     },
   }
-}
+};
 </script>
 
 <style scoped>

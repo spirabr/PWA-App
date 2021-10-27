@@ -20,4 +20,4 @@ module.exports = {
     },
     themeColor: '#1da025'
   }
-}
+};

@@ -11,8 +11,8 @@ test('should validate RGH', () => {
   expect(validateRGH(hospital, rgh2)).toBe(true);
   expect(validateRGH(hospital2, wrongRgh)).toBe(true);
   expect(validateRGH(hospital, wrongRgh)).toBe(false);
-})
+});
 
 test('should return the todays date', () => {
   expect(todaysDate()).toMatch(/[0-3][0-9]\/[0-1][0-9]\/20[2-9][0-9]/);
-})
+});

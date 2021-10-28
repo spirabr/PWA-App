@@ -9,4 +9,29 @@ export async function setPatientAsSent(patient) {
   transaction.objectStore('patients').put(oldRecord, patient.id);
   
   return transaction.complete;
-} 
+}
+
+export async function uploadMetadata(requestData, http) {
+  // Audios will be sent on a separate request
+  const patientRegisterResponse = await http.post(
+    `${process.env.VUE_APP_BACKEND_URL}/patient`,
+    requestData
+  );
+
+  return patientRegisterResponse.status;
+}
+
+export async function uploadAudios(audiosFormData, name, rgh, http) {
+  const requestOptions = {
+    headers: {
+      'Content-Type': `multipart/form-data; boundary=${audiosFormData._boundary}`,
+    },
+  };
+  const audioUploadResponse = await http.put(
+    `${process.env.VUE_APP_BACKEND_URL}/patient/${name}/${rgh}/audio`,
+    audiosFormData,
+    requestOptions
+  );
+
+  return audioUploadResponse.status;
+}

@@ -13,7 +13,7 @@
 <script>
 export default {
   name: 'BackHomeButton'
-}
+};
 </script>
 
 <style scoped>

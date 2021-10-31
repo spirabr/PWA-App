@@ -28,8 +28,6 @@ import AudioRecorder from 'audio-recorder-polyfill';
 import { Howl } from 'howler';
 window.MediaRecorder = AudioRecorder;
 
-let time_out_id;
-
 export default {
   name: 'Microphone',
   props: [ 'Reset' ],
@@ -47,9 +45,9 @@ export default {
             audio: {
               noiseSuppression: false,
               echoCancellation: false,
-              autoGainControl: false,
+              autoGainControl: true,
             } 
-          })
+          });
 
           this.mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/PCMU'});
           this.mediaRecorder.start();
@@ -57,12 +55,12 @@ export default {
           let chunks = [];
           this.mediaRecorder.ondataavailable = ( e => {
             chunks.push(e.data);
-          })
+          });
 
           this.mediaRecorder.addEventListener('dataavailable', e => {
             this.audioURL = window.URL.createObjectURL(e.data);
             this.$emit('newAudio', this.audioURL);
-          })
+          });
           
           this.micState = 1;
         }
@@ -80,7 +78,7 @@ export default {
         this.mediaRecorder.stop();
         this.mediaRecorder.stream.getTracks().forEach(track => {
           track.stop();
-        })
+        });
       }
       this.micState = 2;
     },
@@ -95,7 +93,7 @@ export default {
               this.micState = 4;
             }
           }
-        })
+        });
       }
       this.micState = 3;
       this.listener.play();
@@ -108,7 +106,7 @@ export default {
       else if (this.micState == 1){
         this.stopMicrophone();
         if (!this.Reset) {
-          this.micState = 4
+          this.micState = 4;
         }
       }
       else if (this.micState == 2) {
@@ -122,19 +120,10 @@ export default {
         this.$emit('ready');
       }
     },
-    wait() {
-      time_out_id = setTimeout(this.reset, 2);
-      console.log('Set timeout: ', time_out_id);
-    },
-    cancel() {
-      clearTimeout(time_out_id);
-      console.log('canceled timeout: ', time_out_id);
-    },
     reset() {
       this.audioURL = '';
       this.micState = 0;
       this.listener = undefined;
-      time_out_id = 0;
     }
   },
   computed: {
@@ -167,7 +156,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

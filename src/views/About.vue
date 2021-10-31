@@ -16,7 +16,7 @@ import BackHomeButton from '@/components/BackHomeButton.vue';
 export default {
   components: { BackHomeButton },
   name: 'About',
-}
+};
 </script>
 
 <style scoped>

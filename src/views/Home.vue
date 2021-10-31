@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import router from '@/router'
+import router from '@/router';
 
 export default {
   name: 'Home',
@@ -63,7 +63,7 @@ export default {
       router.push('/about');
     },
   },
-}
+};
 </script>
 
 <style scoped>

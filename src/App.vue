@@ -11,7 +11,7 @@ export default {
   beforeCreate() {
     createIndexedDB();
   }
-}
+};
 </script>
 
 <style>

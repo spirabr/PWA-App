@@ -140,13 +140,13 @@ export default {
       this.curStep++;
     },
     saveSustentada(blobURL) {
-      this.$store.commit('saveSustentada', blobURL)
+      this.$store.commit('saveSustentada', blobURL);
     },
     saveParlenda(blobURL) {
-      this.$store.commit('saveParlenda', blobURL)
+      this.$store.commit('saveParlenda', blobURL);
     },
     saveFrase(blobURL) {
-      this.$store.commit('saveFrase', blobURL)
+      this.$store.commit('saveFrase', blobURL);
     },
   },
   computed: { 
@@ -157,7 +157,7 @@ export default {
       return this.allowSkip;
     }
   }
-}
+};
 </script>
 
 <style scoped>

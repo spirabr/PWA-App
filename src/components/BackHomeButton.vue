@@ -1,7 +1,7 @@
 <template>
-  <router-link to="/">
-		<v-icon 
-			class="close-btn"
+  <router-link class="close-btn" to="/">
+		<v-icon
+			class="margin-header icon-size" 
 			color="var(--purple-color)"
 			x-large
 		>
@@ -18,8 +18,12 @@ export default {
 
 <style scoped>
 	.close-btn {
-		position: absolute !important;
-		top: 1.5rem;
-		left: 1rem;
+		text-decoration: none;
+	}
+	.margin-header {
+		margin: 14px 0 28px;
+	}
+	.icon-size {
+		font-size: 2.3rem !important;
 	}
 </style>

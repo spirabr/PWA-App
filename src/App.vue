@@ -59,7 +59,6 @@ export default {
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
   }
   .container .microphone {
     align-self: flex-start;

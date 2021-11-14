@@ -1,11 +1,6 @@
 <template>
   <v-container>
-    <header>
-      <back-home-button/>
-      <div class='placeholder'>
-        <h1>formulário</h1>
-      </div>
-    </header>
+    <gather-header title="formulário"/>
     <v-form ref='form'>
       <p>Registro do Paciente</p>
       <v-select
@@ -88,9 +83,7 @@
     </v-form>
 
     <v-btn
-      block
       rounded
-      id='next-btn'
       color='var(--purple-color)'
       @click='submit'
     >
@@ -101,12 +94,12 @@
 
 <script>
 import router from '@/router';
-import BackHomeButton from '@/components/BackHomeButton.vue';
+import GatherHeader from '@/components/GatherHeader.vue';
 import { validateRGH, loadOrRequestHospitals, todaysDate } from './Form.js';
 import { maskOptions, apiMaskOptions, covidOptions, apiCovidOptions } from './FormOptions';
 
 export default {
-  components: { BackHomeButton },
+  components: { GatherHeader },
   name: 'Form',
   data: () => ({
     form: {
@@ -158,14 +151,6 @@ export default {
   }
   .container header {
     width: 100%;
-    margin-bottom: 0.8rem;
-  }
-  .container header h1 {
-    color: var(--purple-color);
-    width: 100%;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 1rem;
   }
   .v-form {
     width: 100%;
@@ -191,19 +176,12 @@ export default {
     justify-items: center;
     align-items: center;
   }
-  .container .next-btn {
-    position: absolute;
-    bottom: 4rem;
-  }
   .v-btn {
-    width: 100%;
-
     font-size: 1.3rem;
     font-weight: bold;
     color: white;
   }
   .v-btn:not(.v-btn--round).v-size--default {
-    width: 100%;
     height: 47px;
   }
   .container  .v-input--selection-controls {

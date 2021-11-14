@@ -1,8 +1,7 @@
 <template>
   <v-container>
+    <gather-header title="termo de participação"/>
     <div class="instruction">
-      <back-home-button/>
-      <h1>termo de participação</h1>
       <p>
         Você está sendo convidado/a participar, como voluntário/a, de um estudo que desenvolve 
         um método automático de detecção de características da voz e da fala. 
@@ -20,7 +19,7 @@
     </div>
 
     <Microphone
-      :Reset=false
+      :reset=false
       @newAudio="saveTermo"
       @ready="nextPage"
     />
@@ -30,11 +29,11 @@
 <script>
 import router from '@/router';
 import Microphone from '@/components/Microphone.vue';
-import BackHomeButton from '@/components/BackHomeButton.vue';
+import GatherHeader from '@/components/GatherHeader.vue';
 
 export default {
   name: 'Aceite',
-  components: { Microphone, BackHomeButton },
+  components: { Microphone, GatherHeader },
   methods: {
     saveTermo(blobURL) {
       this.$store.commit('saveTermo', blobURL);
@@ -47,12 +46,16 @@ export default {
 </script>
 
 <style scoped>
+  header {
+    background: white;
+
+    width: 90%;
+  }
   .container {
     padding: 30px 22px;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
   }
   h1 {
     margin-right: 10px;
@@ -60,5 +63,8 @@ export default {
     justify-content: center;
     align-items: center;
     margin: 7% 0;
+  }
+  .instruction {
+    padding-bottom: 60px;
   }
 </style>

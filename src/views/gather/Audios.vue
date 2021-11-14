@@ -33,9 +33,8 @@
 
       <v-stepper-items id="stepper-content">
         <v-stepper-content step="1">
+          <gather-header title="vogal sustentada"/>
           <div class="instruction">
-            <back-home-button/>
-            <h1>vogal sustentada</h1>
             <p>Favor cumprir os seguintes passos: </p>
             <ol>
               <li>
@@ -49,7 +48,7 @@
           </div>
 
           <Microphone
-            :Reset=true
+            :reset=true
             @newAudio="saveSustentada"
             @ready="updateStepper"
           />
@@ -58,8 +57,7 @@
 
         <v-stepper-content step="2">
           <div class="instruction">
-            <back-home-button/>
-            <h1>parlenda</h1>
+            <gather-header title="parlenda"/>
             <p>Agora você poderia dizer alguma coisa de cor? Por exemplo: algo que você
               aprendeu na infância e sabe até hoje?
               <br>
@@ -74,7 +72,7 @@
           </div>
 
           <Microphone
-            :Reset=true
+            :reset=true
             @newAudio="saveParlenda"
             @ready="updateStepper"
           />
@@ -83,8 +81,7 @@
 
         <v-stepper-content step="3">
           <div class="instruction">
-            <back-home-button/>
-            <h1> frase lida </h1>
+            <gather-header title="frase"/>
             <p>Você poderia ler a frase destacada abaixo?<br>
               Caso contrário, pular esta etapa.</p>
             <h2>
@@ -105,7 +102,7 @@
           </v-btn>
           <div @click="disallowSkip()">
             <Microphone
-              :Reset=true
+              :reset=true
               @newAudio="saveFrase"
               @ready="goToDone"
             />
@@ -118,8 +115,8 @@
 
 <script>
 import Microphone from '@/components/Microphone.vue';
-import BackHomeButton from '@/components/BackHomeButton.vue';
 import router from '@/router';
+import GatherHeader from '@/components/GatherHeader.vue';
 
 export default {
   name: 'Gather',
@@ -128,7 +125,7 @@ export default {
     recording: false,
     allowSkip: true,
   }),
-  components: { Microphone, BackHomeButton },
+  components: { Microphone, GatherHeader },
   methods: {
     disallowSkip() {
       this.allowSkip = false;
@@ -169,8 +166,8 @@ export default {
     font-style: italic;
     text-align: center;
   }
-  .parlenda-text {
-    height: 100%;
+  .instruction {
+    justify-self: flex-start;
   }
   .v-stepper {
     width: 100%;

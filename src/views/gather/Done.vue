@@ -8,7 +8,6 @@
         </strong> e selecione a coleta a ser enviada</p>
     </main>
     <v-btn
-      block
       rounded
       large
       color="var(--purple-color)"
@@ -63,18 +62,24 @@ export default {
     flex-direction: column;
     justify-content: center;
   }
-  .back-home {
-    color: white;
-    
+  .v-btn {
+    text-transform: none;
+    letter-spacing: inherit;
     font-weight: bold;
-    font-size: 18.5px;
-    
-    height: 50px;
+    font-size: 1.3rem;
 
-    align-self: flex-end;
-  }
-  .v-btn:not(.v-btn--round).v-size--large {
-    height: 47px;
+    color: white;
+
+    display: flex;
+    flex: unset;
+    max-width: auto;
+
+    border: 2.7px solid;
+
+    background: white;
+
+    width: 100%;
+    height: 47px !important;
   }
   main p {
     text-align: center;

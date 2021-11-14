@@ -1,20 +1,18 @@
 <template>
-  <v-container class="microphone">
+  <v-container :class="containerHeight">
     <v-btn 
-      v-show="micState == 4 && Reset"
+      v-show="micState == 4 && reset"
       outlined
       rounded
-      block
       color="var(--grey-color-faded)"
       class="reset"
-      @click="reset"
+      @click="resetBtn"
     >
     refazer gravação
     </v-btn>
     <v-btn
       :outlined="micState < 4"
       rounded
-      block
       :color="btnColor"
       :class="micState < 4 ? '' : 'advance'"
       @click="toggleMic"
@@ -30,7 +28,7 @@ window.MediaRecorder = AudioRecorder;
 
 export default {
   name: 'Microphone',
-  props: [ 'Reset' ],
+  props: [ 'reset' ],
   data: () => ({
     micState: 0,
     audioURL: '',
@@ -105,7 +103,7 @@ export default {
       }
       else if (this.micState == 1){
         this.stopMicrophone();
-        if (!this.Reset) {
+        if (!this.reset) {
           this.micState = 4;
         }
       }
@@ -120,7 +118,7 @@ export default {
         this.$emit('ready');
       }
     },
-    reset() {
+    resetBtn() {
       this.audioURL = '';
       this.micState = 0;
       this.listener = undefined;
@@ -154,43 +152,53 @@ export default {
       default:
         return 'avançar';
       }
-    }
+    },
+    containerHeight() {
+      return {microphone: true, microphoneAfterRecorded: this.micState === 4, microphoneBeforeRecorded: this.micState != 4};
+    },
   }
 };
 </script>
 
 <style scoped>
   .container .microphone {
-    height: calc(17px + 2*47px);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     
     align-self: flex-end;
     padding: 0;
+
+    position: fixed;
+    bottom: 22px;
+    left: 30px;
+
+    width: calc(100% - 2*30px);
   }
-  .v-btn:not(.v-btn--round).v-size--default {
-    height: 47px;
+  .container .microphoneAfterRecorded {
+    height: calc(17px + 2*47px);
   }
-  .v-btn:not(.v-btn--round).v-size--default .reset {
-    height: 30px;
+  .container .microphoneBeforeRecorded {
+    height: calc(17px + 47px);
   }
   .v-btn {
     text-transform: none;
     letter-spacing: inherit;
     font-weight: bold;
-    
-    align-self: flex-start;
+    font-size: 1.3rem;
+
+    display: flex;
+    flex: unset;
+    max-width: auto;
+
     border: 2.7px solid;
 
-    flex: unset;
-  }
-  .v-btn.v-size--default {
-    font-size: 1.3rem;
+    background: white;
+
+    width: 100%;
+    height: 47px !important;
   }
   .container .reset {
-    height: 47px;
-    width: 276px;
     margin-bottom: 17px;
   }
   .advance {

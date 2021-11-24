@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { uploadAudios, uploadMetadata } from './UploadAudiosCard';
 
 export default {
@@ -61,7 +60,7 @@ export default {
             covidStatus: this.patient.covid,
             maskType: this.patient.mask,
           },
-        }, axios);
+        }, this.http);
 
         if (statusUploadMetadata >= 200 || statusUploadMetadata < 300) {
           const audiosFormData = new FormData();
@@ -71,7 +70,7 @@ export default {
           audiosFormData.append('parlenda', this.$attrs.audios.parlenda);
           audiosFormData.append('frase', this.$attrs.audios.frase);
 
-          const statusUploadAudios = await uploadAudios(audiosFormData, this.location.name, this.patient.rgh, axios);
+          const statusUploadAudios = await uploadAudios(audiosFormData, this.location.name, this.patient.rgh, this.http);
           this.sent = true;
           if (statusUploadAudios >= 200 || statusUploadAudios < 300) {
             this.errorSending = false;

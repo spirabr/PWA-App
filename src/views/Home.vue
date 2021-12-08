@@ -41,7 +41,18 @@
       >
         sobre o spira
       </v-btn>
-
+      
+      <v-btn
+        block
+        rounded
+        large
+        color="var(--purple-color)"
+        class="route-button"
+        link
+        to="/settings"
+      >
+        configurações de áudio
+      </v-btn>
     </div>
 
   </v-container>

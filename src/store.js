@@ -43,7 +43,6 @@ const store = new Vuex.Store({
         const { store } = await openStore('hospitals');
         state.hospitals = await store.getAll() || [{ hospitalName: 'Hospital das Clínicas'}];
       }
-      console.log(state.hospitals);
       return state.hospitals;
     },
   },

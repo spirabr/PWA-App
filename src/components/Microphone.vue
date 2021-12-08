@@ -24,11 +24,17 @@
 <script>
 import AudioRecorder from 'audio-recorder-polyfill';
 import { Howl } from 'howler';
+import getAudioConfigs from '@/services/audioConfigs';
 window.MediaRecorder = AudioRecorder;
 
 export default {
   name: 'Microphone',
-  props: [ 'reset' ],
+  props: {
+    reset: {
+      type: Boolean, 
+      default: true
+    }
+  },
   data: () => ({
     micState: 0,
     audioURL: '',
@@ -40,11 +46,7 @@ export default {
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         try {
           const stream = await navigator.mediaDevices.getUserMedia({ 
-            audio: {
-              noiseSuppression: false,
-              echoCancellation: false,
-              autoGainControl: true,
-            } 
+            audio: getAudioConfigs()
           });
 
           this.mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/PCMU'});

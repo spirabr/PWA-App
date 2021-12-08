@@ -8,6 +8,7 @@ import Aceite from '../views/gather/Aceite';
 import Audios from '../views/gather/Audios';
 import Done from '../views/gather/Done';
 import Upload from '../views/Upload';
+import Settings from '../views/Settings';
 
 Vue.use(VueRouter);
 
@@ -46,6 +47,11 @@ const routes = [
     path: '/upload',
     name: 'Upload',
     component: Upload,
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
   },
   {
     path: '*',

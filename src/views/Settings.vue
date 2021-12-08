@@ -1,88 +1,88 @@
 <template>
-  <v-container>
-    <v-row class="mt-2 d-flex justify-center">
-        <h1>Configurações</h1>
-    </v-row>
-    <v-row>
+  <v-container class="container-padding">
+    <GatherHeader title="Configurações"/>
+    <v-row class="d-flex justify-center">
       <p>Selecione as configurações de áudio desejadas</p>
     </v-row>
     <v-row class="d-flex justify-center">
       <v-switch
-        v-model="echoCancellation"
+        v-model="echoCancellationComputed"
         label="Cancelamento de Eco"
       ></v-switch>
     </v-row>
 
     <v-row class="d-flex justify-center">
       <v-switch
-        v-model="autoGainControl"
+        v-model="autoGainControlComputed"
         label="Controle Automático de Ganho"
       ></v-switch>
     </v-row>
    
     <v-row class="d-flex justify-center">
       <v-switch
-        v-model="noiseSuppression"
+        v-model="noiseSuppressionComputed"
         label="Supressão de Ruído"
       ></v-switch>
     </v-row>
-    <v-row>
-      <microphone/>
+    <v-row class="record-button-height">
+      <microphone
+        @ready="backHome"
+      />
     </v-row>
   </v-container>
 </template>
 
 <script>
 import Microphone from '@/components/Microphone.vue';
+import GatherHeader from '@/components/GatherHeader.vue';
+import getAudioConfigs from '@/services/audioConfigs';
+import router from '@/router';
+
 export default {
-  components: { Microphone },
+  components: { Microphone, GatherHeader },
   data: () => ({
-    echoCancellation: true,
-    autoGainControl: true,
-    noiseSuppression: true,
+    audioConstraints: {
+      echoCancellation: true,
+      autoGainControl: true,
+      noiseSuppression: true,
+    }
   }),
   mounted() {
-    this.echoCancellation = this.stringToBool(localStorage.getItem('echoCancellation') || 'true');
-    this.autoGainControl = this.stringToBool(localStorage.getItem('autoGainControl') || 'true');
-    this.noiseSuppression = this.stringToBool(localStorage.getItem('noiseSuppression') || 'true');
+    this.audioConstraints = getAudioConfigs();
   },
   methods: {
-    stringToBool(value) {
-      return value === 'true' ? true : false;
-    },
     boolToString(value) {
       return value ? 'true' : 'false';
     },
-    save() {
-
-
+    backHome() {
+      router.push('/');
     }
   },
   computed: {
     echoCancellationComputed: {
       get() {
-        return this.echoCancellation;
+        return this.audioConstraints.echoCancellation;
       },
       set(val) {
-        this.echoCancellation = val;
+        this.audioConstraints.echoCancellation = val;
         localStorage.setItem('echoCancellation', this.boolToString(val));
       }
     },
     autoGainControlComputed: {
       get() {
-        return this.autoGainControl;
+        return this.audioConstraints.autoGainControl;
       },
       set(val) {
-        this.autoGainControl = val;
+        this.audioConstraints.autoGainControl = val;
         localStorage.setItem('autoGainControl', this.boolToString(val));
       }
     },
     noiseSuppressionComputed: {
       get() {
-        return this.noiseSuppression;
+        return this.audioConstraints.noiseSuppression;
       },
       set(val) {
-        this.noiseSuppression = val;
+        this.audioConstraints.noiseSuppression = val;
         localStorage.setItem('noiseSuppression', this.boolToString(val));
       }
     }
@@ -94,5 +94,14 @@ export default {
   button {
     margin-top: 16px;
     margin-bottom: 0px;
+  }
+  .record-button-height {
+    height: calc(17px + 2*47px) !important;
+  }
+  .container-padding {
+    padding: 24px 22px !important;
+  }
+  .flex-off {
+    flex: unset;
   }
 </style>

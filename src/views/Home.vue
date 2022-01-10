@@ -42,7 +42,7 @@
         sobre o spira
       </v-btn>
       
-      <!-- <v-btn
+      <v-btn
         block
         rounded
         large
@@ -52,7 +52,7 @@
         to="/settings"
       >
         configurações de áudio
-      </v-btn> -->
+      </v-btn>
     </div>
 
   </v-container>

@@ -1,6 +1,7 @@
 module.exports = {
   transpileDependencies: [
-    'vuetify'
+    'vuetify',
+    'rxjs-interop'
   ],
   devServer: {
     proxy: 'http://localhost:3000'

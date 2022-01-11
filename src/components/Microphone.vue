@@ -8,7 +8,7 @@
       class="reset"
       @click="resetBtn"
     >
-    refazer gravação
+      refazer gravação
     </v-btn>
     <v-btn
       :outlined="micState < 4"
@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import AudioRecorder from 'audio-recorder-polyfill';
 import { Howl } from 'howler';
 import getAudioConfigs from '@/services/audioConfigs';
-window.MediaRecorder = AudioRecorder;
+import { MediaRecorder, register } from 'extendable-media-recorder';
+import { connect } from 'extendable-media-recorder-wav-encoder';
 
 export default {
   name: 'Microphone',
@@ -45,29 +45,25 @@ export default {
     async activateMicrophone() {
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         try {
-          const stream = await navigator.mediaDevices.getUserMedia({ 
-            audio: getAudioConfigs()
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: getAudioConfigs(),
           });
 
-          this.mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/PCMU'});
-          this.mediaRecorder.start();
-
-          let chunks = [];
-          this.mediaRecorder.ondataavailable = ( e => {
-            chunks.push(e.data);
-          });
+          this.mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/wav'});
 
           this.mediaRecorder.addEventListener('dataavailable', e => {
+            console.log(e);
             this.audioURL = window.URL.createObjectURL(e.data);
             this.$emit('newAudio', this.audioURL);
           });
           
+          this.mediaRecorder.start();
           this.micState = 1;
         }
         catch (err) {
           console.error('The following getUserMedia error occurred: ' + err);
         }
-      } 
+      }
       else {
         console.error('getUserMedia not supported on your browser!');
       }
@@ -75,12 +71,9 @@ export default {
 
     stopMicrophone() {
       if (this.mediaRecorder) {
+        console.log(this.mediaRecorder);
         this.mediaRecorder.stop();
-        this.mediaRecorder.stream.getTracks().forEach(track => {
-          track.stop();
-        });
       }
-      this.micState = 2;
     },
 
     listen() {
@@ -95,7 +88,6 @@ export default {
           }
         });
       }
-      this.micState = 3;
       this.listener.play();
     },
 
@@ -108,9 +100,11 @@ export default {
         if (!this.reset) {
           this.micState = 4;
         }
+        this.micState = 2;
       }
       else if (this.micState == 2) {
         this.listen();
+        this.micState = 3;
       }
       else if (this.micState == 3) {
         this.listener.stop();
@@ -158,6 +152,9 @@ export default {
     containerHeight() {
       return {microphone: true, microphoneAfterRecorded: this.micState === 4, microphoneBeforeRecorded: this.micState != 4};
     },
+  },
+  async created() {
+    await register(await connect());
   }
 };
 </script>

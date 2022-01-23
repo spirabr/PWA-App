@@ -33,7 +33,11 @@ export default {
     reset: {
       type: Boolean, 
       default: true
-    }
+    },
+    upload: {
+      type: Boolean, 
+      default: false
+    },
   },
   data: () => ({
     micState: 0,
@@ -145,7 +149,7 @@ export default {
       case 3:
         return 'parar gravação';
       default:
-        return 'avançar';
+        return this.upload ? 'enviar' : 'avançar';
       }
     },
     containerHeight() {

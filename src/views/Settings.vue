@@ -26,6 +26,7 @@
     </v-row>
     <v-row class="record-button-height">
       <Microphone
+        :upload=true
         @newAudio="saveTestAudio"
         @ready="sendTestAudio"
       />

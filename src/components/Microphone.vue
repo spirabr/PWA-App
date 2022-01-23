@@ -52,7 +52,6 @@ export default {
           this.mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/wav'});
 
           this.mediaRecorder.addEventListener('dataavailable', e => {
-            console.log(e);
             this.audioURL = window.URL.createObjectURL(e.data);
             this.$emit('newAudio', this.audioURL);
           });

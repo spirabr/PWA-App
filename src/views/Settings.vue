@@ -25,8 +25,9 @@
       ></v-switch>
     </v-row>
     <v-row class="record-button-height">
-      <microphone
-        @ready="backHome"
+      <Microphone
+        @newAudio="saveTestAudio"
+        @ready="sendTestAudio"
       />
     </v-row>
   </v-container>
@@ -37,6 +38,7 @@ import Microphone from '@/components/Microphone.vue';
 import GatherHeader from '@/components/GatherHeader.vue';
 import getAudioConfigs from '@/services/audioConfigs';
 import router from '@/router';
+import axios from 'axios';
 
 export default {
   components: { Microphone, GatherHeader },
@@ -45,7 +47,8 @@ export default {
       echoCancellation: true,
       autoGainControl: true,
       noiseSuppression: true,
-    }
+    },
+    audioFile: undefined,
   }),
   mounted() {
     this.audioConstraints = getAudioConfigs();
@@ -54,8 +57,30 @@ export default {
     boolToString(value) {
       return value ? 'true' : 'false';
     },
-    backHome() {
-      router.push('/');
+    async sendTestAudio() {
+      const requestOptions = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+  
+      try {
+        await axios.post(
+          `${process.env.VUE_APP_BACKEND_URL}/test`,
+          this.audioFile,
+          requestOptions
+        );
+      }
+      catch (error) {
+        console.error(error);
+      }
+    },
+    async saveTestAudio(blobURL) {
+      const preBlob = await fetch(blobURL);
+      const blob = await preBlob.blob();
+      const audioFile = new File([blob], 'test', { type: 'audio/wav' } );
+
+      this.audioFile = audioFile;
     }
   },
   computed: {

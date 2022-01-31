@@ -38,7 +38,6 @@
 import Microphone from '@/components/Microphone.vue';
 import GatherHeader from '@/components/GatherHeader.vue';
 import getAudioConfigs from '@/services/audioConfigs';
-import router from '@/router';
 import axios from 'axios';
 
 export default {
@@ -64,11 +63,13 @@ export default {
           'Content-Type': 'multipart/form-data',
         },
       };
-  
+      const audioFileForm = new FormData();
+      audioFileForm.append('audio', this.audioFile);
+
       try {
         await axios.post(
           `${process.env.VUE_APP_BACKEND_URL}/test`,
-          this.audioFile,
+          audioFileForm,
           requestOptions
         );
       }

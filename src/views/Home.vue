@@ -9,11 +9,24 @@
     </div>
     
     <div class="buttons">
+
       <v-btn
         block
         rounded
         large
         color="var(--purple-color)"
+        class="route-button"
+        link
+        to="/settings"
+      >
+        realizar teste
+      </v-btn>
+
+      <v-btn
+        block
+        rounded
+        large
+        color="grey"
         class="route-button"
         @click="goToColeta"
       >
@@ -24,34 +37,22 @@
         block
         rounded
         large
-        color="var(--purple-color)"
+        color="grey"
         class="route-button"
         @click="goToUpload"
       >
         upload
       </v-btn>
-    
+
       <v-btn
         block
         rounded
         large
-        color="var(--purple-color)"
+        color="grey"
         class="route-button"
         @click="goToAbout"
       >
         sobre o spira
-      </v-btn>
-      
-      <v-btn
-        block
-        rounded
-        large
-        color="var(--purple-color)"
-        class="route-button"
-        link
-        to="/settings"
-      >
-        configurações de áudio
       </v-btn>
     </div>
 

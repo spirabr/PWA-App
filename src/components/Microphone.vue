@@ -111,7 +111,7 @@ export default {
         this.micState = 4;
       }
       else {
-        this.$emit('ready');
+        this.resetBtn();
       }
     },
     resetBtn() {
@@ -144,7 +144,7 @@ export default {
       case 2:
         return 'escutar gravação';
       case 3:
-        return 'parar gravação';
+        return 'parar reprodução';
       default:
         return 'avançar';
       }

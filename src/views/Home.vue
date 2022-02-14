@@ -16,18 +16,6 @@
         large
         color="var(--purple-color)"
         class="route-button"
-        link
-        to="/settings"
-      >
-        realizar teste
-      </v-btn>
-
-      <v-btn
-        block
-        rounded
-        large
-        color="grey"
-        class="route-button"
         @click="goToColeta"
       >
         iniciar coleta
@@ -37,7 +25,7 @@
         block
         rounded
         large
-        color="grey"
+        color="var(--purple-color)"
         class="route-button"
         @click="goToUpload"
       >
@@ -48,11 +36,23 @@
         block
         rounded
         large
-        color="grey"
+        color="var(--purple-color)"
         class="route-button"
         @click="goToAbout"
       >
         sobre o spira
+      </v-btn>
+
+      <v-btn
+        block
+        rounded
+        large
+        color="var(--purple-color)"
+        class="route-button"
+        link
+        to="/settings"
+      >
+        realizar teste
       </v-btn>
     </div>
 

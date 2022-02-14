@@ -111,7 +111,7 @@ export default {
         this.micState = 4;
       }
       else {
-        this.resetBtn();
+        this.$emit('ready');
       }
     },
     resetBtn() {

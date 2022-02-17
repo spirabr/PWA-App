@@ -2,7 +2,24 @@
   <v-container>
     <gather-header title="formulário"/>
     <v-form ref='form'>
-      <p>Registro do Paciente</p>
+      <div>
+        <p>Tipo de Coleta</p>
+        <v-radio-group 
+          v-model='form.sampleType'
+          class='checkboxes'
+          row
+        >
+          <v-radio
+            v-for="(option, index) in sampleTypeOptions"
+            :key='index'
+            :label='option'
+            :value='apiSampleTypeOptions[index]'
+            color='var(--purple-color)'
+          />
+        </v-radio-group>
+      </div>
+
+      <p>Registro do Participante</p>
       <v-select
         v-model='form.local'
         :items='hospitals'
@@ -10,7 +27,7 @@
         :rules='nonEmptyRule'
         solo
         required
-      ></v-select>
+      />
 
       <v-text-field 
         class='text-input'
@@ -22,7 +39,7 @@
         :hint='validRGH'
         label='Registro Geral Hospitalar'
         required
-      ></v-text-field>
+      />
 
       <div class='sexo-input'>
         <p>Sexo</p>
@@ -36,19 +53,27 @@
             label='Masculino'
             value='Masculino'
             color='var(--purple-color)'
-          ></v-radio>
+          />
           <v-radio
             label='Feminino'
             value='Feminino'
             color='var(--purple-color)'
-          ></v-radio>
+          />
         </v-radio-group>
       </div>
+
+      <p>Idade</p>
+      <v-text-field 
+        class='text-input'
+        type='number'
+        solo
+        v-model='form.age'
+      />
 
       <div class='covid-input'>
         <p>Já testou positivo para COVID-19?</p>
         <v-radio-group 
-          v-model='form.covid'
+          v-model='form.covid.value'
           :rules='nonEmptyRule'
           class='checkboxes'
           row
@@ -59,12 +84,50 @@
             :label='option'
             :value='apiCovidOptions[index]'
             color='var(--purple-color)'
-          ></v-radio>
+          />
         </v-radio-group>
+
+        <div
+          v-if="form.covid.value === 'TRUE'"
+        >
+          <p>Há quanto tempo você recebeu o diagnóstico?</p>
+          <v-text-field
+            class='text-input'
+            v-model='form.timeFromLastPositiveDiagnose'
+            solo
+          />
+
+          <p>Foi hospitalizado?</p>
+          <v-radio-group 
+          v-model='form.covid.hospitalized'
+          class='checkboxes'
+          row
+          >
+            <v-radio
+              label='Sim'
+              :value='true'
+              color='var(--purple-color)'
+            />
+            <v-radio
+              label='Não'
+              :value='false'
+              color='var(--purple-color)'
+            />
+          </v-radio-group>
+
+          <div v-if="form.covid.hospitalized">
+            <p>Por quanto tempo?</p>
+            <v-text-field
+              class='text-input'
+              v-model="form.covid.hospitalizationDuration"
+              solo
+            />
+          </div>
+        </div>
       </div>
 
       <div class='mask-input'>
-        <p>O paciente está usando máscara?</p>
+        <p>Uso de máscara no momento da coleta:</p>
         <v-radio-group 
           v-model='form.mask'
           :rules='nonEmptyRule'
@@ -80,6 +143,22 @@
           ></v-radio>
         </v-radio-group>
       </div>
+
+      <p>SPO<sub>2</sub></p>
+      <v-text-field 
+        class='text-input'
+        type='number'
+        solo
+        v-model='form.oxygenSaturation'
+      />
+
+      <p>BPM</p>
+      <v-text-field 
+        class='text-input'
+        type='number'
+        solo
+        v-model='form.bpm'
+      />
     </v-form>
 
     <v-btn
@@ -96,7 +175,14 @@
 import router from '@/router';
 import GatherHeader from '@/components/GatherHeader.vue';
 import { validateRGH, loadOrRequestHospitals, todaysDate } from './Form.js';
-import { maskOptions, apiMaskOptions, covidOptions, apiCovidOptions } from './FormOptions';
+import { 
+  maskOptions, 
+  apiMaskOptions, 
+  covidOptions, 
+  apiCovidOptions, 
+  sampleTypeOptions, 
+  apiSampleTypeOptions 
+} from './FormOptions';
 
 export default {
   components: { GatherHeader },
@@ -106,15 +192,31 @@ export default {
       rgh: '',
       local: '',
       sex: '',
-      covid: '',
+      covid: {
+        value: '',
+        timeFromLastPositiveDiagnose: '',
+        hospitalized: false,
+        hospitalizationDuration: '',
+      },
       mask: '',
       date: '',
+      oxygenSaturation: undefined,
+      bpm: undefined,
+      age: undefined,
+      internedByrespiratoryInsufficiency: {
+        value: false,
+        location: ''
+      },
+      cid: '',
+      sampleType: 'PATIENT',    
     },
     hospitals: [],
     maskOptions,
     apiMaskOptions,
     covidOptions,
     apiCovidOptions,
+    sampleTypeOptions,
+    apiSampleTypeOptions,
     nonEmptyRule: [ v => v.trim() !== '' || 'Preencha este campo' ],
   }),
   methods: {

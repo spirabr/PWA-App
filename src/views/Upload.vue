@@ -15,6 +15,7 @@
           :location="sample.location"
           :http="instance"
           :audios="sample.audios"
+          @uploaded="deleteSample(key)"
         >
         </UploadAudiosCard>
       </div>
@@ -62,6 +63,11 @@ export default {
           sent: patient.sent
         }));
   },
+  methods: {
+    deleteSample(key) {
+      this.samples.splice(key, 1);
+    }
+  }
 };
 </script>
 

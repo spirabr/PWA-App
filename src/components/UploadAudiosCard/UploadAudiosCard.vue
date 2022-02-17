@@ -73,6 +73,7 @@ export default {
           const statusUploadAudios = await uploadAudios(audiosFormData, this.location.name, this.patient.rgh, this.http);
           this.sent = true;
           if (statusUploadAudios >= 200 || statusUploadAudios < 300) {
+            this.$emit('uploaded');
             this.errorSending = false;
             this.isDisabled = true;
           } else {

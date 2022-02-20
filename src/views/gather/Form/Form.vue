@@ -90,12 +90,12 @@
 
         <div
           v-if="form.covid.value === 'TRUE'"
+          class='d-flex flex-column'
         >
-          <p>Há quanto tempo você recebeu o diagnóstico?</p>
-          <v-text-field
-            class='text-input'
-            v-model='form.timeFromLastPositiveDiagnose'
-            solo
+          <p>Quando você recebeu o diagnóstico?</p>
+          <v-date-picker
+            v-model="form.covid.lastPositiveDiagnoseDate"
+            color='var(--purple-color)'
           />
 
           <p>Foi hospitalizado?</p>
@@ -117,11 +117,16 @@
           </v-radio-group>
 
           <div v-if="form.covid.hospitalized">
-            <p>Por quanto tempo?</p>
-            <v-text-field
-              class='text-input'
-              v-model="form.covid.hospitalizationDuration"
-              solo
+            <p>Quando foi internado?</p>
+            <v-date-picker
+              v-model="form.covid.hospitalizationStart"
+              color='var(--purple-color)'
+            />
+            <p>Quando recebeu alta?</p>
+            <v-date-picker
+              v-model="form.covid.hospitalizationEnd"
+              :min='form.covid.hospitalizationStart'
+              color='var(--purple-color)'
             />
           </div>
         </div>
@@ -251,9 +256,10 @@ export default {
       sex: '',
       covid: {
         value: '',
-        timeFromLastPositiveDiagnose: '',
+        lastPositiveDiagnoseDate: '',
         hospitalized: false,
-        hospitalizationDuration: '',
+        hospitalizationStart: undefined,
+        hospitalizationEnd: undefined,
       },
       mask: '',
       date: '',

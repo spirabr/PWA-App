@@ -66,6 +66,7 @@
       <v-text-field 
         class='text-input'
         type='number'
+        label='Em anos'
         solo
         v-model='form.age'
       />
@@ -148,6 +149,7 @@
       <v-text-field 
         class='text-input'
         type='number'
+        label='Saturação de oxigênio em porcentagem'
         solo
         v-model='form.oxygenSaturation'
       />
@@ -156,8 +158,59 @@
       <v-text-field 
         class='text-input'
         type='number'
+        label='Batimentos por minuto'
         solo
         v-model='form.bpm'
+      />
+
+      <p>Frequência Respiratória</p>
+      <v-text-field 
+        class='text-input'
+        type='number'
+        label='Respirações por minuto'
+        solo
+        v-model='form.respiratoryFrequency'
+      />
+
+      <p>Está internado por insuficiência respiratória?</p>
+      <v-radio-group 
+        v-model='form.internedByRespiratoryInsufficiency.value'
+        class='checkboxes'
+        row
+      >
+        <v-radio
+          v-for="(option, index) in internationReasonOptions"
+          :key='index'
+          :label='option'
+          :value='apiInternationReasonOptions[index]'
+          color='var(--purple-color)'
+        ></v-radio>
+      </v-radio-group>
+
+      <div class="internation-type" v-if="form.internedByRespiratoryInsufficiency.value === 'TRUE'">
+        <p>Enfermaria ou UTI?</p>
+        <v-radio-group 
+          v-model='form.internedByRespiratoryInsufficiency.location'
+          class='checkboxes'
+          row
+        >
+          <v-radio
+            v-for="(option, index) in internationLocationOptions"
+            :key='index'
+            :label='option'
+            :value='apiInternationLocationOptions[index]'
+            color='var(--purple-color)'
+          ></v-radio>
+        </v-radio-group>
+      </div>
+
+      <p>CID</p>
+      <v-text-field 
+        class='text-input'
+        type='number'
+        label='Código internacional da Doença'
+        solo
+        v-model='form.cid'
       />
     </v-form>
 
@@ -181,7 +234,11 @@ import {
   covidOptions, 
   apiCovidOptions, 
   sampleTypeOptions, 
-  apiSampleTypeOptions 
+  apiSampleTypeOptions,
+  internationReasonOptions,
+  apiInternationReasonOptions,
+  internationLocationOptions,
+  apiInternationLocationOptions,
 } from './FormOptions';
 
 export default {
@@ -203,12 +260,13 @@ export default {
       oxygenSaturation: undefined,
       bpm: undefined,
       age: undefined,
-      internedByrespiratoryInsufficiency: {
+      internedByRespiratoryInsufficiency: {
         value: false,
         location: ''
       },
       cid: '',
-      sampleType: 'PATIENT',    
+      sampleType: 'PATIENT',
+      respiratoryFrequency: undefined,
     },
     hospitals: [],
     maskOptions,
@@ -217,6 +275,10 @@ export default {
     apiCovidOptions,
     sampleTypeOptions,
     apiSampleTypeOptions,
+    internationReasonOptions,
+    apiInternationReasonOptions,
+    internationLocationOptions,
+    apiInternationLocationOptions,
     nonEmptyRule: [ v => v.trim() !== '' || 'Preencha este campo' ],
   }),
   methods: {

@@ -9,11 +9,12 @@
         Clique em <strong>enviar todas</strong> para enviar todas as coletas 
         ou clique em <strong>enviar</strong> em alguma coleta para enviá-la.
       </p>
-      <v-btn block
+      <v-btn 
+        block
         rounded
         large
         color="var(--purple-color)" 
-        class="mb-3"
+        class="mb-3 upload-button"
         @click="uploadAllSamples()"
       >
         enviar todas
@@ -94,5 +95,9 @@ export default {
     font-size: 16.5px;
 
     color: white;
+  }
+  .upload-button {
+    flex: unset;
+    height: 47px;
   }
 </style>

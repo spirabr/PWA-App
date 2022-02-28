@@ -9,10 +9,8 @@
         Clique em <strong>upload</strong> para enviar o áudio.
       </p>
       <div class="cards-container">
-        <UploadAudiosCard v-for="sample in samples" :key="sample.patient.id"
-          :patient="sample.patient"
-          :sampleDate="sample.date"
-          :location="sample.location"
+        <UploadAudiosCard v-for="sample in samples" :key="sample.id"
+          :sample="sample"
           :http="instance"
           :audios="sample.audios"
         >
@@ -42,17 +40,8 @@ export default {
     this.samples = patients.filter(patient => (patient && patient.form && patient.id))
       .map(patient => (
         {
-          patient: {
-            id: patient.id,
-            rgh: patient.form.rgh,
-            sex: patient.form.sex,
-            mask: patient.form.mask,
-            covid: patient.form.covid,
-          },
-          location: {
-            name: patient.form.local
-          },
-          date: patient.form.date,
+          id: patient.id,
+          ...patient.form,
           audios: {
             aceite: patient.aceite,
             sustentada: patient.sustentada,

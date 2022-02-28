@@ -1,30 +1,33 @@
 <template>
   <v-card
-    class="upload-audios-card"
     outlined
-    hover
     :loading="isUploading"
     :disabled="isDisabled"
+    class="mb-3"
   >
-    <div class="card-content d-flex align-center pa-2">
-      <div class="sample-data">
-        <v-card-title class="title">{{ sample.name }}</v-card-title>
-        <v-card-subtitle class="subtitle"
-          >{{ sample.local}} - RGH: {{ sample.rgh }}</v-card-subtitle
-        >
-        <v-card-text class="description"
-          >Coleta realizada em: {{ sample.date }}</v-card-text
-        >
-      </div>
-      <div class="send-tag align-self-center">
-        <v-chip
-          :color="sentStyle"
-        >{{ this.sentText }}</v-chip>
-      </div>
-    </div>
-    <v-card-actions class="flex-column">
-      <v-btn class="upload" text @click="submitSample">
-        Upload
+    <v-card-title class="d-flex justify-space-between">
+      Coleta realizada em: {{ dateToString(sample.date) }}
+      <v-chip
+        :color="sentStyle"
+      >{{ this.sentText }}</v-chip>
+    </v-card-title>
+    <v-card-text>
+      Dados:
+      <ul>
+        <li>
+          Local de coleta: <strong>{{ sample.local }}</strong>
+        </li>
+        <li>
+          RGH: <strong>{{ sample.rgh }}</strong>
+        </li>
+        <li v-if="sample.sampleType">
+          Tipo de coleta: <strong>{{ sample.sampleType }}</strong>
+        </li>
+      </ul>
+    </v-card-text>
+    <v-card-actions class="d-flex justify-center">
+      <v-btn @click="submitSample">
+        <div class="upload-btn"> enviar</div>
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -88,7 +91,7 @@ export default {
           audiosFormData.append('frase', this.audios.frase);
 
           const statusUploadAudios = await uploadAudios(audiosFormData, this.sample.local, this.sample.rgh, this.http);
-          this.sample.sent = true;
+          this.sent = true;
           if (statusUploadAudios >= 200 || statusUploadAudios < 300) {
             this.errorSending = false;
             this.isDisabled = true;
@@ -111,6 +114,17 @@ export default {
       }
 
       this.isUploading = false;
+    },
+    dateToString(date) {
+      const options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      };
+      const formattedDate = new Date(date).toLocaleDateString('pt-br', options);
+      return formattedDate === 'Invalid Date' ? date : formattedDate;
     }
   },
   computed: {
@@ -124,24 +138,8 @@ export default {
 };
 </script>
 
-<style>
-.upload-audios-card {
-  display: flex;
-  flex: 1 1 auto;
-  padding: 5px;
-  margin-bottom: 20px;
-  background-color: var(--purple-color);
-}
-.upload-audios-card .title {
-  font-weight: 600;
-}
-.upload-audios-card .card-actions {
-  align-self: center;
-}
-.card-actions {
-  min-width: 100px;
-}
-.upload-audios-card .card-content .sample-data {
-  width: 100%;
+<style >
+.upload-btn {
+  font-size: 1.1rem;
 }
 </style>

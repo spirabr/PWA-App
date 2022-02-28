@@ -1,5 +1,5 @@
 import { describe } from 'jest-circus';
-import { validateRGH, todaysDate } from './Form.js';
+import { validateRGH } from './Form.js';
 
 describe('Form logic', () => {
   test('should validate RGH', () => {
@@ -14,8 +14,4 @@ describe('Form logic', () => {
     expect(validateRGH(hospital2, wrongRgh)).toBe(true);
     expect(validateRGH(hospital, wrongRgh)).toBe(false);
   });
-  
-  test('should return the todays date', () => {
-    expect(todaysDate()).toMatch(/[0-3][0-9]\/[0-1][0-9]\/20[2-9][0-9]/);
-  });  
 });

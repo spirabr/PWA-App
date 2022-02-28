@@ -1,30 +1,33 @@
 <template>
   <v-card
-    class="upload-audios-card"
     outlined
-    hover
     :loading="isUploading"
     :disabled="isDisabled"
+    class="mb-3"
   >
-    <div class="card-content d-flex align-center pa-2">
-      <div class="sample-data">
-        <v-card-title class="title">{{ patient.name }}</v-card-title>
-        <v-card-subtitle class="subtitle"
-          >{{ location.name }} - RGH: {{ patient.rgh }}</v-card-subtitle
-        >
-        <v-card-text class="description"
-          >Coleta realizada em: {{ sampleDate }}</v-card-text
-        >
-      </div>
-      <div class="send-tag align-self-center">
-        <v-chip
-          :color="sentStyle"
-        >{{ this.sentText }}</v-chip>
-      </div>
-    </div>
-    <v-card-actions class="flex-column">
-      <v-btn class="upload" text @click="submitSample">
-        Upload
+    <v-card-title class="d-flex justify-space-between">
+      Coleta realizada em: {{ dateToString(sample.date) }}
+      <v-chip
+        :color="sentStyle"
+      >{{ this.sentText }}</v-chip>
+    </v-card-title>
+    <v-card-text>
+      Dados:
+      <ul>
+        <li>
+          Local de coleta: <strong>{{ sample.local }}</strong>
+        </li>
+        <li>
+          RGH: <strong>{{ sample.rgh }}</strong>
+        </li>
+        <li v-if="sample.sampleType">
+          Tipo de coleta: <strong>{{ sample.sampleType }}</strong>
+        </li>
+      </ul>
+    </v-card-text>
+    <v-card-actions class="d-flex justify-center">
+      <v-btn @click="submitSample">
+        <div class="upload-btn"> enviar</div>
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -35,7 +38,7 @@ import { uploadAudios, uploadMetadata } from './UploadAudiosCard';
 
 export default {
   name: 'UploadAudiosCard',
-  props: ['patient', 'location', 'sampleDate', 'http'],
+  props: ['sample', 'http', 'audios'],
   data: () => ({
     isUploading: false,
     isDisabled: false,
@@ -43,7 +46,7 @@ export default {
     sent: false,
   }),
   created() {
-    this.sent = this.patient.sent;
+    this.sent = this.sample.sent;
   },
   methods: {
     async submitSample() {
@@ -52,25 +55,42 @@ export default {
 
       try {
         const statusUploadMetadata = await uploadMetadata({
-          patientId: this.patient.id,
+          patientId: this.id,
           collector: {
-            patientRgh: this.patient.rgh,
-            hospitalName: this.location.name,
-            patientSex: this.patient.sex,
-            covidStatus: this.patient.covid,
-            maskType: this.patient.mask,
+            patientRgh: this.sample.rgh,
+            sampleType: this.sample.sampleType,
+            gender: this.sample.sex,
+            age: this.sample.age,
+            respiratoryInsufficiencySituation: {
+              respiratoryInsufficiencyStatus: this.sample.internedByRespiratoryInsufficiency.value,
+              location: this.sample.internedByRespiratoryInsufficiency.location
+            },
+            CID: this.sample.cid,
+            respiratoryFrequency: this.sample.respiratoryFrequency,
+            hospitalName: this.sample.local,
+            collectionDate: this.sample.date,
+            maskType: this.sample.mask,
+            covidSituation: {
+              covidStatus: this.sample.covid.value,
+              lastPositiveDiagnoseDate: this.sample.covid.lastPositiveDiagnoseDate,
+              hospitalized: this.sample.covid.hospitalized,
+              hospitalizationStart: this.sample.covid.hospitalizationStart,
+              hospitalizationEnd: this.sample.covid.hospitalizationEnd,
+            },
+            saturacaoOxigenio: this.sample.oxygenSaturation,
+            bpm: this.sample.bpm
           },
         }, this.http);
 
         if (statusUploadMetadata >= 200 || statusUploadMetadata < 300) {
           const audiosFormData = new FormData();
 
-          audiosFormData.append('aceite', this.$attrs.audios.aceite);
-          audiosFormData.append('sustentada', this.$attrs.audios.sustentada);
-          audiosFormData.append('parlenda', this.$attrs.audios.parlenda);
-          audiosFormData.append('frase', this.$attrs.audios.frase);
+          audiosFormData.append('aceite', this.audios.aceite);
+          audiosFormData.append('sustentada', this.audios.sustentada);
+          audiosFormData.append('parlenda', this.audios.parlenda);
+          audiosFormData.append('frase', this.audios.frase);
 
-          const statusUploadAudios = await uploadAudios(audiosFormData, this.location.name, this.patient.rgh, this.http);
+          const statusUploadAudios = await uploadAudios(audiosFormData, this.sample.local, this.sample.rgh, this.http);
           this.sent = true;
           if (statusUploadAudios >= 200 || statusUploadAudios < 300) {
             this.errorSending = false;
@@ -83,6 +103,9 @@ export default {
           this.errorSending = true;
           this.isDisabled = false;
         }
+
+        this.sent = true;
+
       } catch (error) {
         console.error(error);
         this.errorSending = true;
@@ -91,6 +114,17 @@ export default {
       }
 
       this.isUploading = false;
+    },
+    dateToString(date) {
+      const options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      };
+      const formattedDate = new Date(date).toLocaleDateString('pt-br', options);
+      return formattedDate === 'Invalid Date' ? date : formattedDate;
     }
   },
   computed: {
@@ -104,24 +138,8 @@ export default {
 };
 </script>
 
-<style>
-.upload-audios-card {
-  display: flex;
-  flex: 1 1 auto;
-  padding: 5px;
-  margin-bottom: 20px;
-  background-color: var(--purple-color);
-}
-.upload-audios-card .title {
-  font-weight: 600;
-}
-.upload-audios-card .card-actions {
-  align-self: center;
-}
-.card-actions {
-  min-width: 100px;
-}
-.upload-audios-card .card-content .sample-data {
-  width: 100%;
+<style >
+.upload-btn {
+  font-size: 1.1rem;
 }
 </style>

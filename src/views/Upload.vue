@@ -6,15 +6,24 @@
         upload
       </h1>
       <p>
-        Clique em <strong>upload</strong> para enviar o áudio.
+        Clique em <strong>enviar todas</strong> para enviar todas as coletas 
+        ou clique em <strong>enviar</strong> em alguma coleta para enviá-la.
       </p>
+      <v-btn block
+        rounded
+        large
+        color="var(--purple-color)" 
+        class="mb-3"
+        @click="uploadAllSamples()"
+      >
+        enviar todas
+      </v-btn>
       <div class="cards-container">
-        <UploadAudiosCard v-for="sample in samples" :key="sample.patient.id"
-          :patient="sample.patient"
-          :sampleDate="sample.date"
-          :location="sample.location"
-          :http="instance"
+        <UploadAudiosCard v-for="sample in samples" :key="sample.id"
+          :sample="sample"
+          :http="instance"  
           :audios="sample.audios"
+          ref="uploadCards"
         >
         </UploadAudiosCard>
       </div>
@@ -42,17 +51,8 @@ export default {
     this.samples = patients.filter(patient => (patient && patient.form && patient.id))
       .map(patient => (
         {
-          patient: {
-            id: patient.id,
-            rgh: patient.form.rgh,
-            sex: patient.form.sex,
-            mask: patient.form.mask,
-            covid: patient.form.covid,
-          },
-          location: {
-            name: patient.form.local
-          },
-          date: patient.form.date,
+          id: patient.id,
+          ...patient.form,
           audios: {
             aceite: patient.aceite,
             sustentada: patient.sustentada,
@@ -62,6 +62,11 @@ export default {
           sent: patient.sent
         }));
   },
+  methods: {
+    uploadAllSamples() {
+      this.$refs.uploadCards.forEach((card) => card.submitSample());
+    }
+  }
 };
 </script>
 
@@ -83,5 +88,11 @@ export default {
     font-weight: normal;
     color: #707070;
     padding-bottom: 3%;
+  }
+  .v-size--large {
+    font-weight: bold;
+    font-size: 16.5px;
+
+    color: white;
   }
 </style>

@@ -12,7 +12,7 @@ export const apiSampleTypeOptions = ['PATIENT', 'TEST', 'CONTROL'];
 
 export const internationReasonOptions = ['Sim', 'Não'];
 
-export const apiInternationReasonOptions = ['TRUE', 'FALSE'];
+export const apiInternationReasonOptions = [true, false];
 
 export const internationLocationOptions = ['Enfermaria', 'UTI'];
 

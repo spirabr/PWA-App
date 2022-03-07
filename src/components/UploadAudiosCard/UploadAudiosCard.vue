@@ -7,10 +7,21 @@
   >
     <v-card-title class="d-flex justify-space-between">
       Coleta realizada em: {{ dateToString(sample.date) }}
-      <v-chip
-        :color="sentStyle"
-      >{{ this.sentText }}</v-chip>
+      <div class="d-flex flex-column align-center ">
+        <v-chip
+          class="mb-2"
+          :color="sentStyle"
+        >{{ this.sentText }}</v-chip>
+
+        <v-btn
+          class="white--text rounded-lg"
+          color="red"
+          @click="deleteSample">
+          <div class="upload-btn">excluir</div>
+        </v-btn>
+      </div>
     </v-card-title>
+
     <v-card-text>
       Dados:
       <ul>
@@ -25,7 +36,7 @@
         </li>
       </ul>
     </v-card-text>
-    <v-card-actions class="d-flex justify-center">
+    <v-card-actions class="d-flex justify-center ">
       <v-btn @click="submitSample">
         <div class="upload-btn"> enviar</div>
       </v-btn>
@@ -55,7 +66,7 @@ export default {
 
       try {
         const statusUploadMetadata = await uploadMetadata({
-          patientId: this.id,
+          patientId: this.sample.id,
           collector: {
             patientRgh: this.sample.rgh,
             sampleType: this.sample.sampleType,
@@ -93,6 +104,7 @@ export default {
           const statusUploadAudios = await uploadAudios(audiosFormData, this.sample.local, this.sample.rgh, this.http);
           this.sent = true;
           if (statusUploadAudios >= 200 || statusUploadAudios < 300) {
+            this.$emit('deleted');
             this.errorSending = false;
             this.isDisabled = true;
           } else {
@@ -114,6 +126,10 @@ export default {
       }
 
       this.isUploading = false;
+    },
+    deleteSample() {
+      this.$store.commit('deletePatient', this.sample.id);
+      this.$emit('deleted');
     },
     dateToString(date) {
       const options = {

@@ -20,11 +20,12 @@
         enviar todas
       </v-btn>
       <div class="cards-container">
-        <UploadAudiosCard v-for="sample in samples" :key="sample.id"
+        <UploadAudiosCard v-for="(sample, index) in samples" :key="sample.id"
           :sample="sample"
           :http="instance"  
           :audios="sample.audios"
           ref="uploadCards"
+          @deleted="deleteSample(index)"
         >
         </UploadAudiosCard>
       </div>
@@ -66,6 +67,9 @@ export default {
   methods: {
     uploadAllSamples() {
       this.$refs.uploadCards.forEach((card) => card.submitSample());
+    },
+    deleteSample(index) {
+      this.samples.splice(index, 1);
     }
   }
 };

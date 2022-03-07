@@ -46,7 +46,7 @@ export default {
     instance: instance,
     samples: []
   }),
-  async created() {
+  async beforeMount() {
     const patients = await this.$store.getters.allPatients;
 
     this.samples = patients.filter(patient => (patient && patient.form && patient.id))

@@ -212,7 +212,6 @@
       <p>CID</p>
       <v-text-field 
         class='text-input'
-        type='number'
         label='Código internacional da Doença'
         solo
         v-model='form.cid'

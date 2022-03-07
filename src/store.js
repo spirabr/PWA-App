@@ -90,7 +90,7 @@ const store = new Vuex.Store({
       
       return transaction.complete;
     },
-    async deletePatient(id) {
+    async deletePatient(state, id) {
       const { store, transaction } = await openStore('patients');
       store.delete(id);
       return transaction.complete;

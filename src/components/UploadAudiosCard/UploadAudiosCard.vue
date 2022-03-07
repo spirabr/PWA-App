@@ -29,6 +29,9 @@
       <v-btn @click="submitSample">
         <div class="upload-btn"> enviar</div>
       </v-btn>
+      <v-btn @click="deleteSample">
+        <div class="upload-btn">excluir</div>
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -55,7 +58,7 @@ export default {
 
       try {
         const statusUploadMetadata = await uploadMetadata({
-          patientId: this.id,
+          patientId: this.sample.id,
           collector: {
             patientRgh: this.sample.rgh,
             sampleType: this.sample.sampleType,
@@ -114,6 +117,11 @@ export default {
       }
 
       this.isUploading = false;
+    },
+    deleteSample() {
+      this.$store.commit('deletePatient', this.sample.id);
+      this.$destroy();
+      this.$el.parentNode.removeChild(this.$el);
     },
     dateToString(date) {
       const options = {

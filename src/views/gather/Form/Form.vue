@@ -15,6 +15,7 @@
             :label='option'
             :value='apiSampleTypeOptions[index]'
             color='var(--purple-color)'
+            class='inner-checkboxes'
           />
         </v-radio-group>
       </div>
@@ -344,6 +345,9 @@ export default {
     display: flex;
     justify-items: center;
     align-items: center;
+  }
+  .inner-checkboxes {
+    margin-bottom: 10px;
   }
   .v-btn {
     font-size: 1.3rem;

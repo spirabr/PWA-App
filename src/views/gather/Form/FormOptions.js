@@ -6,9 +6,9 @@ export const covidOptions = ['Sim', 'Não', 'Não deseja declarar ou não sabe']
 
 export const apiCovidOptions = ['TRUE', 'FALSE', 'UNKNOWN'];
 
-export const sampleTypeOptions = ['Paciente', 'Teste', 'Controle'];
+export const sampleTypeOptions = ['Paciente', 'Teste', 'Controle', 'Pós-covid'];
 
-export const apiSampleTypeOptions = ['PATIENT', 'TEST', 'CONTROL'];
+export const apiSampleTypeOptions = ['PATIENT', 'TEST', 'CONTROL', 'AFTERCOVID'];
 
 export const internationReasonOptions = ['Sim', 'Não'];
 

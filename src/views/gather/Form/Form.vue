@@ -3,7 +3,7 @@
     <gather-header title="formulário"/>
     <v-form ref='form'>
       <div>
-        <p>Tipo de Coleta</p>
+        <p>{{sampleTypeTitle}}</p>
         <v-radio-group 
           v-model='form.sampleType'
           class='checkboxes'
@@ -18,6 +18,18 @@
             class='inner-checkboxes'
           />
         </v-radio-group>
+      </div>
+
+      <div v-if={isInferenceApp}>
+        <p>Modelo para Inferência</p>
+        <v-select
+          v-model='form.model'
+          :items='models.map(model => model.name)'
+          label='Modelos disponíveis'
+          :rules='nonEmptyRule'
+          solo
+          required
+        />
       </div>
 
       <p>Registro do Participante</p>
@@ -233,7 +245,7 @@
 import router from '@/router';
 import GatherHeader from '@/components/GatherHeader.vue';
 import { hasToken } from '@/services/auth';
-import { validateRGH, loadOrRequestHospitals, todaysDate } from './Form.js';
+import { validateRGH, loadOrRequestHospitals, todaysDate, isInferenceApp} from './Form.js';
 import { 
   maskOptions, 
   apiMaskOptions, 
@@ -251,31 +263,58 @@ export default {
   components: { GatherHeader },
   name: 'Form',
   data: () => ({
-    form: {
-      rgh: '',
-      local: '',
-      sex: '',
-      covid: {
-        value: '',
-        lastPositiveDiagnoseDate: '',
-        hospitalized: false,
-        hospitalizationStart: undefined,
-        hospitalizationEnd: undefined,
+    form: isInferenceApp() ? 
+      {
+        model:'',
+        rgh: '',
+        local: '',
+        sex: '',
+        covid: {
+          value: '',
+          lastPositiveDiagnoseDate: '',
+          hospitalized: false,
+          hospitalizationStart: undefined,
+          hospitalizationEnd: undefined,
+        },
+        mask: '',
+        date: '',
+        oxygenSaturation: undefined,
+        bpm: undefined,
+        age: undefined,
+        internedByRespiratoryInsufficiency: {
+          value: false,
+          location: ''
+        },
+        cid: '',
+        sampleType: 'PATIENT',
+        respiratoryFrequency: undefined,
+      }:
+      {
+        rgh: '',
+        local: '',
+        sex: '',
+        covid: {
+          value: '',
+          lastPositiveDiagnoseDate: '',
+          hospitalized: false,
+          hospitalizationStart: undefined,
+          hospitalizationEnd: undefined,
+        },
+        mask: '',
+        date: '',
+        oxygenSaturation: undefined,
+        bpm: undefined,
+        age: undefined,
+        internedByRespiratoryInsufficiency: {
+          value: false,
+          location: ''
+        },
+        cid: '',
+        sampleType: 'PATIENT',
+        respiratoryFrequency: undefined,
       },
-      mask: '',
-      date: '',
-      oxygenSaturation: undefined,
-      bpm: undefined,
-      age: undefined,
-      internedByRespiratoryInsufficiency: {
-        value: false,
-        location: ''
-      },
-      cid: '',
-      sampleType: 'PATIENT',
-      respiratoryFrequency: undefined,
-    },
     hospitals: [],
+    models:[],
     maskOptions,
     apiMaskOptions,
     covidOptions,
@@ -287,6 +326,7 @@ export default {
     internationLocationOptions,
     apiInternationLocationOptions,
     nonEmptyRule: [ v => v.trim() !== '' || 'Preencha este campo' ],
+    sampleTypeTitle:isInferenceApp() ? 'Tipo de Inferência' : 'Tipo de Coleta',
   }),
   methods: {
     submit() {
@@ -313,6 +353,9 @@ export default {
           .filter(hospitalName => hospitalName && hospitalName.trim());
       });
     this.$store.commit('clearPatient');
+    if(isInferenceApp()){
+      this.models=[{id: 'id_1',name:'model 1'},{id: 'id_2',name:'model 2'}];
+    }
   },
 };
 </script>

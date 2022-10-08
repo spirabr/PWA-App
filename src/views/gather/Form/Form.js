@@ -40,7 +40,3 @@ export function todaysDate() {
   //TODO: fix timezone error
   return today.toISOString();
 }
-
-export function isInferenceApp(){
-  return (process.env.VUE_APP_IS_INFERENCE_APP === 'true');
-}

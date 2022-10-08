@@ -245,7 +245,8 @@
 import router from '@/router';
 import GatherHeader from '@/components/GatherHeader.vue';
 import { hasToken } from '@/services/auth';
-import { validateRGH, loadOrRequestHospitals, loadOrRequestModels, todaysDate, isInferenceApp} from './Form.js';
+import { validateRGH, loadOrRequestHospitals, loadOrRequestModels, todaysDate} from './Form.js';
+import { isInferenceApp } from '../../Settings.js';
 import { 
   maskOptions, 
   apiMaskOptions, 

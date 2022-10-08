@@ -31,6 +31,10 @@ const store = new Vuex.Store({
       frase: null,
     },
     hospitals: [],
+    user: {
+      id: null,
+      token: null,
+    }
   },
   getters: {
     async allPatients() {

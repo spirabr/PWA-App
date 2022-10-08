@@ -40,3 +40,7 @@ Para formatar o projeto de acordo com as regras de Lint, use o comando
 ```
 yarn lint
 ```
+
+# Aplicativo de Inferência
+
+Este PWA possui também um segundo modo de funcionamento para realização de inferências com os modelos criados pelo SPIRA.

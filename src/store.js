@@ -33,6 +33,11 @@ const store = new Vuex.Store({
       frase: null,
     },
     hospitals: [],
+    models:[],
+    user: {
+      id: null,
+      token: null,
+    },
   },
   getters: {
     async allPatients() {
@@ -47,6 +52,13 @@ const store = new Vuex.Store({
       }
       return state.hospitals;
     },
+    async getModels(state) {
+      if (state.models.length <= 0) {
+        const { store } = await openStore('models');
+        state.models = await store.getAll();
+      }
+      return state.models;
+    },
   },
   mutations: {
     clearPatient(state) {
@@ -60,6 +72,7 @@ const store = new Vuex.Store({
           frase: null,
         },
         hospitals: [],
+        models:[],
       };
     },
     addFormData(state, data) {
@@ -106,7 +119,17 @@ const store = new Vuex.Store({
       }
       
       return transaction.complete;
-    }
+    },
+    async loadModels(state, newModels) {
+      state.models = newModels;
+
+      const { store, transaction } = await openStore('models');
+      for (let i = 0; i < state.models.length; i += 1) {
+        store.put(state.models[i]);
+      }
+      
+      return transaction.complete;
+    },
   },
 });
 

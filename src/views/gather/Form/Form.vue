@@ -245,7 +245,7 @@
 import router from '@/router';
 import GatherHeader from '@/components/GatherHeader.vue';
 import { hasToken } from '@/services/auth';
-import { validateRGH, loadOrRequestHospitals, todaysDate, isInferenceApp} from './Form.js';
+import { validateRGH, loadOrRequestHospitals, loadOrRequestModels, todaysDate, isInferenceApp} from './Form.js';
 import { 
   maskOptions, 
   apiMaskOptions, 
@@ -352,10 +352,13 @@ export default {
           .map(hospital => hospital.hospitalName)
           .filter(hospitalName => hospitalName && hospitalName.trim());
       });
-    this.$store.commit('clearPatient');
     if(isInferenceApp()){
-      this.models=[{id: 'id_1',name:'model 1'},{id: 'id_2',name:'model 2'}];
+      loadOrRequestModels(this)
+        .then(models => {
+          this.models = models;
+        });
     }
+    this.$store.commit('clearPatient');
   },
 };
 </script>

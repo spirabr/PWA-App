@@ -23,6 +23,18 @@ export async function loadOrRequestHospitals(component) {
   }
 }
 
+export async function loadOrRequestModels(component) {
+  try {
+    const newModels = await axios.get(`${process.env.VUE_APP_IS_INFERENCE_APP}/models`);
+    component.$store.commit('loadModels', newModels.data);
+    return newModels.data;
+  }
+  catch {
+    return await component.$store.getters.getModels;
+  }
+}
+
+
 export function todaysDate() {
   const today = new Date();
   //TODO: fix timezone error
@@ -30,6 +42,5 @@ export function todaysDate() {
 }
 
 export function isInferenceApp(){
-  console.log(process.env.VUE_APP_IS_INFERENCE_APP);
   return (process.env.VUE_APP_IS_INFERENCE_APP === 'true');
 }

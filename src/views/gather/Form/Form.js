@@ -28,3 +28,8 @@ export function todaysDate() {
   //TODO: fix timezone error
   return today.toISOString();
 }
+
+export function isInferenceApp(){
+  console.log(process.env.VUE_APP_IS_INFERENCE_APP);
+  return (process.env.VUE_APP_IS_INFERENCE_APP === 'true');
+}

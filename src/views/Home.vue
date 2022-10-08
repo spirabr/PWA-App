@@ -18,7 +18,7 @@
         class="route-button"
         @click="goToColeta"
       >
-        iniciar coleta
+        iniciar {{formButtomLabel}}
       </v-btn>
 
       <v-btn
@@ -62,6 +62,7 @@
 <script>
 import router from '@/router';
 import { hasToken } from '@/services/auth';
+import { isInferenceApp } from './Settings.js';
 
 export default {
   name: 'Home',
@@ -80,7 +81,10 @@ export default {
     if(!hasToken(this)){
       this.$router.push('/signin');
     }
-  }
+  },
+  data: () => ({
+    formButtomLabel: isInferenceApp() ? 'inferência': 'coleta',
+  }),
 };
 </script>
 

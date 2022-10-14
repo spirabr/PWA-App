@@ -6,7 +6,7 @@ export async function signIn(state, username, password, http) {
   const requestData = {
     username,
     password
-  }
+  };
   const requestOptions = {
     headers: {
       'Content-Type': 'multipart/form-data;',

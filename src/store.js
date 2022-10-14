@@ -1,8 +1,10 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import { openDB } from 'idb';
+import VueCookies from 'vue-cookies';
 
 Vue.use(Vuex);
+Vue.use(VueCookies, { expire: '7d'});
 
 export function createIndexedDB() {
   openDB('local', undefined, {

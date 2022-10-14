@@ -30,6 +30,7 @@
 import router from '@/router';
 import Microphone from '@/components/Microphone.vue';
 import GatherHeader from '@/components/GatherHeader.vue';
+import { hasToken } from '@/services/auth';
 
 export default {
   name: 'Aceite',
@@ -41,6 +42,11 @@ export default {
     nextPage() {
       router.push('./audios');
     },
+  },
+  mounted() {
+    if(!hasToken(this)){
+      this.$router.push('/signin');
+    }
   }
 };
 </script>

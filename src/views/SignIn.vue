@@ -44,7 +44,7 @@
 
 
 <script>
-import { signIn } from './Inference.js';
+import { signIn } from '../services/auth';
 
 export default {
   name: 'SignIn',
@@ -58,7 +58,7 @@ export default {
     login(submitEvent) {
       this.username = submitEvent.target.elements.username.value;
       this.password = submitEvent.target.elements.password.value;
-      signIn(this.username, this.password)
+      signIn(this,this.username, this.password)
         .then(() => {
           this.$router.push('/');
         })

@@ -37,7 +37,6 @@ export async function uploadAudios(audiosFormData, name, rgh, http) {
 }
 
 export async function sendInference(token, userId, requestData, http) {
-  console.log('AAAAAAAAAAAAAAAAAAAAa');
   const requestOptions = {
     headers: {
       'Content-Type': 'multipart/form-data;',

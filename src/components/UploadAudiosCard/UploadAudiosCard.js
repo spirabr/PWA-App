@@ -35,3 +35,21 @@ export async function uploadAudios(audiosFormData, name, rgh, http) {
 
   return audioUploadResponse.status;
 }
+
+export async function sendInference(token, userId, requestData, http) {
+  console.log('AAAAAAAAAAAAAAAAAAAAa');
+  const requestOptions = {
+    headers: {
+      'Content-Type': 'multipart/form-data;',
+      'Authorization': `Bearer ${token}`,
+    }
+  };
+  // Audios will be sent on a separate request
+  const patientRegisterResponse = await http.post(
+    `${process.env.VUE_APP_INFERENCE_BACKEND_URL}/users/${userId}/inferences`,
+    requestData,
+    requestOptions
+  );
+
+  return patientRegisterResponse.status;
+}

@@ -45,9 +45,13 @@
 
 <script>
 import { signIn } from '../services/auth';
+import axios from 'axios';
+
+const instance = axios.create();
 
 export default {
   name: 'SignIn',
+  props: ['http'],
   data() {
     return {
       username: '',
@@ -58,7 +62,7 @@ export default {
     login(submitEvent) {
       this.username = submitEvent.target.elements.username.value;
       this.password = submitEvent.target.elements.password.value;
-      signIn(this,this.username, this.password)
+      signIn(this, instance,this.username, this.password)
         .then(() => {
           this.$router.push('/');
         })

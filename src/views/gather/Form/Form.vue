@@ -232,6 +232,7 @@
 <script>
 import router from '@/router';
 import GatherHeader from '@/components/GatherHeader.vue';
+import { hasToken } from '@/services/auth';
 import { validateRGH, loadOrRequestHospitals, todaysDate } from './Form.js';
 import { 
   maskOptions, 
@@ -302,6 +303,9 @@ export default {
     }
   },
   created() {
+    if(!hasToken(this)){
+      this.$router.push('/signin');
+    }
     loadOrRequestHospitals(this)
       .then(val => {
         this.hospitals = val

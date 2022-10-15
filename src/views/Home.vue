@@ -61,6 +61,7 @@
 
 <script>
 import router from '@/router';
+import { hasToken } from '@/services/auth';
 
 export default {
   name: 'Home',
@@ -75,6 +76,11 @@ export default {
       router.push('/about');
     },
   },
+  mounted () {
+    if(!hasToken(this)){
+      this.$router.push('/signin');
+    }
+  }
 };
 </script>
 

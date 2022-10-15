@@ -21,6 +21,7 @@
 
 <script>
 import router from '@/router';
+import { hasToken } from '@/services/auth';
 
 export default {
   name: 'Done',
@@ -35,6 +36,9 @@ export default {
     },
   },
   async created() {
+    if(!hasToken(this)){
+      this.$router.push('/signin');
+    }
     this.$store.commit('persistData');
     this.saving = false;
   },

@@ -37,6 +37,7 @@ import Microphone from '@/components/Microphone.vue';
 import GatherHeader from '@/components/GatherHeader.vue';
 import getAudioConfigs from '@/services/audioConfigs';
 import router from '@/router';
+import { hasToken } from '@/services/auth';
 
 export default {
   components: { Microphone, GatherHeader },
@@ -48,6 +49,9 @@ export default {
     }
   }),
   mounted() {
+    if(!hasToken(this)){
+      this.$router.push('/signin');
+    }
     this.audioConstraints = getAudioConfigs();
   },
   methods: {

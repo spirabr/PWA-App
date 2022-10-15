@@ -37,6 +37,7 @@
 import UploadAudiosCard from '@/components/UploadAudiosCard/UploadAudiosCard.vue';
 import axios from 'axios'; // TODO: move this to global scope
 import BackHomeButton from '@/components/BackHomeButton';
+import { hasToken } from '@/services/auth';
 
 const instance = axios.create();
 
@@ -48,6 +49,9 @@ export default {
     samples: []
   }),
   async beforeMount() {
+    if(!hasToken(this)){
+      this.$router.push('/signin');
+    }
     const patients = await this.$store.getters.allPatients;
 
     this.samples = patients.filter(patient => (patient && patient.form && patient.id))

@@ -13,9 +13,16 @@
 
 <script>
 import BackHomeButton from '@/components/BackHomeButton.vue';
+import { hasToken } from '@/services/auth';
+
 export default {
   components: { BackHomeButton },
   name: 'About',
+  mounted() {
+    if(!hasToken(this)){
+      this.$router.push('/signin');
+    }
+  }
 };
 </script>
 

@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { uploadAudios, uploadMetadata } from './UploadAudiosCard';
+import { uploadAudios, uploadMetadata, sendInference } from './UploadAudiosCard';
 
 export default {
   name: 'UploadAudiosCard',
@@ -65,59 +65,105 @@ export default {
       this.isDisabled = true;
 
       try {
-        const statusUploadMetadata = await uploadMetadata({
-          patientId: this.sample.id,
-          collector: {
-            patientRgh: this.sample.rgh,
-            sampleType: this.sample.sampleType,
-            gender: this.sample.sex,
-            age: this.sample.age,
-            respiratoryInsufficiencySituation: {
-              respiratoryInsufficiencyStatus: this.sample.internedByRespiratoryInsufficiency.value,
-              location: this.sample.internedByRespiratoryInsufficiency.location
-            },
-            CID: this.sample.cid,
-            respiratoryFrequency: this.sample.respiratoryFrequency,
-            hospitalName: this.sample.local,
-            collectionDate: this.sample.date,
-            maskType: this.sample.mask,
-            covidSituation: {
-              covidStatus: this.sample.covid.value,
-              lastPositiveDiagnoseDate: this.sample.covid.lastPositiveDiagnoseDate,
-              hospitalized: this.sample.covid.hospitalized,
-              hospitalizationStart: this.sample.covid.hospitalizationStart,
-              hospitalizationEnd: this.sample.covid.hospitalizationEnd,
-            },
-            saturacaoOxigenio: this.sample.oxygenSaturation,
-            bpm: this.sample.bpm
-          },
-        }, this.http);
+        if(process.env.VUE_APP_IS_INFERENCE_APP) {
+          const statusSendInference = await sendInference(
+            this.$cookies.get('token'),
+            this.$cookies.get('user_id'),
+            {
+              patientId: this.sample.id,
+              collector: {
+                patientRgh: this.sample.rgh,
+                sampleType: this.sample.sampleType,
+                gender: this.sample.sex,
+                age: this.sample.age,
+                respiratoryInsufficiencySituation: {
+                  respiratoryInsufficiencyStatus: this.sample.internedByRespiratoryInsufficiency.value,
+                  location: this.sample.internedByRespiratoryInsufficiency.location
+                },
+                CID: this.sample.cid,
+                respiratoryFrequency: this.sample.respiratoryFrequency,
+                hospitalName: this.sample.local,
+                collectionDate: this.sample.date,
+                maskType: this.sample.mask,
+                covidSituation: {
+                  covidStatus: this.sample.covid.value,
+                  lastPositiveDiagnoseDate: this.sample.covid.lastPositiveDiagnoseDate,
+                  hospitalized: this.sample.covid.hospitalized,
+                  hospitalizationStart: this.sample.covid.hospitalizationStart,
+                  hospitalizationEnd: this.sample.covid.hospitalizationEnd,
+                },
+                saturacaoOxigenio: this.sample.oxygenSaturation,
+                bpm: this.sample.bpm,
+                aceite: this.audios.aceite,
+                sustentada: this.audios.sustentada,
+                parlenda: this.audios.parlenda,
+                frase: this.audios.frase,
+              },
+            }, this.http);
 
-        if (statusUploadMetadata >= 200 || statusUploadMetadata < 300) {
-          const audiosFormData = new FormData();
-
-          audiosFormData.append('aceite', this.audios.aceite);
-          audiosFormData.append('sustentada', this.audios.sustentada);
-          audiosFormData.append('parlenda', this.audios.parlenda);
-          audiosFormData.append('frase', this.audios.frase);
-
-          const statusUploadAudios = await uploadAudios(audiosFormData, this.sample.local, this.sample.rgh, this.http);
-          this.sent = true;
-          if (statusUploadAudios >= 200 || statusUploadAudios < 300) {
+          if (statusSendInference >= 200 || statusSendInference < 300) {
             this.$emit('deleted');
             this.errorSending = false;
             this.isDisabled = true;
+            this.sent = true;
           } else {
             this.errorSending = true;
             this.isDisabled = false;
           }
         } else {
-          this.errorSending = true;
-          this.isDisabled = false;
+          const statusUploadMetadata = await uploadMetadata({
+            patientId: this.sample.id,
+            collector: {
+              patientRgh: this.sample.rgh,
+              sampleType: this.sample.sampleType,
+              gender: this.sample.sex,
+              age: this.sample.age,
+              respiratoryInsufficiencySituation: {
+                respiratoryInsufficiencyStatus: this.sample.internedByRespiratoryInsufficiency.value,
+                location: this.sample.internedByRespiratoryInsufficiency.location
+              },
+              CID: this.sample.cid,
+              respiratoryFrequency: this.sample.respiratoryFrequency,
+              hospitalName: this.sample.local,
+              collectionDate: this.sample.date,
+              maskType: this.sample.mask,
+              covidSituation: {
+                covidStatus: this.sample.covid.value,
+                lastPositiveDiagnoseDate: this.sample.covid.lastPositiveDiagnoseDate,
+                hospitalized: this.sample.covid.hospitalized,
+                hospitalizationStart: this.sample.covid.hospitalizationStart,
+                hospitalizationEnd: this.sample.covid.hospitalizationEnd,
+              },
+              saturacaoOxigenio: this.sample.oxygenSaturation,
+              bpm: this.sample.bpm
+            },
+          }, this.http);
+
+          if (statusUploadMetadata >= 200 || statusUploadMetadata < 300) {
+            const audiosFormData = new FormData();
+
+            audiosFormData.append('aceite', this.audios.aceite);
+            audiosFormData.append('sustentada', this.audios.sustentada);
+            audiosFormData.append('parlenda', this.audios.parlenda);
+            audiosFormData.append('frase', this.audios.frase);
+
+            const statusUploadAudios = await uploadAudios(audiosFormData, this.sample.local, this.sample.rgh, this.http);
+            this.sent = true;
+            if (statusUploadAudios >= 200 || statusUploadAudios < 300) {
+              this.$emit('deleted');
+              this.errorSending = false;
+              this.isDisabled = true;
+            } else {
+              this.errorSending = true;
+              this.isDisabled = false;
+            }
+          } else {
+            this.errorSending = true;
+            this.isDisabled = false;
+          }
+
+          this.sent = true;
         }
-
-        this.sent = true;
-
       } catch (error) {
         console.error(error);
         this.errorSending = true;

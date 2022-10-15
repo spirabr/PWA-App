@@ -117,6 +117,7 @@
 import Microphone from '@/components/Microphone.vue';
 import router from '@/router';
 import GatherHeader from '@/components/GatherHeader.vue';
+import { hasToken } from '@/services/auth';
 
 export default {
   name: 'Gather',
@@ -152,6 +153,11 @@ export default {
     },
     skipBtn() {
       return this.allowSkip;
+    }
+  },
+  mounted() {
+    if(!hasToken(this)){
+      this.$router.push('/signin');
     }
   }
 };

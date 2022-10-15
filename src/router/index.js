@@ -9,6 +9,7 @@ import Audios from '../views/gather/Audios';
 import Done from '../views/gather/Done';
 import Upload from '../views/Upload';
 import Settings from '../views/Settings';
+import SignIn from '../views/SignIn';
 
 Vue.use(VueRouter);
 
@@ -52,6 +53,11 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+  },
+  {
+    path: '/signin',
+    name: 'SignIn',
+    component: SignIn,
   },
   {
     path: '*',

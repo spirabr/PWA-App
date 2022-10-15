@@ -62,7 +62,7 @@
 <script>
 import router from '@/router';
 import { hasToken } from '@/services/auth';
-import { isInferenceApp } from './Inference.js';
+import { isInferenceApp } from '../services/inference.js';
 
 export default {
   name: 'Home',

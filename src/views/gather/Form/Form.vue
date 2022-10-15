@@ -328,6 +328,7 @@ export default {
     apiInternationLocationOptions,
     nonEmptyRule: [ v => v.trim() !== '' || 'Preencha este campo' ],
     sampleTypeTitle:isInferenceApp() ? 'Tipo de Inferência' : 'Tipo de Coleta',
+    isInferenceApp: isInferenceApp(),
   }),
   methods: {
     submit() {

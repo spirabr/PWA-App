@@ -25,9 +25,15 @@ export async function loadOrRequestHospitals(component) {
 
 export async function loadOrRequestModels(component) {
   try {
-    const newModels = await axios.get(`${process.env.VUE_APP_IS_INFERENCE_APP}/models`);
-    component.$store.commit('loadModels', newModels.data);
-    return newModels.data;
+    const requestOptions = {
+      headers: {
+        'Content-Type': 'multipart/form-data;',
+        'Authorization': `Bearer ${component.$cookies.get('token')}`,
+      }
+    };
+    const newModels = await axios.get(`${process.env.VUE_APP_INFERENCE_BACKEND_URL}/${process.env.VUE_APP_INFERENCE_VERSION}/models`,requestOptions);
+    component.$store.commit('loadModels', newModels.data.models);
+    return newModels.data.models;
   }
   catch {
     return await component.$store.getters.getModels;

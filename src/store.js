@@ -17,6 +17,10 @@ export function createIndexedDB() {
         let objectStore = db.createObjectStore('hospitals', {keyPath: 'id'});
         objectStore.createIndex('hospitalId', 'id');
       }
+      if (!db.objectStoreNames.contains('models')) {
+        let objectStore = db.createObjectStore('models', {keyPath: 'id'});
+        objectStore.createIndex('modelId', 'id');
+      }
     }
   });
 }
@@ -34,10 +38,6 @@ const store = new Vuex.Store({
     },
     hospitals: [],
     models:[],
-    user: {
-      id: null,
-      token: null,
-    },
   },
   getters: {
     async allPatients() {

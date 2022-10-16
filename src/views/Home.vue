@@ -33,6 +33,18 @@
       </v-btn>
 
       <v-btn
+          block
+          rounded
+          large
+          color="var(--purple-color)"
+          class="route-button"
+          @click="goToInferences"
+          v-if="isInferenceApp"
+        >
+          inferências
+        </v-btn>
+
+      <v-btn
         block
         rounded
         large
@@ -73,6 +85,9 @@ export default {
     goToUpload() {
       router.push('/upload');
     },
+    goToInferences() {
+      router.push('/inferences');
+    },
     goToAbout() {
       router.push('/about');
     },
@@ -84,6 +99,7 @@ export default {
   },
   data: () => ({
     formButtomLabel: isInferenceApp() ? 'inferência': 'coleta',
+    isInferenceApp: isInferenceApp(),
   }),
 };
 </script>

@@ -35,6 +35,11 @@
                 Sign In
               </button>
             </v-row>
+            <v-row v-for="(error,i) in errors" :key="i">
+              <p class="error">
+                {{ error }}
+              </p>
+            </v-row>
           </form>
         </v-card>
       </v-row>
@@ -54,6 +59,7 @@ export default {
   props: ['http'],
   data() {
     return {
+      errors: [],
       username: '',
       password: '',
     };
@@ -62,6 +68,19 @@ export default {
     login(submitEvent) {
       this.username = submitEvent.target.elements.username.value;
       this.password = submitEvent.target.elements.password.value;
+
+      if (!this.username || !this.password) {
+        this.errors = [];
+
+        if (!this.username) {
+          this.errors.push('username required.');
+        }
+        if (!this.password) {
+          this.errors.push('password required.');
+        }
+        return;
+      }
+
       signIn(this, instance,this.username, this.password)
         .then(() => {
           this.$router.push('/');
@@ -72,12 +91,15 @@ export default {
           console.log(errorCode);
           console.log(errorMessage);
         });
-    },
+    }
   },
 };
 </script>
 
 <style scoped>
+  .error {
+    color:black;
+  }
   .input-field {
     border-radius:5px;
     background-color: white;

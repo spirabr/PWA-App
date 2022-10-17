@@ -45,7 +45,7 @@ export async function sendInference(token, userId, requestData, http) {
   };
   // Audios will be sent on a separate request
   const patientRegisterResponse = await http.post(
-    `${process.env.VUE_APP_INFERENCE_BACKEND_URL}/v1/users/${userId}/inferences`,
+    `${process.env.VUE_APP_INFERENCE_BACKEND_URL}/${process.env.VUE_APP_INFERENCE_VERSION}/users/${userId}/inferences`,
     requestData,
     requestOptions
   );

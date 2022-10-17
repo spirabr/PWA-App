@@ -10,10 +10,12 @@ import Done from '../views/gather/Done';
 import Upload from '../views/Upload';
 import Settings from '../views/Settings';
 import SignIn from '../views/SignIn';
+import Inferences from '../views/Inferences';
+import { isInferenceApp } from '../services/inference';
 
 Vue.use(VueRouter);
 
-const routes = [
+const routes = isInferenceApp() ? [
   {
     path: '/',
     name: 'Home',
@@ -58,6 +60,57 @@ const routes = [
     path: '/signin',
     name: 'SignIn',
     component: SignIn,
+  },
+  {
+    path: '/inferences',
+    name: 'Inferences',
+    component: Inferences,
+  },
+  {
+    path: '*',
+    name: '404',
+    component: NotFound
+  },
+]: [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home,
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About,
+  },
+  {
+    path: '/gather/form',
+    name: 'Form',
+    component: Form
+  },
+  {
+    path: '/gather/aceite',
+    name: 'Aceite',
+    component: Aceite
+  },
+  {
+    path: '/gather/audios',
+    name: 'Audios',
+    component: Audios
+  },
+  {
+    path: '/gather/done',
+    name: 'Done',
+    component: Done
+  },
+  {
+    path: '/upload',
+    name: 'Upload',
+    component: Upload,
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
   },
   {
     path: '*',

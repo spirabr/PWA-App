@@ -18,7 +18,7 @@
         class="route-button"
         @click="goToColeta"
       >
-        iniciar coleta
+        iniciar {{formButtomLabel}}
       </v-btn>
 
       <v-btn
@@ -31,6 +31,18 @@
       >
         upload
       </v-btn>
+
+      <v-btn
+          block
+          rounded
+          large
+          color="var(--purple-color)"
+          class="route-button"
+          @click="goToInferences"
+          v-if="isInferenceApp"
+        >
+          inferências
+        </v-btn>
 
       <v-btn
         block
@@ -62,6 +74,7 @@
 <script>
 import router from '@/router';
 import { hasToken } from '@/services/auth';
+import { isInferenceApp } from '../services/inference.js';
 
 export default {
   name: 'Home',
@@ -72,6 +85,9 @@ export default {
     goToUpload() {
       router.push('/upload');
     },
+    goToInferences() {
+      router.push('/inferences');
+    },
     goToAbout() {
       router.push('/about');
     },
@@ -80,7 +96,11 @@ export default {
     if(!hasToken(this)){
       this.$router.push('/signin');
     }
-  }
+  },
+  data: () => ({
+    formButtomLabel: isInferenceApp() ? 'inferência': 'coleta',
+    isInferenceApp: isInferenceApp(),
+  }),
 };
 </script>
 

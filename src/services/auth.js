@@ -1,6 +1,12 @@
 import qs from 'qs';
+import Vue from 'vue';
+import VueCookies from 'vue-cookies';
+import {isInferenceApp} from '../services/inference';
+
+Vue.use(VueCookies, { expire: '7d'});
 
 export function hasToken(state) {
+  if(!isInferenceApp())return true;
   return state.$cookies.isKey('token');
 }
 

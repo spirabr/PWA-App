@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { requestInferences } from '../services/inference';
+import { hasToken } from '../services/auth';
 
 export default {
   data() {
@@ -33,24 +35,24 @@ export default {
         {label:'Status',name:'status'},
         {label:'Diagnóstico',name:'diagnosis'}
       ],
-      items: [
-        { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
-        { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
-        { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
-        { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
-        { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
-        { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
-        { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
-        { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
-        { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
-        { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
-        { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
-        { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
-        { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
-        { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
-        { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
-        { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
-      ],
+      items: [],
+      //   { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
+      //   { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
+      //   { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
+      //   { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
+      //   { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
+      //   { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
+      //   { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
+      //   { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
+      //   { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
+      //   { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
+      //   { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
+      //   { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
+      //   { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
+      //   { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
+      //   { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
+      //   { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
+      // ],
       sortDirection: 1,
       sortBy: 'rgh',
     };
@@ -72,7 +74,16 @@ export default {
         (a, b) => b[head] > a[head] ? -1 : a[head] > b[head] ? 1 : 0 : 
         (a, b) => a[head] > b[head] ? -1 : b[head] > a[head] ? 1 : 0;
     }
-  }
+  },
+  created() {
+    if(!hasToken(this)){
+      this.$router.push('/signin');
+    }
+    requestInferences(this)
+      .then(inferences => {
+        this.items = inferences;
+      });
+  },
 };
 </script>
 

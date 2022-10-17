@@ -14,7 +14,8 @@ export function validateRGH(hospital, rgh) {
 
 export async function loadOrRequestHospitals(component) {
   try {
-    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/hospital`);
+    // const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/hospital`);
+    const newHospitals = { data:[{hospitalName:'h1'},{hospitalName:'h2'}]};
     component.$store.commit('loadHospitals', newHospitals.data);
     return newHospitals.data;
   }

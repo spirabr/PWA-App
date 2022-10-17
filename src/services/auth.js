@@ -22,4 +22,5 @@ export async function signIn(state, instance, username, password) {
   );
   state.$cookies.set('token',loginResponse.data.access_token,parseInt(process.env.VUE_APP_COOKIE_EXPIRING_TIME));
   state.$cookies.set('user_id',loginResponse.data.id,parseInt(process.env.VUE_APP_COOKIE_EXPIRING_TIME));
+  console.log(state.$cookies.get('user_id'));
 }

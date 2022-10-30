@@ -22,8 +22,6 @@ export async function requestInferences(state) {
         `${process.env.VUE_APP_INFERENCE_BACKEND_URL}/${process.env.VUE_APP_INFERENCE_VERSION}`
           +'/models/',requestOptions);
 
-    console.log(inferencesResponse.data.inferences);
-
     for(const inference of inferencesResponse.data.inferences){
       const resultResponse = 
         await axios.get(

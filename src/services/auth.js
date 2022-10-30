@@ -10,6 +10,11 @@ export function hasToken(state) {
   return state.$cookies.isKey('token');
 }
 
+export function clearCredentials(state) {
+  state.$cookies.remove('token');
+  state.$cookies.remove('user_id');
+}
+
 export async function signIn(state, instance, username, password) {
   const requestData = qs.stringify({
     username:username,
@@ -28,4 +33,5 @@ export async function signIn(state, instance, username, password) {
   );
   state.$cookies.set('token',loginResponse.data.access_token,parseInt(process.env.VUE_APP_COOKIE_EXPIRING_TIME));
   state.$cookies.set('user_id',loginResponse.data.id,parseInt(process.env.VUE_APP_COOKIE_EXPIRING_TIME));
+  console.log(state.$cookies.get('user_id'));
 }

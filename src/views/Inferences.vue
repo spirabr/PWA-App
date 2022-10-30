@@ -1,31 +1,36 @@
 <template>
-  <div class="table-wrapper">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th v-for="head in headers" @click="sort(head.name)" :key="head.name">
-            {{ head.label }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item,i) in sortedProperties" :key="i">
-          <td>{{ item.rgh }}</td> 
-          <td>{{ item.model }}</td>  
-          <td>{{ item.created_in }}</td> 
-          <td>{{ item.status }}</td> 
-          <td>{{ item.diagnosis }}</td>  
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <v-container>
+    <back-home-button/>
+    <div class="table-wrapper">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th v-for="head in headers" @click="sort(head.name)" :key="head.name">
+              {{ head.label }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item,i) in sortedProperties" :key="i">
+            <td>{{ item.rgh }}</td> 
+            <td>{{ item.model }}</td>  
+            <td>{{ item.created_in }}</td> 
+            <td>{{ item.status }}</td> 
+            <td>{{ item.diagnosis }}</td>  
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </v-container>  
 </template>
 
 <script>
 import { requestInferences } from '../services/inference';
 import { hasToken } from '../services/auth';
+import BackHomeButton from '@/components/BackHomeButton';
 
 export default {
+  components: { BackHomeButton },
   data() {
     return {
       headers: [
@@ -36,23 +41,6 @@ export default {
         {label:'Diagnóstico',name:'diagnosis'}
       ],
       items: [],
-      //   { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
-      //   { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
-      //   { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
-      //   { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
-      //   { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
-      //   { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
-      //   { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
-      //   { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
-      //   { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
-      //   { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
-      //   { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
-      //   { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
-      //   { model: 'model_1', rgh: '62536', created_in: '2022-03-21', status: 'completed' ,diagnosis:'positive' },
-      //   { model: 'model_2', rgh: '9393', created_in: '2022-07-21', status: 'completed' ,diagnosis:'negative' },
-      //   { model: 'model_1', rgh: '12333', created_in: '2022-08-21', status: 'processing' ,diagnosis:'-' },
-      //   { model: 'model_2', rgh: '626', created_in: '2022-02-12', status: 'completed' ,diagnosis:'positive' },
-      // ],
       sortDirection: 1,
       sortBy: 'rgh',
     };

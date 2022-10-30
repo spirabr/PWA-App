@@ -23,10 +23,12 @@
       <div v-if={isInferenceApp}>
         <p>Modelo para Inferência</p>
         <v-select
-          v-model='form.model'
-          :items='models.map(model => model.name)'
-          label='Modelos disponíveis'
+          v-model='form.modelId'
+          :items='models'
+          :item-text="'name'"
+          :item-value="'id'"
           :rules='nonEmptyRule'
+          label='Modelos disponíveis'
           solo
           required
         />
@@ -266,7 +268,7 @@ export default {
   data: () => ({
     form: isInferenceApp() ? 
       {
-        model:'',
+        modelId:'',
         rgh: '',
         local: '',
         sex: '',

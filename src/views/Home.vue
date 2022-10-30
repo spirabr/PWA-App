@@ -41,8 +41,8 @@
           @click="goToInferences"
           v-if="isInferenceApp"
         >
-          inferências
-        </v-btn>
+        inferências
+      </v-btn>
 
       <v-btn
         block
@@ -68,12 +68,24 @@
       </v-btn>
     </div>
 
+    <v-btn
+          block
+          rounded
+          large
+          color="var(--purple-color)"
+          class="route-button"
+          @click="logOut"
+          v-if="isInferenceApp"
+        >
+      sair
+    </v-btn>
+
   </v-container>
 </template>
 
 <script>
 import router from '@/router';
-import { hasToken } from '@/services/auth';
+import { hasToken, clearCredentials } from '@/services/auth';
 import { isInferenceApp } from '../services/inference.js';
 
 export default {
@@ -90,6 +102,10 @@ export default {
     },
     goToAbout() {
       router.push('/about');
+    },
+    logOut() {
+      clearCredentials(this);
+      router.push('/signin');
     },
   },
   mounted () {

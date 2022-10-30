@@ -43,7 +43,6 @@ export async function sendInference(token, userId, requestData, http) {
       'Authorization': `Bearer ${token}`,
     }
   };
-  // Audios will be sent on a separate request
   const patientRegisterResponse = await http.post(
     `${process.env.VUE_APP_INFERENCE_BACKEND_URL}/${process.env.VUE_APP_INFERENCE_VERSION}/users/${userId}/inferences`,
     requestData,

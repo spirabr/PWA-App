@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from 'axios';
 
 export function isInferenceApp(){
@@ -36,4 +37,8 @@ export async function requestInferences(state) {
   catch {
     return await state.$store.getters.getInferences;
   }
+=======
+export function isInferenceApp(){
+  return (process.env.VUE_APP_IS_INFERENCE_APP === 'true');
+>>>>>>> 50d1f98e1254e9ba6c363e6d514f2e97391fb11c
 }

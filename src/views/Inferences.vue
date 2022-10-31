@@ -12,6 +12,7 @@
         </thead>
         <tbody>
           <tr v-for="(item,i) in sortedProperties" :key="i">
+            <td>{{ item.local }}</td>
             <td>{{ item.rgh }}</td> 
             <td>{{ item.model }}</td>  
             <td>{{ item.created_in }}</td> 
@@ -34,6 +35,7 @@ export default {
   data() {
     return {
       headers: [
+        {label:'Hospital', name:'local'},
         {label:'RGH', name:'rgh'},
         {label:'Modelo',name:'model'},
         {label:'Data de Inferência',name:'created_in'},
@@ -42,7 +44,7 @@ export default {
       ],
       items: [],
       sortDirection: 1,
-      sortBy: 'rgh',
+      sortBy: 'local',
     };
   },
   computed: {

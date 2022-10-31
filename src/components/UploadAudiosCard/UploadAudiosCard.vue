@@ -88,6 +88,7 @@ export default {
           requestFormData.append('hospitalization_start', this.sample.covid.hospitalizationStart);
           requestFormData.append('hospitalization_end', this.sample.covid.hospitalizationEnd);
           requestFormData.append('spo2', this.sample.oxygenSaturation);
+          requestFormData.append('local', this.sample.local);
 
           const statusSendInference = await sendInference(
             this.$cookies.get('token'),

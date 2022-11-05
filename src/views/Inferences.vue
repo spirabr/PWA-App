@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <back-home-button/>
-    <div class="table-wrapper">
+    <div v-if="!isMobile()" class="table-wrapper">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -22,6 +22,31 @@
         </tbody>
       </table>
     </div>
+    <div v-else>
+      <v-card
+        elevation="2"
+      >
+        <v-card-text class="mobile-header"> <div class="mobile-header-text">Inferências</div></v-card-text>
+      </v-card>
+      <v-card>
+        <v-row>
+          <v-card-text>
+            <div v-for="(header,j) in headers" @click="sort(head.name)" :key="j">
+              {{header.label}}
+            </div>
+          </v-card-text>
+        </v-row>
+      </v-card>
+      <v-card v-for="(item,i) in sortedProperties" :key="i"
+        elevation="2"
+      >
+        <v-card-text class="mobile-card-text">
+          <div v-for="(header,j) in headers" :key="j">
+            {{header.label}}: {{item[header.name]}}
+          </div>
+        </v-card-text>
+      </v-card>
+    </div>
   </v-container>  
 </template>
 
@@ -38,7 +63,7 @@ export default {
         {label:'Hospital', name:'local'},
         {label:'RGH', name:'rgh'},
         {label:'Modelo',name:'model'},
-        {label:'Data de Inferência',name:'created_in'},
+        {label:'Data da Inferência',name:'created_in'},
         {label:'Status',name:'status'},
         {label:'Diagnóstico',name:'diagnosis'}
       ],
@@ -63,6 +88,9 @@ export default {
       return direction === 1 ? 
         (a, b) => b[head] > a[head] ? -1 : a[head] > b[head] ? 1 : 0 : 
         (a, b) => a[head] > b[head] ? -1 : b[head] > a[head] ? 1 : 0;
+    },
+    isMobile() {
+      return true;
     }
   },
   created() {
@@ -136,7 +164,6 @@ h2{
     font-size: 20px;
 }
 
-
 .table thead th:nth-child(odd) {
     color: #ffffff;
     background-color: rgba(63, 31, 105, 0.7);
@@ -144,6 +171,23 @@ h2{
 
 .table tr:nth-child(even) {
     background: #F8F8F8;
+}
+
+/* mobile css */
+
+.mobile-header {
+    background-color: rgba(124, 31, 244, 0.7);
+}
+
+.mobile-header-text {
+  color: #ffffff;
+  font-size: 23px;
+}
+
+.mobile-card-text {
+    color: #000000;
+    background-color: rgba(245, 245, 245, 0.7);
+    font-size: 15px;
 }
 
 </style>

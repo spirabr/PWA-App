@@ -1,6 +1,6 @@
-<template>
+<template >
   <v-container>
-    <back-home-button/>
+    <gather-header title="inferências"/>
     <div v-if="!isMobile()" class="table-wrapper">
       <table class="table table-striped">
         <thead>
@@ -23,49 +23,50 @@
       </table>
     </div>
     <div v-else>
-      <v-card
-        elevation="2"
-      >
-        <v-card-text class="mobile-header"> <div class="mobile-header-text">Inferências</div></v-card-text>
-      </v-card>
-      <v-card>
-        <v-row>
-          <v-card-text>
-            <div v-for="(header,j) in headers" @click="sort(head.name)" :key="j">
-              {{header.label}}
-            </div>
-          </v-card-text>
-        </v-row>
-      </v-card>
-      <v-card v-for="(item,i) in sortedProperties" :key="i"
-        elevation="2"
-      >
-        <v-card-text class="mobile-card-text">
-          <div v-for="(header,j) in headers" :key="j">
-            {{header.label}}: {{item[header.name]}}
-          </div>
-        </v-card-text>
+      <v-card elevation="2">
+        <v-select class="mobile-select"
+          label="Ordenar por (selecione novamente para inverter a ordem)"
+          :items="headers"
+          item-text="text"
+          item-value="name"
+          color="var(--purple-color)"
+          @input="sort"
+          >
+        </v-select>
+        <div v-for="(item,i) in sortedProperties" :key="i" class="mobile-card-div">
+          <v-card 
+            class="mobile-card"
+            elevation="1"
+          >
+            <v-card-text class="mobile-card-text">
+              <div v-for="(header,j) in headers" :key="j">
+                <p v-if="(header.name!='diagnosis' && header.name!='status')">{{header.label}}: {{item[header.name]}}</p>
+                <p v-else class="bolder-header">{{header.label}}: {{item[header.name]}}</p>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
       </v-card>
     </div>
-  </v-container>  
+  </v-container>
 </template>
 
 <script>
 import { requestInferences } from '../services/inference';
 import { hasToken } from '../services/auth';
-import BackHomeButton from '@/components/BackHomeButton';
+import GatherHeader from '@/components/GatherHeader.vue';
 
 export default {
-  components: { BackHomeButton },
+  components: { GatherHeader },
   data() {
     return {
       headers: [
-        {label:'Hospital', name:'local'},
-        {label:'RGH', name:'rgh'},
-        {label:'Modelo',name:'model'},
-        {label:'Data da Inferência',name:'created_in'},
-        {label:'Status',name:'status'},
-        {label:'Diagnóstico',name:'diagnosis'}
+        {label:'Hospital', name:'local', text:'Hospital'},
+        {label:'RGH', name:'rgh',text:'RGH'},
+        {label:'Modelo',name:'model', text:'Modelo'},
+        {label:'Data da Inferência',name:'created_in',text:'Data da Inferência' },
+        {label:'Status',name:'status',text:'Status'},
+        {label:'Diagnóstico',name:'diagnosis',text:'Diagnóstico'}
       ],
       items: [],
       sortDirection: 1,
@@ -90,7 +91,11 @@ export default {
         (a, b) => a[head] > b[head] ? -1 : b[head] > a[head] ? 1 : 0;
     },
     isMobile() {
-      return true;
+      if (screen.width <= 760) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   created() {
@@ -176,18 +181,36 @@ h2{
 /* mobile css */
 
 .mobile-header {
-    background-color: rgba(124, 31, 244, 0.7);
+    font-size: 23px;
+    text-align: left;
+    font-weight: bold;
+    font-style: normal;
+    color:var(--purple-color);
 }
 
-.mobile-header-text {
-  color: #ffffff;
-  font-size: 23px;
+.mobile-select {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .mobile-card-text {
     color: #000000;
     background-color: rgba(245, 245, 245, 0.7);
     font-size: 15px;
+}
+
+.mobile-card-div {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bolder-header {
+  padding-top: 5px;
+  font-weight: bold;
 }
 
 </style>

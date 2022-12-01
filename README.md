@@ -43,7 +43,7 @@ yarn lint
 
 # Aplicativo de Inferência
 
-Este PWA possui também um segundo modo de funcionamento para realização de inferências com os modelos criados pelo SPIRA.
+Este aplicativo possui também um segundo modo de funcionamento para realização de inferências com os modelos criados pelo SPIRA.
 Para lançar a aplicação neste segundo modo, basta configurar a variável de ambiente:
 ```
 VUE_APP_IS_INFERENCE_APP=true

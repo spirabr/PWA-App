@@ -71,7 +71,9 @@ export default {
           requestFormData.append('aceite', this.audios.aceite);
           requestFormData.append('sustentada', this.audios.sustentada);
           requestFormData.append('parlenda', this.audios.parlenda);
-          requestFormData.append('frase', this.audios.frase);
+          if (this.audios.frase){
+            requestFormData.append('frase', this.audios.frase);
+          }
           requestFormData.append('model_id',this.sample.modelId);
           requestFormData.append('rgh',this.sample.rgh);
           requestFormData.append('age',this.sample.age);

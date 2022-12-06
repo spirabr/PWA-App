@@ -14,7 +14,7 @@ export async function setPatientAsSent(patient) {
 export async function uploadMetadata(requestData, http) {
   // Audios will be sent on a separate request
   const patientRegisterResponse = await http.post(
-    `${process.env.VUE_APP_BACKEND_URL}/patient`,
+    '/api/patient',
     requestData
   );
 
@@ -28,7 +28,7 @@ export async function uploadAudios(audiosFormData, name, rgh, http) {
     },
   };
   const audioUploadResponse = await http.put(
-    `${process.env.VUE_APP_BACKEND_URL}/patient/${name}/${rgh}/audio`,
+    `/api/patient/${name}/${rgh}/audio`,
     audiosFormData,
     requestOptions
   );
@@ -44,7 +44,7 @@ export async function sendInference(token, userId, requestData, http) {
     }
   };
   const patientRegisterResponse = await http.post(
-    `${process.env.VUE_APP_INFERENCE_BACKEND_URL}/${process.env.VUE_APP_INFERENCE_VERSION}/users/${userId}/inferences`,
+    `/inference-api/${process.env.VUE_APP_INFERENCE_VERSION}/users/${userId}/inferences`,
     requestData,
     requestOptions
   );

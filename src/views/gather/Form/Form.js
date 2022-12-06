@@ -14,7 +14,7 @@ export function validateRGH(hospital, rgh) {
 
 export async function loadOrRequestHospitals(component) {
   try {
-    const newHospitals = await axios.get(`${process.env.VUE_APP_BACKEND_URL}/hospital`);
+    const newHospitals = await axios.get('/api/hospital');
     return newHospitals.data;
   }
   catch {
@@ -30,7 +30,7 @@ export async function loadOrRequestModels(component) {
         'Authorization': `Bearer ${component.$cookies.get('token')}`,
       }
     };
-    const newModels = await axios.get(`${process.env.VUE_APP_INFERENCE_BACKEND_URL}/${process.env.VUE_APP_INFERENCE_VERSION}/models`,requestOptions);
+    const newModels = await axios.get(`/inference-api/${process.env.VUE_APP_INFERENCE_VERSION}/models`,requestOptions);
     component.$store.commit('loadModels', newModels.data.models);
     return newModels.data.models;
   }

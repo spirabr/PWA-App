@@ -4,7 +4,18 @@ module.exports = {
     'rxjs-interop'
   ],
   devServer: {
-    proxy: 'http://localhost:3000'
+    proxy: {
+      '/inference-api': {
+        target: process.env.VUE_APP_INFERENCE_BACKEND_URL,
+        pathRewrite: {'^/inference-api' : ''},
+        secure: false
+      },
+      '/api': {
+        target: process.env.VUE_APP_BACKEND_URL,
+        pathRewrite: {'^/api' : ''},
+        secure: false
+      }
+    }
   },
   pwa: {
     name: 'Spira',

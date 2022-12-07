@@ -27,7 +27,8 @@ module.exports = {
       swSrc: 'src/service-worker.js',
       exclude: [
         /\.map$/,
-        /manifest\.json$/
+        /manifest\.json$/,
+        /_redirects/
       ],
     },
     themeColor: '#1da025'

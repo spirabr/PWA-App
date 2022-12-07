@@ -50,9 +50,9 @@
 
 <script>
 import { signIn } from '../services/auth';
-import axios from 'axios';
+import { getInferenceAxios } from '@/services/inference';
 
-const instance = axios.create();
+const $axios = getInferenceAxios();
 
 export default {
   name: 'SignIn',
@@ -81,7 +81,7 @@ export default {
         return;
       }
 
-      signIn(this, instance,this.username, this.password)
+      signIn(this, $axios, this.username, this.password)
         .then(() => {
           this.$router.push('/');
         })

@@ -1,4 +1,5 @@
 import { openDB } from 'idb';
+import { getInferenceAxios } from '../../services/inference';
 
 export async function setPatientAsSent(patient) {
   const db = await openDB('local');
@@ -43,8 +44,10 @@ export async function sendInference(token, userId, requestData, http) {
       'Authorization': `Bearer ${token}`,
     }
   };
-  const patientRegisterResponse = await http.post(
-    `/inference-api/${process.env.VUE_APP_INFERENCE_VERSION}/users/${userId}/inferences`,
+
+  const $axios = getInferenceAxios();
+  const patientRegisterResponse = await $axios.post(
+    `/users/${userId}/inferences`,
     requestData,
     requestOptions
   );

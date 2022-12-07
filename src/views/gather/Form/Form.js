@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getInferenceAxios, isInferenceApp } from '../../../services/inference';
 
 export function validateRGH(hospital, rgh) {
   if (hospital === 'Hospital das Clínicas') {
@@ -14,10 +15,27 @@ export function validateRGH(hospital, rgh) {
 
 export async function loadOrRequestHospitals(component) {
   try {
-    const newHospitals = await axios.get('/api/hospital');
-    return newHospitals.data;
+    if(isInferenceApp()){
+      const requestOptions = {
+        headers: {
+          'Authorization': `Bearer ${component.$cookies.get('token')}`,
+        }
+      };
+  
+      const $axios = getInferenceAxios();
+      const newHospitals = await $axios.get('/hospitals/',requestOptions);
+      return newHospitals.data.hospitals;
+
+    } else {
+      const $axios = axios.create({
+        baseURL: `${process.env.VUE_APP_BACKEND_URL}`
+      });
+      const newHospitals = await $axios.get('/hospital');
+      return newHospitals.data;
+    }
   }
-  catch {
+  catch (e){
+    console.log(e);
     return await component.$store.getters.getHospitals;
   }
 }
@@ -26,11 +44,14 @@ export async function loadOrRequestModels(component) {
   try {
     const requestOptions = {
       headers: {
-        'Content-Type': 'multipart/form-data;',
         'Authorization': `Bearer ${component.$cookies.get('token')}`,
       }
     };
-    const newModels = await axios.get(`/inference-api/${process.env.VUE_APP_INFERENCE_VERSION}/models`,requestOptions);
+
+    const $axios = getInferenceAxios();
+
+    const newModels = await $axios.get('/models/',requestOptions);
+    console.log(newModels);
     component.$store.commit('loadModels', newModels.data.models);
     return newModels.data.models;
   }

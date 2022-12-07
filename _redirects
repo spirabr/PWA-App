@@ -1,3 +1,0 @@
-# Redirects from what the browser requests to what we serve
-/inference-api     /http://inspirada.ime.usp.br:28000
-/api               /http://inspirada.ime.usp.br:10080

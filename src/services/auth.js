@@ -27,7 +27,7 @@ export async function signIn(state, instance, username, password) {
   };
 
   const loginResponse = await instance.post(
-    '/inference-api/v1/users/auth',
+    '/users/auth',
     requestData,
     requestOptions
   );

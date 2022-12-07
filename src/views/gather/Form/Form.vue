@@ -350,16 +350,24 @@ export default {
     if(!hasToken(this)){
       this.$router.push('/signin');
     }
-    loadOrRequestHospitals(this)
-      .then(val => {
-        this.hospitals = val
-          .map(hospital => hospital.hospitalName)
-          .filter(hospitalName => hospitalName && hospitalName.trim());
-      });
+    
     if(isInferenceApp()){
       loadOrRequestModels(this)
         .then(models => {
           this.models = models;
+        });
+      loadOrRequestHospitals(this)
+        .then(val => {
+          this.hospitals = val
+            .map(hospital => hospital.name)
+            .filter(name => name && name.trim());
+        });
+    } else {
+      loadOrRequestHospitals(this)
+        .then(val => {
+          this.hospitals = val
+            .map(hospital => hospital.hospitalName)
+            .filter(hospitalName => hospitalName && hospitalName.trim());
         });
     }
     this.$store.commit('clearPatient');

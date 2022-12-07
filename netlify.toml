@@ -1,3 +1,11 @@
+[[headers]]
+  for = "https://inspirada.ime.usp.br:28000/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "https://inspirada.ime.usp.br:28000"
+[[headers]]
+  for = "https://inspirada.ime.usp.br:10080/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "https://inspirada.ime.usp.br:10080"
 [[redirects]]
   from = "/*"
   to = "/index.html"

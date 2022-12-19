@@ -51,7 +51,6 @@ export async function loadOrRequestModels(component) {
     const $axios = getInferenceAxios();
 
     const newModels = await $axios.get('/models/',requestOptions);
-    console.log(newModels);
     component.$store.commit('loadModels', newModels.data.models);
     return newModels.data.models;
   }

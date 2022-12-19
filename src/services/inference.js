@@ -24,15 +24,11 @@ export async function requestInferences(state) {
     const inferencesResponse = 
       await $axios.get(`/users/${state.$cookies.get('user_id')}/inferences`,requestOptions);
 
-    console.log(inferencesResponse);
-
     const modelsResponse = 
     await $axios.get('/models/',requestOptions);
     for(const inference of inferencesResponse.data.inferences){
       const resultResponse = 
         await $axios.get(`/users/${state.$cookies.get('user_id')}/inferences/${inference.id}/result`,requestOptions);
-      
-      console.log(resultResponse);
 
       inference.diagnosis = resultResponse.data.result.diagnosis;
       inference.model = modelsResponse.data.models.find((model)=>model.id == inference.model_id).name;

@@ -12,7 +12,7 @@
         <v-card elevation="2" class="card">
           <form @submit.prevent="login">
             <v-row justify="center" class="label-title">
-              <label for="email" color="white">Username</label>
+              <label for="email" color="white">Nome do Usuário</label>
             </v-row>
             <v-row justify="center" class="v-size--large input">        
               <input
@@ -21,7 +21,7 @@
                 name="username"/>
             </v-row>
             <v-row justify="center" class="label-title">
-              <label for="password">Password</label>
+              <label for="password">Senha</label>
             </v-row>
             <v-row justify="center" class="v-size--large input">
               <input
@@ -32,7 +32,7 @@
             </v-row>
             <v-row justify="center">
               <button type="submit" class="buttons" id="login_button">
-                Sign In
+                Entrar
               </button>
             </v-row>
             <v-row v-for="(error,i) in errors" :key="i">
@@ -73,10 +73,10 @@ export default {
         this.errors = [];
 
         if (!this.username) {
-          this.errors.push('username required.');
+          this.errors.push('nome de usuário obrigatório.');
         }
         if (!this.password) {
-          this.errors.push('password required.');
+          this.errors.push('senha obrigatória.');
         }
         return;
       }

@@ -21,6 +21,16 @@ export async function uploadMetadata(requestData, http) {
   return patientRegisterResponse.status;
 }
 
+export async function dumpMetadata(requestData, http) {
+  // Audios will be sent on a separate request
+  const patientRegisterResponse = await http.post(
+    `${process.env.VUE_APP_BACKEND_URL}/patient`,
+    requestData
+  );
+
+  return patientRegisterResponse.status;
+}
+
 export async function uploadAudios(audiosFormData, name, rgh, http) {
   const requestOptions = {
     headers: {

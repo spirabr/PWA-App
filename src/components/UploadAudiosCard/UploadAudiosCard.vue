@@ -127,6 +127,30 @@ export default {
 
       this.isUploading = false;
     },
+    dumpSample() {
+      return {
+        patientId: this.sample.id,
+        patientRgh: this.sample.rgh,
+        sampleType: this.sample.sampleType,
+        gender: this.sample.sex,
+        age: this.sample.age,
+        respiratoryInsufficiencyStatus: this.sample.internedByRespiratoryInsufficiency.value,
+        location: this.sample.internedByRespiratoryInsufficiency.location,
+        CID: this.sample.cid,
+        respiratoryFrequency: this.sample.respiratoryFrequency,
+        hospitalName: this.sample.local,
+        collectionDate: this.sample.date,
+        maskType: this.sample.mask,
+        covidStatus: this.sample.covid.value,
+        lastPositiveDiagnoseDate: this.sample.covid.lastPositiveDiagnoseDate,
+        hospitalized: this.sample.covid.hospitalized,
+        hospitalizationStart: this.sample.covid.hospitalizationStart,
+        hospitalizationEnd: this.sample.covid.hospitalizationEnd,
+        saturacaoOxigenio: this.sample.oxygenSaturation,
+        bpm: this.sample.bpm
+      };
+    }
+    ,
     deleteSample() {
       this.$store.commit('deletePatient', this.sample.id);
       this.$emit('deleted');

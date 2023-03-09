@@ -19,6 +19,16 @@
       >
         enviar todas
       </v-btn>
+      <v-btn 
+        block
+        rounded
+        large
+        color="var(--purple-color)" 
+        class="mb-3 upload-button"
+        @click="dumpAllSamples()"
+      >
+        gerar arquivo local
+      </v-btn>
       <div class="cards-container">
         <UploadAudiosCard v-for="(sample, index) in samples" :key="sample.id"
           :sample="sample"
@@ -68,8 +78,33 @@ export default {
     uploadAllSamples() {
       this.$refs.uploadCards.forEach((card) => card.submitSample());
     },
+    dumpAllSamples() {
+      const samples = this.$refs.uploadCards.map((card) => card.dumpSample());
+      
+      if(samples.size == 0){
+        return;
+      }
+
+      const fields = Object.keys(samples[0]);
+      const replacer = function(nothing, value) { return value === null ? '' : value; };
+      const csv = samples.map(function(sample){
+        return fields.map(function(fieldName){
+          return JSON.stringify(sample[fieldName], replacer);
+        }).join(',');
+      });
+      csv.unshift(fields.join(','));
+      this.download(csv.join('\r\n'));
+    },
     deleteSample(index) {
       this.samples.splice(index, 1);
+    },
+    download(data) {
+      const blob = new Blob([data], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('download', 'samples.csv');
+      a.click();
     }
   }
 };

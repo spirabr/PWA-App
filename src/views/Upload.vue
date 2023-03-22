@@ -86,7 +86,7 @@ export default {
       }
 
       const fields = Object.keys(samples[0]);
-      const replacer = function(nothing, value) { return value === null ? '' : value; };
+      const replacer = ( _ , value) => { return value === null ? '' : value; };
       const csv = samples.map(function(sample){
         return fields.map(function(fieldName){
           return JSON.stringify(sample[fieldName], replacer);
